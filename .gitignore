@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+env/
+
+# Build outputs and caching
+.next/
+dist/
+build/
+coverage/
+.cache/
+*.tsbuildinfo
+
+# Environmental variables & Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+
+# Database & Local volumes
+*.sqlite
+*.db
+redis-data/
+postgres-data/
+
+# Logs & Temporary files
+logs/
+*.log
+tmp/
+temp/
+__pycache__/
+.pytest_cache/
+.DS_Store
+.idea/
+.vscode/
+uploads/
