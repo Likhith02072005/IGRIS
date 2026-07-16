@@ -23,7 +23,7 @@ from app.market_data.service import market_data_service
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="Astra Quant Lab Algorithmic Execution and Quant Engine.",
+    description="IGRIS Algorithmic Execution and Quant Engine.",
     version="1.1.0"
 )
 

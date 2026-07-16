@@ -3,7 +3,7 @@ from typing import Dict, Any, Optional, Tuple
 
 class BaseStrategy:
     """
-    Abstract Base Class for all Astra Quant Lab strategies.
+    Abstract Base Class for all IGRIS strategies.
     Provides standard helper functions for technical analysis and signal checking.
     """
     def __init__(self, name: str, params: Dict[str, Any]):

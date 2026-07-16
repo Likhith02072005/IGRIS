@@ -29,7 +29,7 @@ export default function TradeJournal() {
       id: 'J_001',
       date: '2026-07-15',
       time: '10:30:00',
-      strategyName: 'ASTRA',
+      strategyName: 'IGRIS',
       direction: 'SELL',
       entryPrice: 240.50,
       exitPrice: 190.50,
@@ -39,7 +39,7 @@ export default function TradeJournal() {
       greeks: { delta: -0.45, theta: 12.5, gamma: 0.02 },
       reason: 'Price revisited stored low on first 30min green-green candles. Pattern matched completely.',
       notes: 'Exited quickly at the 50 point target mark. Good execution velocity.',
-      tags: ['AstraPattern', 'Intraday', 'PutBuying']
+      tags: ['IgrisPattern', 'Intraday', 'PutBuying']
     },
     {
       id: 'J_002',
@@ -61,7 +61,7 @@ export default function TradeJournal() {
 
   // Form states
   const [showAddForm, setShowAddForm] = useState(false);
-  const [strategy, setStrategy] = useState('ASTRA');
+  const [strategy, setStrategy] = useState('IGRIS');
   const [direction, setDirection] = useState<'BUY' | 'SELL'>('BUY');
   const [entry, setEntry] = useState('150');
   const [exit, setExit] = useState('200');
@@ -149,7 +149,7 @@ export default function TradeJournal() {
                 value={strategy}
                 onChange={(e) => setStrategy(e.target.value)}
               >
-                <option value="ASTRA">ASTRA</option>
+                <option value="IGRIS">IGRIS</option>
                 <option value="Momentum Catcher">Momentum Catcher</option>
                 <option value="ORB">Opening Range Breakout</option>
               </select>
@@ -294,7 +294,7 @@ export default function TradeJournal() {
               <input
                 type="text"
                 className="w-full glass-input p-3 rounded-xl text-xs font-mono"
-                placeholder="AstraPattern, Intraday"
+                placeholder="IgrisPattern, Intraday"
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
               />

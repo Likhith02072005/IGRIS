@@ -37,9 +37,9 @@ export default function StrategyDetails() {
 
   // Seeded Trade History
   const [trades, setTrades] = useState<TradeRecord[]>([
-    { num: 1, symbol: 'BANKNIFTY26JUL52400CE', direction: 'BUY', entry: 52400, exit: 52450, entryPrem: 110.5, exitPrem: 160.5, lots: 2, qty: 30, pnl: 1500.00, pnlPct: 45.2, duration: '42m', reason: 'ASTRA High Revisit', charges: 40.0 },
+    { num: 1, symbol: 'BANKNIFTY26JUL52400CE', direction: 'BUY', entry: 52400, exit: 52450, entryPrem: 110.5, exitPrem: 160.5, lots: 2, qty: 30, pnl: 1500.00, pnlPct: 45.2, duration: '42m', reason: 'IGRIS High Revisit', charges: 40.0 },
     { num: 2, symbol: 'BANKNIFTY26JUL52400PE', direction: 'SELL', entry: 52410, exit: 52430, entryPrem: 240.2, exitPrem: 260.2, lots: 2, qty: 30, pnl: -600.00, pnlPct: -8.3, duration: '20m', reason: 'Stop Loss Trigger', charges: 40.0 },
-    { num: 3, symbol: 'BANKNIFTY26JUL52400CE', direction: 'BUY', entry: 52380, exit: 52430, entryPrem: 130.0, exitPrem: 180.0, lots: 2, qty: 30, pnl: 1500.00, pnlPct: 38.4, duration: '1h 12m', reason: 'ASTRA Low Revisit', charges: 40.0 },
+    { num: 3, symbol: 'BANKNIFTY26JUL52400CE', direction: 'BUY', entry: 52380, exit: 52430, entryPrem: 130.0, exitPrem: 180.0, lots: 2, qty: 30, pnl: 1500.00, pnlPct: 38.4, duration: '1h 12m', reason: 'IGRIS Low Revisit', charges: 40.0 },
   ]);
 
   const handleEmergencyExit = () => {
@@ -51,7 +51,7 @@ export default function StrategyDetails() {
   };
 
   const handleClone = () => {
-    alert('Strategy cloned successfully. Created: ASTRA copy_1');
+    alert('Strategy cloned successfully. Created: IGRIS copy_1');
   };
 
   const filteredTrades = trades.filter(t => {
@@ -76,7 +76,7 @@ export default function StrategyDetails() {
           <div>
             <div className="flex items-center gap-3">
               <h1 className="text-xl font-bold uppercase tracking-wider text-white">
-                ASTRA Options Algorithm
+                IGRIS Options Algorithm
               </h1>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] bg-brand/10 border border-brand/20 text-brand font-bold">
                 v1.2.0
@@ -122,7 +122,7 @@ export default function StrategyDetails() {
 
             {/* Backtest & Paper links */}
             <button
-              onClick={() => router.push(`/dashboard/backtesting?strategyId=ASTRA`)}
+              onClick={() => router.push(`/dashboard/backtesting?strategyId=IGRIS`)}
               className="px-4 py-2.5 rounded-xl bg-indigo-650 hover:bg-indigo-600 border border-indigo-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
             >
               Backtest

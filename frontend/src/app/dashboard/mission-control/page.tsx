@@ -30,7 +30,7 @@ export default function MissionControl() {
   const [strategies, setStrategies] = useState<RunningStrategy[]>([
     {
       id: 'strat_1',
-      name: 'ASTRA Options Straddle',
+      name: 'IGRIS Options Straddle',
       status: 'RUNNING',
       position: '+2 Lots BANKNIFTY 52400CE',
       capital: 45000,

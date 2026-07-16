@@ -1,10 +1,10 @@
 import pandas as pd
 from typing import Dict, Any, Optional, Tuple
-from .base import BaseStrategy
+from ..base import BaseStrategy
 
-class AstraStrategy(BaseStrategy):
+class IgrisStrategy(BaseStrategy):
     """
-    Astra Strategy:
+    Igris Strategy:
     1. Wait first two 30-min candles.
     2. If first is Green AND second is Green:
        - Store first candle Low.
@@ -15,7 +15,7 @@ class AstraStrategy(BaseStrategy):
     4. Target: 50 points, SL: 100 points.
     5. No reentry. Force exit at 15:15 (3:15 PM).
     """
-    def __init__(self, name: str = "ASTRA", params: Optional[Dict[str, Any]] = None):
+    def __init__(self, name: str = "IGRIS", params: Optional[Dict[str, Any]] = None):
         default_params = {
             "target": 50.0,
             "stop_loss": 100.0,

@@ -64,7 +64,7 @@ export default function Sidebar() {
             </div>
             <div>
               <span className="font-extrabold text-sm text-white uppercase tracking-wider block">
-                Astra <span className="text-brand">Quant Lab</span>
+                Igris <span className="text-brand">Quant Lab</span>
               </span>
               <span className="text-[10px] text-gray-500 font-mono tracking-widest block uppercase">
                 v1.1.0 Terminal

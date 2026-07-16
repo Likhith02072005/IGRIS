@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 class BaseQuantPlugin(abc.ABC):
     """
     Developer SDK Base Plugin class.
-    Allows developers to extend Astra with indicators, risk checkers, and strategies.
+    Allows developers to extend Igris with indicators, risk checkers, and strategies.
     """
     def __init__(self, name: str, version: str = "1.0.0"):
         self.name = name

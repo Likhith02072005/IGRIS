@@ -84,7 +84,7 @@ export default function DashboardLayout({
           {/* Left Block - Platform Brand and Live Indices */}
           <div className="flex items-center gap-6 overflow-x-auto scrollbar-none">
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-brand-light flex-shrink-0">
-              Astra Terminal
+              Igris Terminal
             </span>
             
             <div className="h-4 w-[1px] bg-gray-800 flex-shrink-0" />

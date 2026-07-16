@@ -65,7 +65,7 @@ export default function LoginPage() {
       // Direct mock integration for social oauth matching user requirements.
       // In production, this redirects to Google/Github consent screen, then back to callback.
       // We simulate the API callback success here.
-      const mockEmail = `${provider}_user_${Math.floor(Math.random() * 1000)}@astra.lab`;
+      const mockEmail = `${provider}_user_${Math.floor(Math.random() * 1000)}@igris.lab`;
       const mockName = `${provider.toUpperCase()} Operator`;
 
       const res = await fetch('http://localhost:5000/api/auth/oauth', {
@@ -108,7 +108,7 @@ export default function LoginPage() {
             <Shield className="w-8 h-8 text-brand" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-white uppercase">
-            Astra <span className="text-brand">Quant Lab</span>
+            Igris <span className="text-brand">Quant Lab</span>
           </h1>
           <p className="text-sm text-gray-400 mt-1">Institutional Quantitative Research Platform</p>
         </div>
@@ -135,7 +135,7 @@ export default function LoginPage() {
                 type="email"
                 required
                 className="w-full glass-input py-3 pl-11 pr-4 rounded-xl text-sm"
-                placeholder="operator@astraquant.com"
+                placeholder="operator@igrisquant.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}

@@ -28,7 +28,7 @@ class NotificationEngine:
         """
         Broadcasting alerts dynamically to configured destinations.
         """
-        msg = f"ASTRA RISK ALERT - {alert_type}: {details.get('message', '')}"
+        msg = f"IGRIS RISK ALERT - {alert_type}: {details.get('message', '')}"
         cls.send_telegram(msg)
         cls.send_discord(msg)
         cls.send_slack(msg)

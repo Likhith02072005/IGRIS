@@ -8,13 +8,13 @@ logger = logging.getLogger(__name__)
 
 class EventBus:
     """
-    Enterprise Redis Streams & Pub/Sub Event Bus for Astra Quant Lab.
+    Enterprise Redis Streams & Pub/Sub Event Bus for IGRIS.
     Enables loose coupling and real-time messaging between microservices.
     """
     def __init__(self):
         self.redis_client = redis.Redis.from_url(settings.REDIS_URL, decode_responses=True)
-        self.stream_name = "astra:event_stream"
-        self.pubsub_prefix = "astra:chan:"
+        self.stream_name = "igris:event_stream"
+        self.pubsub_prefix = "igris:chan:"
         
     def publish(self, event_type: str, data: Dict[str, Any]) -> str:
         """

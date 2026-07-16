@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Dict, Any, Optional, Tuple
-from .base import BaseStrategy
+from ..base import BaseStrategy
 
 class MomentumCatcherStrategy(BaseStrategy):
     """

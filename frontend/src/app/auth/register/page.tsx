@@ -71,7 +71,7 @@ export default function RegisterPage() {
             <UserPlus className="w-8 h-8 text-brand" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-white uppercase">
-            Astra <span className="text-brand">Quant Lab</span>
+            Igris <span className="text-brand">Quant Lab</span>
           </h1>
           <p className="text-sm text-gray-400 mt-1">Terminal Provisioning Console</p>
         </div>
@@ -118,7 +118,7 @@ export default function RegisterPage() {
                 type="email"
                 required
                 className="w-full glass-input py-3 pl-11 pr-4 rounded-xl text-sm"
-                placeholder="operator@astraquant.com"
+                placeholder="operator@igrisquant.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}

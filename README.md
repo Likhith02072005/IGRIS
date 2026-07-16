@@ -1,4 +1,4 @@
-# Astra Quant Lab - Algorithmic Trading & Research Platform
+# IGRIS - Algorithmic Trading & Research Platform
 
 An institutional-grade, microservice-based quantitative research and trading execution workspace designed for hedge funds, prop trading desks, and professional quantitative engineers.
 
@@ -20,7 +20,7 @@ graph TD
 ## 2. Directory Layout
 
 ```
-astra-quant-lab/
+igris/
 ├── backend/            # Express gateway API (Authentication & SQL CRUD)
 ├── database/           # Relational migrations and Prisma ORM schemas
 ├── engine/             # FastAPI High Performance execution server & solvers
@@ -79,7 +79,7 @@ docker-compose up --build
 ---
 
 ## 5. Development SDK
-Astra includes a Python developer SDK allowing custom strategies and indicators plugins:
+Igris includes a Python developer SDK allowing custom strategies and indicators plugins:
 ```python
 from sdk import BaseQuantPlugin
 

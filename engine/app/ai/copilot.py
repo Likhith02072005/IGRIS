@@ -35,7 +35,7 @@ class AICopilot:
         # 3. Reduce drawdown limits
         if "drawdown" in query_lower and "below" in query_lower:
             strategy = re.findall(r"reduce (\w+) drawdown", query_lower)
-            strat_name = strategy[0].upper() if strategy else "ASTRA"
+            strat_name = strategy[0].upper() if strategy else "IGRIS"
             return {
                 "response": f"To limit drawdown of {strat_name} below 10%, we will tighten trailing stop loss parameters and implement dynamic position sizing based on rolling ATR calculations.",
                 "action": "OPTIMIZE_RISK_LIMITS",
@@ -45,14 +45,14 @@ class AICopilot:
         # 4. Strategy comparison
         if "compare" in query_lower:
             return {
-                "response": "Momentum Buying achieves higher profit multipliers ($4,850.00) but takes larger drawdowns (-5.8%). ASTRA Straddle has a smoother curve ($2,450.00) and smaller drawdown (-3.12%).",
+                "response": "Momentum Buying achieves higher profit multipliers ($4,850.00) but takes larger drawdowns (-5.8%). IGRIS Straddle has a smoother curve ($2,450.00) and smaller drawdown (-3.12%).",
                 "action": "DISPLAY_COMPARATIVE_BOARD",
                 "parameters_suggested": {}
             }
 
         # Fallback response
         return {
-            "response": "Astra AI Copilot active. Commands supported: loss audits, parameter optimization, regime rotation advice.",
+            "response": "Igris AI Copilot active. Commands supported: loss audits, parameter optimization, regime rotation advice.",
             "action": "NONE",
             "parameters_suggested": {}
         }

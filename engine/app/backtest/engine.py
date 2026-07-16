@@ -290,7 +290,7 @@ class BacktestEngine:
 # Simple CLI entry support to run backtests directly
 if __name__ == "__main__":
     # Test execution
-    engine = BacktestEngine("ASTRA", {}, "2026-07-01", "2026-07-15")
+    engine = BacktestEngine("IGRIS", {}, "2026-07-01", "2026-07-15")
     res = engine.run()
     print("Test run completed. Metrics:")
     print(res["metrics"])

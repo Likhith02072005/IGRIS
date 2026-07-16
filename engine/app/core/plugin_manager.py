@@ -12,7 +12,7 @@ class PluginManager:
     """
     def __init__(self, plugins_dir: str = "/app/plugins"):
         if not os.path.exists(plugins_dir):
-            self.plugins_dir = "/Users/likhith/.gemini/antigravity/scratch/astra-quant-lab/plugins"
+            self.plugins_dir = "/Users/likhith/.gemini/antigravity/scratch/igris/plugins"
         else:
             self.plugins_dir = plugins_dir
         

@@ -30,7 +30,7 @@ export default function PortfolioPage() {
   const [strategies, setStrategies] = useState<StrategyPortfolioItem[]>([
     {
       id: 'strat_1',
-      name: 'ASTRA Options straddle',
+      name: 'IGRIS Options straddle',
       status: 'LIVE',
       allocated: 45000.00,
       currentValue: 47450.00,
@@ -139,7 +139,7 @@ export default function PortfolioPage() {
         <div className="glass-panel p-5 rounded-2xl border-l-4 border-brand">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Top Performing Algorithm</span>
           <div className="flex items-baseline gap-3">
-            <h3 className="text-2xl font-bold text-white font-mono">ASTRA Straddle</h3>
+            <h3 className="text-2xl font-bold text-white font-mono">IGRIS Straddle</h3>
             <span className="text-xs font-bold text-brand font-mono">Sharpe: 2.84</span>
           </div>
           <span className="text-[10px] text-gray-400 font-mono mt-1 block">Today return: +2.45% ROI</span>

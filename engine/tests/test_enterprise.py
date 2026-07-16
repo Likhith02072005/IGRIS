@@ -10,7 +10,7 @@ from app.ai.copilot import AICopilot
 class TestEnterprisePlatformExtensions(unittest.TestCase):
     """
     Test suite verifying the math correctness and event routing
-    of the Astra Quant Lab enterprise modules.
+    of the IGRIS enterprise modules.
     """
 
     def test_event_bus_publish(self):
@@ -78,7 +78,7 @@ class TestEnterprisePlatformExtensions(unittest.TestCase):
         self.assertGreater(res["expected_return_pct"], -100.0)
 
     def test_ai_copilot_parser(self):
-        res = AICopilot.query("Why did Astra lose today?")
+        res = AICopilot.query("Why did Igris lose today?")
         self.assertEqual(res["action"], "RECOMMENDED_FADE_OFFSET")
         self.assertIn("stop_loss_multiplier", res["parameters_suggested"])
 

@@ -13,7 +13,7 @@ class DataWarehouse:
     """
     def __init__(self, data_dir: str = "/app/warehouse"):
         if not os.path.exists(data_dir):
-            self.data_dir = "/Users/likhith/.gemini/antigravity/scratch/astra-quant-lab/warehouse"
+            self.data_dir = "/Users/likhith/.gemini/antigravity/scratch/igris/warehouse"
         else:
             self.data_dir = data_dir
         os.makedirs(self.data_dir, exist_ok=True)

@@ -15,7 +15,7 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: 'AI',
-      text: 'Astra AI Assistant initialized. Equipped with Market Regime Detectors, Strategy Optimizer, and Risk Advisors. How can I assist your quantitative terminal session?'
+      text: 'Igris AI Assistant initialized. Equipped with Market Regime Detectors, Strategy Optimizer, and Risk Advisors. How can I assist your quantitative terminal session?'
     }
   ]);
   const [input, setInput] = useState('');
@@ -77,7 +77,7 @@ export default function AIAssistant() {
         </div>
         <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand/10 border border-brand/20">
           <Sparkles className="w-3.5 h-3.5 text-brand" />
-          <span className="text-[10px] font-mono text-brand font-bold uppercase tracking-wider">Astra LLM Active</span>
+          <span className="text-[10px] font-mono text-brand font-bold uppercase tracking-wider">Igris LLM Active</span>
         </div>
       </div>
 
@@ -123,7 +123,7 @@ export default function AIAssistant() {
                 <RefreshCw className="w-4 h-4 animate-spin" />
               </div>
               <div className="p-4 rounded-2xl bg-gray-950/65 border border-gray-900 text-gray-500 font-mono text-[10px] uppercase tracking-wider">
-                Astra AI reasoning...
+                Igris AI reasoning...
               </div>
             </div>
           )}

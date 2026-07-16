@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const preloadedStrategies = [
   {
-    name: "ASTRA",
+    name: "IGRIS",
     description: "Wait first 30 minute candle. If green/green setup, buy Put on Low revisit. If red/red setup, buy Call on High revisit. Target 50 pts, SL 100 pts. Exit 3:15 PM.",
     category: "OPTIONS",
     instrument: "BANKNIFTY",
@@ -22,7 +22,7 @@ const preloadedStrategies = [
     maxTradesPerDay: 1,
     filters: { first_two_matching: true },
     riskRules: { daily_loss_limit: 5000 },
-    notes: "Astra Quant institutional grade mean reversion-fade hybrid strategy.",
+    notes: "IGRIS institutional grade mean reversion-fade hybrid strategy.",
   },
   {
     name: "Momentum Catcher",
@@ -190,10 +190,10 @@ async function main() {
   const hashedPassword = await bcrypt.hash(dummyPassword, 10);
   
   const systemUser = await prisma.user.upsert({
-    where: { email: 'operator@astraquant.com' },
+    where: { email: 'operator@igrisquant.com' },
     update: {},
     create: {
-      email: 'operator@astraquant.com',
+      email: 'operator@igrisquant.com',
       name: 'System Default Operator',
       password: hashedPassword,
     },

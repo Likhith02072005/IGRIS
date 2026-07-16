@@ -84,22 +84,22 @@ export default function Backtesting() {
         } else {
           // Templates fallback
           setStrategies([
-            { id: 'ASTRA', name: 'ASTRA' },
+            { id: 'IGRIS', name: 'IGRIS' },
             { id: 'Momentum Catcher', name: 'Momentum Catcher' },
             { id: 'Opening Range Breakout', name: 'Opening Range Breakout' },
           ]);
           if (!selectedStrategy) {
-            setSelectedStrategy('ASTRA');
+            setSelectedStrategy('IGRIS');
           }
         }
       } catch (err) {
         // Load fallback defaults
         setStrategies([
-          { id: 'ASTRA', name: 'ASTRA' },
+          { id: 'IGRIS', name: 'IGRIS' },
           { id: 'Momentum Catcher', name: 'Momentum Catcher' },
           { id: 'Opening Range Breakout', name: 'Opening Range Breakout' },
         ]);
-        setSelectedStrategy('ASTRA');
+        setSelectedStrategy('IGRIS');
       }
     };
     loadStrats();
@@ -113,7 +113,7 @@ export default function Backtesting() {
 
     // Find clean strategy name
     const stratObj = strategies.find(x => x.id === selectedStrategy);
-    const strategyName = stratObj ? stratObj.name : 'ASTRA';
+    const strategyName = stratObj ? stratObj.name : 'IGRIS';
 
     try {
       const res = await fetch('http://localhost:5000/api/dashboard/metrics'); // dummy ping to verify server connectivity

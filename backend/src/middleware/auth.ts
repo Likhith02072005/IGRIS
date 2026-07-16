@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'astra-quant-secret-key-institutional-grade';
+const JWT_SECRET = process.env.JWT_SECRET || 'igris-quant-secret-key-institutional-grade';
 
 export interface AuthenticatedRequest extends Request {
   user?: {

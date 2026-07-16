@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from '../config/db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'astra-quant-secret-key-institutional-grade';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'astra-quant-refresh-secret-key-institutional-grade';
+const JWT_SECRET = process.env.JWT_SECRET || 'igris-quant-secret-key-institutional-grade';
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'igris-quant-refresh-secret-key-institutional-grade';
 
 // Sign Access Token
 const generateAccessToken = (user: { id: string; email: string }) => {

@@ -21,29 +21,29 @@ export default function PortfolioOptimizerUI() {
 
   // Seeded optimization outputs
   const [strategies, setStrategies] = useState<OptimizerStats[]>([
-    { strategy: 'ASTRA Options Straddle', weight: 45.0, capital: 45000, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
+    { strategy: 'IGRIS Options Straddle', weight: 45.0, capital: 45000, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
     { strategy: 'Momentum Catcher Buying', weight: 35.0, capital: 35000, sharpe: 2.15, volatility: 14.2, riskContribution: 45.4 },
     { strategy: 'VWAP Reversal Fade', weight: 20.0, capital: 20000, sharpe: 1.95, volatility: 6.8, riskContribution: 16.4 },
   ]);
 
   const correlationMatrix = {
-    'ASTRA Options Straddle': { 'ASTRA Options Straddle': 1.0, 'Momentum Catcher Buying': 0.12, 'VWAP Reversal Fade': -0.15 },
-    'Momentum Catcher Buying': { 'ASTRA Options Straddle': 0.12, 'Momentum Catcher Buying': 1.0, 'VWAP Reversal Fade': 0.05 },
-    'VWAP Reversal Fade': { 'ASTRA Options Straddle': -0.15, 'Momentum Catcher Buying': 0.05, 'VWAP Reversal Fade': 1.0 },
+    'IGRIS Options Straddle': { 'IGRIS Options Straddle': 1.0, 'Momentum Catcher Buying': 0.12, 'VWAP Reversal Fade': -0.15 },
+    'Momentum Catcher Buying': { 'IGRIS Options Straddle': 0.12, 'Momentum Catcher Buying': 1.0, 'VWAP Reversal Fade': 0.05 },
+    'VWAP Reversal Fade': { 'IGRIS Options Straddle': -0.15, 'Momentum Catcher Buying': 0.05, 'VWAP Reversal Fade': 1.0 },
   };
 
   const handleModelChange = (model: 'MAX_SHARPE' | 'MIN_VARIANCE') => {
     setModelType(model);
     if (model === 'MAX_SHARPE') {
       setStrategies([
-        { strategy: 'ASTRA Options Straddle', weight: 45.0, capital: capital * 0.45, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
+        { strategy: 'IGRIS Options Straddle', weight: 45.0, capital: capital * 0.45, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
         { strategy: 'Momentum Catcher Buying', weight: 35.0, capital: capital * 0.35, sharpe: 2.15, volatility: 14.2, riskContribution: 45.4 },
         { strategy: 'VWAP Reversal Fade', weight: 20.0, capital: capital * 0.20, sharpe: 1.95, volatility: 6.8, riskContribution: 16.4 },
       ]);
     } else {
       // Minimum Variance allocates more to low vol asset (VWAP Reversal Fade)
       setStrategies([
-        { strategy: 'ASTRA Options Straddle', weight: 30.0, capital: capital * 0.30, sharpe: 2.84, volatility: 8.5, riskContribution: 28.5 },
+        { strategy: 'IGRIS Options Straddle', weight: 30.0, capital: capital * 0.30, sharpe: 2.84, volatility: 8.5, riskContribution: 28.5 },
         { strategy: 'Momentum Catcher Buying', weight: 15.0, capital: capital * 0.15, sharpe: 2.15, volatility: 14.2, riskContribution: 18.2 },
         { strategy: 'VWAP Reversal Fade', weight: 55.0, capital: capital * 0.55, sharpe: 1.95, volatility: 6.8, riskContribution: 53.3 },
       ]);

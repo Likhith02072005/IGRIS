@@ -1,11 +1,11 @@
 from .base import BaseStrategy
-from .astra import AstraStrategy
+from .igris import IgrisStrategy
 from .momentum_catcher import MomentumCatcherStrategy
 
 def load_strategy(strategy_name: str, params: dict) -> BaseStrategy:
     name_clean = strategy_name.lower().replace(" ", "_").strip()
-    if name_clean == "astra":
-        return AstraStrategy("ASTRA", params)
+    if name_clean == "igris":
+        return IgrisStrategy("IGRIS", params)
     elif name_clean == "momentum_catcher" or name_clean == "momentum":
         return MomentumCatcherStrategy("Momentum Catcher", params)
     else:

@@ -20,10 +20,10 @@ export default function PluginMarketplace() {
   const [plugins, setPlugins] = useState<PluginCard[]>([
     {
       id: 'plugin_1',
-      name: 'ASTRA Options Straddle',
+      name: 'IGRIS Options Straddle',
       category: 'STRATEGY',
       version: '1.2.0',
-      author: 'Astra Core Dev',
+      author: 'Igris Core Dev',
       description: 'Dynamic option buying straddle with standard volatility fading rules.',
       installed: true
     },

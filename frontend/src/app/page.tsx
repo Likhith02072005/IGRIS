@@ -21,7 +21,7 @@ export default function EntryPage() {
     <div className="min-h-screen w-full flex items-center justify-center bg-background text-gray-400">
       <div className="text-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand mx-auto mb-4"></div>
-        <p className="text-sm tracking-widest uppercase">Initializing Astra Quant Lab Terminal...</p>
+        <p className="text-sm tracking-widest uppercase">Initializing IGRIS Terminal...</p>
       </div>
     </div>
   );

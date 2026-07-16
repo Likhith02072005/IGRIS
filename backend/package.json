@@ -1,7 +1,7 @@
 {
-  "name": "astra-quant-lab-backend",
+  "name": "igris-backend",
   "version": "1.0.0",
-  "description": "Backend API Server for Astra Quant Lab",
+  "description": "Backend API Server for IGRIS",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",

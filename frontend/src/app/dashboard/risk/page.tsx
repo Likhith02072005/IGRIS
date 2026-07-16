@@ -149,7 +149,7 @@ export default function RiskDashboard() {
             </h2>
             <div className="space-y-4">
               {[
-                { name: 'ASTRA Options Straddle', risk: 'Low', pct: 25, color: 'bg-bloomberg-green' },
+                { name: 'IGRIS Options Straddle', risk: 'Low', pct: 25, color: 'bg-bloomberg-green' },
                 { name: 'Momentum Catcher Buying', risk: 'Medium', pct: 50, color: 'bg-brand' },
                 { name: 'VWAP Reversal Fade', risk: 'Minimal', pct: 10, color: 'bg-emerald-500' },
               ].map(item => (
