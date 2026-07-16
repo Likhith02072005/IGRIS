@@ -13,7 +13,8 @@ class DataWarehouse:
     """
     def __init__(self, data_dir: str = "/app/warehouse"):
         if not os.path.exists(data_dir):
-            self.data_dir = "/Users/likhith/.gemini/antigravity/scratch/igris/warehouse"
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+            self.data_dir = os.path.join(base_dir, "warehouse")
         else:
             self.data_dir = data_dir
         os.makedirs(self.data_dir, exist_ok=True)

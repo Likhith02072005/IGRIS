@@ -12,7 +12,8 @@ class PluginManager:
     """
     def __init__(self, plugins_dir: str = "/app/plugins"):
         if not os.path.exists(plugins_dir):
-            self.plugins_dir = "/Users/likhith/.gemini/antigravity/scratch/igris/plugins"
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+            self.plugins_dir = os.path.join(base_dir, "plugins")
         else:
             self.plugins_dir = plugins_dir
         

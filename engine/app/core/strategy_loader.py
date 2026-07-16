@@ -15,7 +15,8 @@ class StrategySandboxLoader:
     def __init__(self, strategies_dir: str = "/app/strategies"):
         # Default to local path if directory doesn't exist (e.g. running outside Docker)
         if not os.path.exists(strategies_dir):
-            self.strategies_dir = "/Users/likhith/.gemini/antigravity/scratch/igris/strategies"
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+            self.strategies_dir = os.path.join(base_dir, "strategies")
         else:
             self.strategies_dir = strategies_dir
 
