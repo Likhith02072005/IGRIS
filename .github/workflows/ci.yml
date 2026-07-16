@@ -1,4 +1,4 @@
-name: Astra Quant Lab CI Pipeline
+name: IGRIS CI Pipeline
 
 on:
   push:
@@ -49,6 +49,8 @@ jobs:
           npm install
 
       - name: Verify Prisma schemas
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/igris_quant?schema=public"
         run: |
           cd backend
           npx prisma validate --schema=../database/prisma/schema.prisma
@@ -61,6 +63,8 @@ jobs:
   # 3. Python Quant Engine validation
   engine-check:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v3
 

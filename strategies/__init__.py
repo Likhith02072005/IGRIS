@@ -1,6 +1,6 @@
 from .base import BaseStrategy
-from .igris import IgrisStrategy
-from .momentum_catcher import MomentumCatcherStrategy
+from .igris.strategy import IgrisStrategy
+from .momentum_catcher.strategy import MomentumCatcherStrategy
 
 def load_strategy(strategy_name: str, params: dict) -> BaseStrategy:
     name_clean = strategy_name.lower().replace(" ", "_").strip()
