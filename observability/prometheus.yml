@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  # Monitor Express backend metrics
+  - job_name: 'astra-backend'
+    static_configs:
+      - targets: ['backend:5000']
+
+  # Monitor FastAPI engine metrics
+  - job_name: 'astra-engine'
+    static_configs:
+      - targets: ['engine:8000']

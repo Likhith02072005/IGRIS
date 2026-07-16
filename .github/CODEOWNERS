@@ -1,0 +1,9 @@
+# Global Owners
+*       @astra-quant-lab/maintainers
+
+# Directory-Specific Owners
+/backend/     @astra-quant-lab/gateway-devs
+/engine/      @astra-quant-lab/engine-devs
+/frontend/     @astra-quant-lab/frontend-devs
+/database/     @astra-quant-lab/database-admins
+/strategies/   @astra-quant-lab/strategy-researchers

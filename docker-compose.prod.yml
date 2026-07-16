@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: astra-prod-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: astra-prod-secure-password-2026
+      POSTGRES_DB: astra_quant
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d astra_quant"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: astra-prod-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: astra-prod-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:astra-prod-secure-password-2026@db:5432/astra_quant?schema=public
+      - REDIS_URL=redis://redis:6379/0
+      - JWT_SECRET=astra-quant-secret-key-institutional-grade-secure-key-2026
+      - JWT_REFRESH_SECRET=astra-quant-refresh-secret-key-institutional-grade-secure-key-2026
+      - ALLOWED_ORIGINS=http://localhost,http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  engine:
+    build:
+      context: ./engine
+      dockerfile: Dockerfile
+    container_name: astra-prod-engine
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:astra-prod-secure-password-2026@db:5432/astra_quant?schema=public
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - JWT_SECRET=astra-quant-secret-key-institutional-grade-secure-key-2026
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  pgdata_prod:
