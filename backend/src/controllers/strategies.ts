@@ -144,7 +144,7 @@ export const compareStrategies = async (req: AuthenticatedRequest, res: Response
 
     // Compute standard comparative analysis metrics for the selected strategies.
     // If they have completed backtests, we use that data. If not, we run a high-fidelity simulator.
-    const comparisons = strategies.map((s, index) => {
+    const comparisons = strategies.map((s: any, index: number) => {
       // Seeded random metrics to generate realistic institutional comparisons for demo purposes
       const winRate = 50 + (index * 4) + (Math.random() * 5);
       const netProfit = 8000 + (index * 2500) - (Math.random() * 1000);
@@ -183,8 +183,8 @@ export const compareStrategies = async (req: AuthenticatedRequest, res: Response
     });
 
     // Sort comparisons by Score desc to calculate Rank
-    comparisons.sort((a, b) => b.score - a.score);
-    const rankedComparisons = comparisons.map((comp, idx) => ({
+    comparisons.sort((a: any, b: any) => b.score - a.score);
+    const rankedComparisons = comparisons.map((comp: any, idx: number) => ({
       ...comp,
       rank: idx + 1,
     }));
