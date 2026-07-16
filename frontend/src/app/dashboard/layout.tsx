@@ -136,7 +136,7 @@ export default function DashboardLayout({
             <div className="flex items-center gap-2">
               <ArrowUpRight className="w-4.5 h-4.5 text-bloomberg-green" />
               <div>
-                <span className="text-[8px] text-gray-500 font-bold block uppercase tracking-wider">Today's PnL</span>
+                <span className="text-[8px] text-gray-500 font-bold block uppercase tracking-wider">Today&apos;s PnL</span>
                 <span className="text-xs font-bold text-bloomberg-green font-mono">+$2,450.00</span>
               </div>
             </div>

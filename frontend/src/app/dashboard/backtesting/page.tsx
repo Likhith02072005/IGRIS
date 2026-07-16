@@ -373,7 +373,7 @@ export default function Backtesting() {
               <Play className="w-12 h-12 text-gray-700 mb-4 animate-pulse" />
               <p className="text-sm font-bold uppercase tracking-wider text-white">Simulation Engine Ready</p>
               <p className="text-xs text-gray-500 mt-2 max-w-sm">
-                Select your strategies and configure parameters. Click "Run Backtest" to begin candle-by-candle checks.
+                Select your strategies and configure parameters. Click &quot;Run Backtest&quot; to begin candle-by-candle checks.
               </p>
             </div>
           )}

@@ -100,7 +100,7 @@ export default function DashboardHome() {
         {/* Card: Today's PnL */}
         <div className="glass-panel p-5 rounded-xl flex flex-col justify-between h-32 relative overflow-hidden group hover:border-bloomberg-green/40 transition-colors">
           <div className="flex justify-between items-start">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Today's PnL</span>
+            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Today&apos;s PnL</span>
             <Activity className="w-4 h-4 text-bloomberg-green" />
           </div>
           <div>
