@@ -64,7 +64,7 @@ jobs:
   engine-check:
     runs-on: ubuntu-latest
     env:
-      PYTHONPATH: ${{ github.workspace }}
+      PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/engine
     steps:
       - uses: actions/checkout@v3
 
