@@ -8,7 +8,8 @@
     "start": "node dist/server.js",
     "dev": "nodemon --watch src -e ts --exec ts-node src/server.ts",
     "prisma:generate": "prisma generate --schema=../database/prisma/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --schema=../database/prisma/schema.prisma"
+    "prisma:migrate": "prisma migrate dev --schema=../database/prisma/schema.prisma",
+    "postinstall": "prisma generate --schema=../database/prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.12.0",
