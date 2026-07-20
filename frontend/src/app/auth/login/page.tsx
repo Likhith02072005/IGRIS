@@ -37,7 +37,7 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -68,7 +68,7 @@ export default function LoginPage() {
       const mockEmail = `${provider}_user_${Math.floor(Math.random() * 1000)}@igris.lab`;
       const mockName = `${provider.toUpperCase()} Operator`;
 
-      const res = await fetch('http://localhost:5000/api/auth/oauth', {
+      const res = await fetch('http://localhost:5001/api/auth/oauth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -56,7 +56,7 @@ export default function StrategiesList() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/strategies', {
+      const res = await fetch('http://localhost:5001/api/strategies', {
         headers: { 'Authorization': `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -103,7 +103,7 @@ export default function StrategiesList() {
     setComparing(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/strategies/compare', {
+      const res = await fetch('http://localhost:5001/api/strategies/compare', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -229,7 +229,12 @@ export default function StrategiesList() {
                       />
                     </td>
                     <td className="p-4 max-w-sm">
-                      <p className="text-white font-bold text-sm tracking-wide">{strat.name}</p>
+                      <Link 
+                        href={`/dashboard/strategies/${strat.id}`}
+                        className="text-white font-bold text-sm tracking-wide hover:text-brand hover:underline transition-colors"
+                      >
+                        {strat.name}
+                      </Link>
                       <p className="text-gray-500 font-medium text-[11px] mt-0.5 line-clamp-1">
                         {strat.description || 'No description provided.'}
                       </p>
