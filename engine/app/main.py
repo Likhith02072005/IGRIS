@@ -27,14 +27,14 @@ app = FastAPI(
     version="1.1.0"
 )
 
-# Startup event triggers background tasks
-@app.on_event("startup")
-def startup_event():
-    market_data_service.start()
+# Startup event triggers background tasks (disabled for serverless compatibility)
+# @app.on_event("startup")
+# def startup_event():
+#     market_data_service.start()
 
-@app.on_event("shutdown")
-def shutdown_event():
-    market_data_service.stop()
+# @app.on_event("shutdown")
+# def shutdown_event():
+#     market_data_service.stop()
 
 # Request Models
 class ConnectRequest(BaseModel):
