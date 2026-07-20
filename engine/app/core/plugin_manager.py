@@ -11,8 +11,10 @@ class PluginManager:
     Handles installation, removal, and discovery of modules.
     """
     def __init__(self, plugins_dir: str = "/app/plugins"):
-        if not os.path.exists(plugins_dir):
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+        if os.getenv("VERCEL") == "1":
+            self.plugins_dir = "/tmp/plugins"
+        elif not os.path.exists(plugins_dir):
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
             self.plugins_dir = os.path.join(base_dir, "plugins")
         else:
             self.plugins_dir = plugins_dir
