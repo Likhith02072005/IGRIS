@@ -56,7 +56,7 @@ export default function StrategiesList() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5001/api/strategies', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies`, {
         headers: { 'Authorization': `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -103,7 +103,7 @@ export default function StrategiesList() {
     setComparing(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5001/api/strategies/compare', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies/compare`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

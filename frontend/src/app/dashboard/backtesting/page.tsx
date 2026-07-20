@@ -72,7 +72,7 @@ export default function Backtesting() {
     // Fetch user strategies to populate selector
     const loadStrats = async () => {
       try {
-        const res = await fetch('http://localhost:5001/api/strategies', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies`, {
           headers: { 'Authorization': `Bearer ${accessToken}` },
         });
         const data = await res.json();
@@ -116,11 +116,11 @@ export default function Backtesting() {
     const strategyName = stratObj ? stratObj.name : 'IGRIS';
 
     try {
-      const res = await fetch('http://localhost:5001/api/dashboard/metrics'); // dummy ping to verify server connectivity
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/dashboard/metrics`); // dummy ping to verify server connectivity
       
       // We directly dispatch to FastAPI engine running on port 8000
       // In live docker setups, backend Express proxies this, or we query directly.
-      const engineRes = await fetch('http://localhost:8000/engine/backtest', {
+      const engineRes = await fetch(`${process.env.NEXT_PUBLIC_ENGINE_URL || 'http://localhost:8000'}/engine/backtest`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
