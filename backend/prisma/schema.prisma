@@ -1,0 +1,174 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String             @id @default(uuid())
+  email             String             @unique
+  password          String
+  name              String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  strategies        Strategy[]
+  journalEntries    JournalEntry[]
+  brokerConnections BrokerConnection[]
+  backtests         BacktestRun[]
+  trades            LiveTrade[]
+}
+
+model BrokerConnection {
+  id           String      @id @default(uuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  broker       String      // e.g., "ZERODHA", "DHAN", "OPENALGO", "FYERS"
+  apiKey       String      // Encrypted
+  apiSecret    String      // Encrypted
+  accessToken  String?     // Encrypted
+  active       Boolean     @default(true)
+  status       String      @default("DISCONNECTED") // CONNECTED, DISCONNECTED, ERROR
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  liveOrders   LiveOrder[]
+}
+
+model Strategy {
+  id              String            @id @default(uuid())
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  description     String?
+  category        String            // MOMENTUM, MEAN_REVERSION, VWAP, OPTIONS, CUSTOM, etc.
+  instrument      String            // NIFTY, BANKNIFTY, SENSEX, STOCKS
+  timeframe       String            // 1m, 3m, 5m, 15m, 30m, 1h, 1d
+  direction       String            // LONG, SHORT, BOTH
+  entryLogic      String            // Code or pseudo-logic
+  exitLogic       String            // Code or pseudo-logic
+  target          Float
+  stopLoss        Float
+  trailingStop    Float?
+  riskPercent     Float             @default(1.0)
+  positionSize    Float             @default(1.0)
+  tradingWindow   String            // e.g., "09:15-15:30"
+  maxTradesPerDay Int               @default(3)
+  filters         Json?             // Filters e.g., indicator thresholds
+  riskRules       Json?             // Custom risk limits
+  notes           String?
+  version         Int               @default(1)
+  status          String            @default("DRAFT") // ACTIVE, DRAFT, ARCHIVED
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  versions        StrategyVersion[]
+  backtests       BacktestRun[]
+  orders          LiveOrder[]
+  trades          LiveTrade[]
+}
+
+model StrategyVersion {
+  id         String   @id @default(uuid())
+  strategyId String
+  strategy   Strategy @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  version    Int
+  entryLogic String
+  exitLogic  String
+  target     Float
+  stopLoss   Float
+  createdAt  DateTime @default(now())
+}
+
+model BacktestRun {
+  id         String          @id @default(uuid())
+  userId     String
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategyId String
+  strategy   Strategy        @relation(fields: [strategyId], references: [id], onDelete: Cascade)
+  startDate  DateTime
+  endDate    DateTime
+  capital    Float
+  slippage   Float
+  brokerage  Float
+  timeframe  String
+  metrics    Json            // Win %, Sharpe, Sortino, PnL details, etc.
+  status     String          @default("PENDING") // PENDING, RUNNING, COMPLETED, FAILED
+  createdAt  DateTime        @default(now())
+  trades     BacktestTrade[]
+}
+
+model BacktestTrade {
+  id         String      @id @default(uuid())
+  backtestId String
+  backtest   BacktestRun @relation(fields: [backtestId], references: [id], onDelete: Cascade)
+  symbol     String
+  direction  String      // BUY, SELL
+  entryTime  DateTime
+  exitTime   DateTime
+  entryPrice Float
+  exitPrice  Float
+  quantity   Int
+  pnl        Float
+  exitReason String      // TARGET, STOP_LOSS, TIME_EXIT, FADE, etc.
+  greeks     Json?
+}
+
+model LiveOrder {
+  id            String            @id @default(uuid())
+  strategyId    String?
+  strategy      Strategy?         @relation(fields: [strategyId], references: [id], onDelete: SetNull)
+  brokerId      String
+  broker        BrokerConnection  @relation(fields: [brokerId], references: [id], onDelete: Cascade)
+  brokerOrderId String?
+  symbol        String
+  direction     String            // BUY, SELL
+  orderType     String            // MARKET, LIMIT, SL-M, SL-L
+  quantity      Int
+  price         Float?
+  triggerPrice  Float?
+  status        String            @default("PENDING") // PENDING, EXECUTED, CANCELLED, REJECTED
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+model LiveTrade {
+  id         String        @id @default(uuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  strategyId String?
+  strategy   Strategy?     @relation(fields: [strategyId], references: [id], onDelete: SetNull)
+  orderId    String
+  symbol     String
+  direction  String        // BUY, SELL
+  entryTime  DateTime
+  exitTime   DateTime?
+  entryPrice Float
+  exitPrice  Float?
+  quantity   Int
+  pnl        Float?
+  status     String        @default("OPEN") // OPEN, CLOSED
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  journal    JournalEntry?
+}
+
+model JournalEntry {
+  id          String       @id @default(uuid())
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tradeId     String?      @unique
+  trade       LiveTrade?   @relation(fields: [tradeId], references: [id], onDelete: SetNull)
+  date        DateTime     @default(now())
+  notes       String?
+  emotion     String?      // GREED, FEAR, PATIENT, DISCIPLINED, etc.
+  confidence  String?      // HIGH, MEDIUM, LOW
+  screenshot  String?      // S3 or path link
+  tags        JournalTag[]
+}
+
+model JournalTag {
+  id      String         @id @default(uuid())
+  name    String         @unique
+  entries JournalEntry[]
+}
