@@ -1,4 +1,10 @@
-FROM node:20-alpine
+FROM node:20-bookworm-slim
+
+# Install PostgreSQL client, server, and clean up logs
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    postgresql \
+    postgresql-contrib \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -16,6 +22,13 @@ RUN npm run prisma:generate
 # Build typescript source
 RUN npm run build
 
-EXPOSE 5000
+# Make start.sh executable
+RUN chmod +x start.sh
 
-CMD ["npm", "start"]
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=8080
+
+EXPOSE 8080
+
+CMD ["./start.sh"]
