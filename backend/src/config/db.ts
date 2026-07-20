@@ -15,6 +15,11 @@ if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes("localhost:54
 }
 
 const realPrisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/astra_quant?schema=public",
+    },
+  },
   log: process.env.NODE_ENV === 'development' ? ['query', 'info', 'warn', 'error'] : ['error'],
 });
 
