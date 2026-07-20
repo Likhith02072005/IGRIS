@@ -12,8 +12,10 @@ class DataWarehouse:
     Asynchronously records ticks, signals, orders, and system logs to audit files.
     """
     def __init__(self, data_dir: str = "/app/warehouse"):
-        if not os.path.exists(data_dir):
-            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
+        if os.getenv("VERCEL") == "1":
+            self.data_dir = "/tmp/warehouse"
+        elif not os.path.exists(data_dir):
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
             self.data_dir = os.path.join(base_dir, "warehouse")
         else:
             self.data_dir = data_dir
