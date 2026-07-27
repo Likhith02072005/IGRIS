@@ -55,7 +55,7 @@ export default function BacktestValidationUI() {
         <button 
           onClick={handleRunSimulation}
           disabled={running}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
         >
           <RefreshCw className={`w-4 h-4 ${running ? 'animate-spin' : ''}`} />
           {running ? 'Simulating...' : 'Run Monte Carlo'}
@@ -68,7 +68,7 @@ export default function BacktestValidationUI() {
         {/* Left Side: Monte Carlo Results */}
         <div className="lg:col-span-2 space-y-6">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">
               Monte Carlo Confidence Intervals
             </h2>
@@ -89,13 +89,13 @@ export default function BacktestValidationUI() {
                       <td className="p-3 text-white">{row.percentile}</td>
                       <td className="p-3">
                         <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                          row.type === 'Conservative' ? 'bg-bloomberg-red/10 text-bloomberg-red' : 'bg-bloomberg-green/10 text-bloomberg-green'
+                          row.type === 'Conservative' ? 'bg-[#ef4444]/10 text-[#ef4444]' : 'bg-[#22c55e]/10 text-[#22c55e]'
                         }`}>
                           {row.type}
                         </span>
                       </td>
-                      <td className="p-3 text-right font-mono text-bloomberg-green">+{row.profit}%</td>
-                      <td className="p-3 text-right font-mono text-bloomberg-red">-{row.drawdown}%</td>
+                      <td className="p-3 text-right font-mono text-[#22c55e]">+{row.profit}%</td>
+                      <td className="p-3 text-right font-mono text-[#ef4444]">-{row.drawdown}%</td>
                     </tr>
                   ))}
                 </tbody>
@@ -104,7 +104,7 @@ export default function BacktestValidationUI() {
           </div>
 
           {/* Walk Forward Grid */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">
               Walk-Forward Out-of-Sample Performance Splits
             </h2>
@@ -120,11 +120,11 @@ export default function BacktestValidationUI() {
               </div>
               <div className="border-b border-gray-900 pb-2">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Walk-Forward Efficiency</span>
-                <span className="text-bloomberg-green font-mono">{wfe.efficiency}%</span>
+                <span className="text-[#22c55e] font-mono">{wfe.efficiency}%</span>
               </div>
               <div className="border-b border-gray-900 pb-2">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Overfitting Check</span>
-                <span className="text-bloomberg-green font-bold">{wfe.status}</span>
+                <span className="text-[#22c55e] font-bold">{wfe.status}</span>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function BacktestValidationUI() {
         {/* Right Side: Simulation Parameters */}
         <div className="space-y-6">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">
               Simulator Configurations
             </h2>
@@ -144,7 +144,7 @@ export default function BacktestValidationUI() {
                 <label className="text-gray-400 font-bold uppercase text-[9px] tracking-wider">Number of Simulations</label>
                 <input 
                   type="number" 
-                  className="glass-input w-full p-2.5 rounded-xl font-mono" 
+                  className="input-field w-full p-2.5 rounded-xl font-mono" 
                   value={sims} 
                   onChange={(e) => setSims(Number(e.target.value))}
                 />
@@ -154,7 +154,7 @@ export default function BacktestValidationUI() {
                 <label className="text-gray-400 font-bold uppercase text-[9px] tracking-wider">Trade Skip Probability %</label>
                 <input 
                   type="number" 
-                  className="glass-input w-full p-2.5 rounded-xl font-mono" 
+                  className="input-field w-full p-2.5 rounded-xl font-mono" 
                   defaultValue={5}
                 />
               </div>
@@ -163,7 +163,7 @@ export default function BacktestValidationUI() {
                 <label className="text-gray-400 font-bold uppercase text-[9px] tracking-wider">Slippage Standard Deviation</label>
                 <input 
                   type="number" 
-                  className="glass-input w-full p-2.5 rounded-xl font-mono" 
+                  className="input-field w-full p-2.5 rounded-xl font-mono" 
                   defaultValue={0.1}
                   step={0.01}
                 />

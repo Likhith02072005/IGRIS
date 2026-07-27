@@ -27,7 +27,7 @@ import {
 const navItems = [
   { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
   { name: 'Mission Control', path: '/dashboard/mission-control', icon: Cpu },
-  { name: 'Subscribed Portfolio', path: '/dashboard/portfolio', icon: FolderKanban },
+  { name: 'Portfolio', path: '/dashboard/portfolio', icon: FolderKanban },
   { name: 'Portfolio Optimizer', path: '/dashboard/portfolio/optimizer', icon: PieChart },
   { name: 'Strategies', path: '/dashboard/strategies', icon: Code2 },
   { name: 'Strategy Builder', path: '/dashboard/strategies/builder', icon: FileCode2 },
@@ -38,9 +38,8 @@ const navItems = [
   { name: 'Risk Control', path: '/dashboard/risk', icon: Shield },
   { name: 'Trade Journal', path: '/dashboard/journal', icon: BookOpen },
   { name: 'AI Assistant', path: '/dashboard/ai-assistant', icon: Bot },
-  { name: 'Plugin Marketplace', path: '/dashboard/marketplace', icon: ShoppingBag },
-  { name: 'System Observability', path: '/dashboard/observability', icon: Activity },
-  { name: 'Settings', path: '/dashboard/settings', icon: Settings },
+  { name: 'Marketplace', path: '/dashboard/marketplace', icon: ShoppingBag },
+  { name: 'Observability', path: '/dashboard/observability', icon: Activity },
 ];
 
 export default function Sidebar() {
@@ -54,27 +53,19 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 min-h-screen bg-[#060a16] border-r border-gray-800 flex flex-col justify-between">
-      {/* Top Section - Brand */}
+    <aside className="w-64 min-h-screen bg-[#0a0a0a] border-r border-[#1a1a1a] flex flex-col justify-between">
+      {/* Logo */}
       <div>
-        <div className="p-6 border-b border-gray-800">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-bold text-white tracking-wider text-lg shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-              A
-            </div>
-            <div>
-              <span className="font-extrabold text-sm text-white uppercase tracking-wider block">
-                Igris <span className="text-brand">Quant Lab</span>
-              </span>
-              <span className="text-[10px] text-gray-500 font-mono tracking-widest block uppercase">
-                v1.1.0 Terminal
-              </span>
-            </div>
+        <div className="p-6 border-b border-[#1a1a1a]">
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#22d3ee]" />
+            <span className="text-white font-bold text-lg tracking-tight">IGRIS</span>
+            <span className="text-[#444] text-xs ml-auto">v1.1.0</span>
           </Link>
         </div>
 
-        {/* Navigation list */}
-        <nav className="p-4 space-y-1 overflow-y-auto max-h-[calc(100vh-170px)]">
+        {/* Navigation */}
+        <nav className="p-3 space-y-0.5 overflow-y-auto max-h-[calc(100vh-160px)]">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.path;
@@ -82,13 +73,13 @@ export default function Sidebar() {
               <Link
                 key={item.name}
                 href={item.path}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-[9px] font-extrabold uppercase tracking-wider transition-all duration-200 ${
+                className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
                   isActive
-                    ? 'bg-brand/15 text-brand border border-brand/20 shadow-glass-inset'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-900/60 border border-transparent'
+                    ? 'text-[#22d3ee] bg-[#22d3ee]/5 border-l-2 border-[#22d3ee]'
+                    : 'text-[#666] hover:text-white border-l-2 border-transparent'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-brand' : 'text-gray-400'}`} />
+                <Icon className="w-4 h-4" />
                 {item.name}
               </Link>
             );
@@ -96,32 +87,20 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* Bottom Section - Operator State */}
-      <div className="p-4 border-t border-gray-800 bg-[#040710]/80">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-bloomberg-green animate-pulse" />
-            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-              Engine Online
-            </span>
+      {/* User section */}
+      <div className="p-4 border-t border-[#1a1a1a]">
+        <div className="flex items-center justify-between">
+          <div className="overflow-hidden">
+            <p className="text-sm text-white truncate">{user?.name || 'Operator'}</p>
+            <p className="text-xs text-[#666] truncate">{user?.email}</p>
           </div>
           <button
             onClick={handleLogout}
-            className="p-1.5 rounded-md hover:bg-red-500/10 text-gray-400 hover:text-red-500 transition-colors"
-            title="Disconnect Terminal"
+            className="p-2 rounded-md text-[#666] hover:text-white transition-colors"
+            title="Logout"
           >
             <LogOut className="w-4 h-4" />
           </button>
-        </div>
-
-        <div className="flex items-center gap-3 p-2.5 rounded-lg bg-gray-950/60 border border-gray-900 shadow-glass-inset">
-          <div className="w-8 h-8 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center">
-            <UserCheck className="w-4 h-4 text-brand" />
-          </div>
-          <div className="overflow-hidden">
-            <p className="text-xs font-bold text-white truncate">{user?.name || 'Operator'}</p>
-            <p className="text-[10px] text-gray-500 truncate font-mono">{user?.email}</p>
-          </div>
         </div>
       </div>
     </aside>

@@ -54,7 +54,7 @@ export default function AnalyticsDashboard() {
           { label: 'Walk Forward Score', val: '88/100', desc: 'Robust parameter mapping' },
           { label: 'Rolling 30D Sharpe', val: '2.95', desc: 'Institutional profile' },
         ].map(item => (
-          <div key={item.label} className="glass-panel p-5 rounded-xl">
+          <div key={item.label} className="card p-5 rounded-xl">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-1">{item.label}</span>
             <h3 className="text-xl font-bold text-white font-mono">{item.val}</h3>
             <span className="text-[10px] text-gray-400 font-medium block mt-0.5">{item.desc}</span>
@@ -69,9 +69,9 @@ export default function AnalyticsDashboard() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Monthly returns heatmap */}
-          <div className="glass-panel p-6 rounded-2xl">
+          <div className="card p-6 rounded-lg">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-6 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-brand" /> Monthly Return Heatmap (%)
+              <Calendar className="w-4 h-4 text-[#22d3ee]" /> Monthly Return Heatmap (%)
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-center text-xs font-mono font-bold border-collapse">
@@ -97,19 +97,19 @@ export default function AnalyticsDashboard() {
                   {monthlyHeatmap.map(row => (
                     <tr key={row.year} className="hover:bg-gray-900/10">
                       <td className="py-4 text-gray-400">{row.year}</td>
-                      <td className="py-4 text-bloomberg-green bg-bloomberg-green/10 border border-[#030712]">+2.4%</td>
-                      <td className="py-4 text-bloomberg-red bg-bloomberg-red/10 border border-[#030712]">-1.2%</td>
-                      <td className="py-4 text-bloomberg-green bg-bloomberg-green/20 border border-[#030712]">+4.8%</td>
-                      <td className="py-4 text-bloomberg-green bg-bloomberg-green/15 border border-[#030712]">+3.2%</td>
-                      <td className="py-4 text-bloomberg-green bg-bloomberg-green/25 border border-[#030712]">+5.6%</td>
-                      <td className="py-4 text-bloomberg-red bg-bloomberg-red/5 border border-[#030712]">-0.8%</td>
-                      <td className="py-4 text-bloomberg-green bg-bloomberg-green/30 border border-[#030712]">+9.4%</td>
+                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/10 border border-[#030712]">+2.4%</td>
+                      <td className="py-4 text-[#ef4444] bg-[#ef4444]/10 border border-[#030712]">-1.2%</td>
+                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/20 border border-[#030712]">+4.8%</td>
+                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/15 border border-[#030712]">+3.2%</td>
+                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/25 border border-[#030712]">+5.6%</td>
+                      <td className="py-4 text-[#ef4444] bg-[#ef4444]/5 border border-[#030712]">-0.8%</td>
+                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/30 border border-[#030712]">+9.4%</td>
                       <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
                       <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
                       <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
                       <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
                       <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
-                      <td className="py-4 text-bloomberg-green bg-bloomberg-green/30 font-extrabold">+23.4%</td>
+                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/30 font-extrabold">+23.4%</td>
                     </tr>
                   ))}
                 </tbody>
@@ -118,7 +118,7 @@ export default function AnalyticsDashboard() {
           </div>
 
           {/* Daily & Hourly statistics table */}
-          <div className="glass-panel p-6 rounded-2xl">
+          <div className="card p-6 rounded-lg">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
               Daily trading edge profiles
             </h2>
@@ -139,7 +139,7 @@ export default function AnalyticsDashboard() {
                     return (
                       <tr key={d.day} className="hover:bg-gray-900/10">
                         <td className="py-3.5 text-white font-bold">{d.day}</td>
-                        <td className={`py-3.5 text-right font-mono ${isPositive ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                        <td className={`py-3.5 text-right font-mono ${isPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                           {isPositive ? '+' : ''}${d.pnl.toLocaleString()}
                         </td>
                         <td className="py-3.5 text-right font-mono text-gray-400">{d.trades}</td>
@@ -147,7 +147,7 @@ export default function AnalyticsDashboard() {
                         <td className="py-3.5">
                           <div className="flex items-center gap-2">
                             <div className="h-1.5 w-24 bg-gray-900 rounded-full overflow-hidden">
-                              <div className={`h-full bg-brand`} style={{ width: `${d.winRate}%` }} />
+                              <div className={`h-full bg-[#22d3ee]`} style={{ width: `${d.winRate}%` }} />
                             </div>
                             <span className="text-[10px] font-mono text-gray-500">{d.winRate >= 60 ? 'Optimal' : 'Standard'}</span>
                           </div>
@@ -165,10 +165,10 @@ export default function AnalyticsDashboard() {
         {/* Right column: Monte Carlo Simulation */}
         <div className="space-y-6">
           
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <LineChart className="w-4 h-4 text-brand" /> Monte Carlo Engine
+                <LineChart className="w-4 h-4 text-[#22d3ee]" /> Monte Carlo Engine
               </h2>
               <button
                 onClick={() => {
@@ -207,9 +207,9 @@ export default function AnalyticsDashboard() {
                     {monteCarloSteps.map(step => (
                       <tr key={step.step}>
                         <td className="py-2.5 text-white font-sans">{step.step}</td>
-                        <td className="py-2.5 text-right text-bloomberg-red">${step.p10.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-[#ef4444]">${step.p10.toLocaleString()}</td>
                         <td className="py-2.5 text-right text-white">${step.p50.toLocaleString()}</td>
-                        <td className="py-2.5 text-right text-bloomberg-green">${step.p90.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-[#22c55e]">${step.p90.toLocaleString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -218,8 +218,8 @@ export default function AnalyticsDashboard() {
             </div>
 
             {/* Insolvency risk score */}
-            <div className="bg-bloomberg-green/10 border border-bloomberg-green/30 p-4 rounded-xl flex items-center gap-3">
-              <ShieldAlert className="w-5 h-5 text-bloomberg-green flex-shrink-0" />
+            <div className="bg-[#22c55e]/10 border border-[#22c55e]/30 p-4 rounded-xl flex items-center gap-3">
+              <ShieldAlert className="w-5 h-5 text-[#22c55e] flex-shrink-0" />
               <div>
                 <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Risk of Ruin Score</span>
                 <span className="text-xs font-bold text-white font-mono">0.00% (Insolvency proof)</span>

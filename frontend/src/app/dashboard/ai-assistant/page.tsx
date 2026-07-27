@@ -75,14 +75,14 @@ export default function AIAssistant() {
             Consult the AI Strategy Generator, Market Regime Detector, and Portfolio Advisor.
           </p>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand/10 border border-brand/20">
-          <Sparkles className="w-3.5 h-3.5 text-brand" />
-          <span className="text-[10px] font-mono text-brand font-bold uppercase tracking-wider">Igris LLM Active</span>
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#22d3ee]/10 border border-[#22d3ee]/20">
+          <Sparkles className="w-3.5 h-3.5 text-[#22d3ee]" />
+          <span className="text-[10px] font-mono text-[#22d3ee] font-bold uppercase tracking-wider">Igris LLM Active</span>
         </div>
       </div>
 
       {/* Chat Messages container */}
-      <div className="flex-1 my-6 glass-panel rounded-2xl p-6 overflow-y-auto space-y-6 flex flex-col justify-between">
+      <div className="flex-1 my-6 card rounded-lg p-6 overflow-y-auto space-y-6 flex flex-col justify-between">
         
         {/* Messages list */}
         <div className="space-y-6 overflow-y-auto flex-1 pr-2">
@@ -95,14 +95,14 @@ export default function AIAssistant() {
               >
                 {/* Avatar */}
                 <div className={`w-8 h-8 rounded-xl border flex-shrink-0 flex items-center justify-center ${
-                  isAI ? 'bg-brand/10 border-brand/25 text-brand' : 'bg-gray-900 border-gray-800 text-gray-400'
+                  isAI ? 'bg-[#22d3ee]/10 border-[#22d3ee]/25 text-[#22d3ee]' : 'bg-gray-900 border-gray-800 text-gray-400'
                 }`}>
                   {isAI ? <Bot className="w-4.5 h-4.5" /> : <User className="w-4.5 h-4.5" />}
                 </div>
 
                 {/* Message body */}
-                <div className={`p-4 rounded-2xl text-xs leading-relaxed ${
-                  isAI ? 'bg-gray-950/65 border border-gray-900 text-gray-250 shadow-glass-inset' : 'bg-brand text-white font-semibold'
+                <div className={`p-4 rounded-lg text-xs leading-relaxed ${
+                  isAI ? 'bg-gray-950/65 border border-gray-900 text-gray-250 ' : 'bg-[#22d3ee] text-white font-semibold'
                 }`}>
                   <p className="whitespace-pre-line">{m.text}</p>
                   
@@ -119,10 +119,10 @@ export default function AIAssistant() {
 
           {loading && (
             <div className="flex gap-4 max-w-[80%] self-start">
-              <div className="w-8 h-8 rounded-xl bg-brand/10 border border-brand/25 text-brand flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#22d3ee]/10 border border-[#22d3ee]/25 text-[#22d3ee] flex items-center justify-center">
                 <RefreshCw className="w-4 h-4 animate-spin" />
               </div>
-              <div className="p-4 rounded-2xl bg-gray-950/65 border border-gray-900 text-gray-500 font-mono text-[10px] uppercase tracking-wider">
+              <div className="p-4 rounded-lg bg-gray-950/65 border border-gray-900 text-gray-500 font-mono text-[10px] uppercase tracking-wider">
                 Igris AI reasoning...
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function AIAssistant() {
             <button
               key={tpl.label}
               onClick={() => handleTemplateClick(tpl.prompt)}
-              className="px-3 py-1.5 rounded-lg bg-gray-950 border border-gray-900 text-[10px] text-gray-400 hover:text-white transition-colors uppercase tracking-wider font-bold shadow-glass-inset"
+              className="px-3 py-1.5 rounded-lg bg-gray-950 border border-gray-900 text-[10px] text-gray-400 hover:text-white transition-colors uppercase tracking-wider font-bold "
             >
               {tpl.label}
             </button>
@@ -152,7 +152,7 @@ export default function AIAssistant() {
       <form onSubmit={handleSend} className="flex gap-3 flex-shrink-0">
         <input
           type="text"
-          className="flex-1 glass-input py-4 px-5 rounded-2xl text-xs placeholder-gray-500"
+          className="flex-1 input-field py-4 px-5 rounded-lg text-xs placeholder-gray-500"
           placeholder="Consult the AI strategy architect or request market regime scans..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -161,7 +161,7 @@ export default function AIAssistant() {
         <button
           type="submit"
           disabled={loading}
-          className="px-6 rounded-2xl bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+          className="px-6 rounded-lg bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
         >
           <Send className="w-4 h-4" />
           Send

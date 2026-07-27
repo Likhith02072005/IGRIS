@@ -175,11 +175,11 @@ export default function PaperTrading() {
         </div>
 
         {/* Replay Controls panel */}
-        <div className="flex items-center gap-3 bg-gray-950/80 border border-gray-900 px-4 py-2 rounded-xl shadow-glass-inset">
+        <div className="flex items-center gap-3 bg-gray-950/80 border border-gray-900 px-4 py-2 rounded-xl ">
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             className={`p-2 rounded-lg transition-all ${
-              isPlaying ? 'bg-bloomberg-red/10 text-bloomberg-red' : 'bg-bloomberg-green/10 text-bloomberg-green'
+              isPlaying ? 'bg-[#ef4444]/10 text-[#ef4444]' : 'bg-[#22c55e]/10 text-[#22c55e]'
             }`}
             title={isPlaying ? 'Pause Replay' : 'Play Replay'}
           >
@@ -194,7 +194,7 @@ export default function PaperTrading() {
                 key={s}
                 onClick={() => setSpeed(s)}
                 className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold ${
-                  speed === s ? 'bg-brand text-white' : 'bg-gray-900 text-gray-400 hover:text-white'
+                  speed === s ? 'bg-[#22d3ee] text-white' : 'bg-gray-900 text-gray-400 hover:text-white'
                 }`}
               >
                 {s}x
@@ -217,10 +217,10 @@ export default function PaperTrading() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Virtual Chart screen placeholder */}
-          <div className="glass-panel p-6 rounded-2xl h-[340px] flex flex-col justify-between relative overflow-hidden">
+          <div className="card p-6 rounded-lg h-[340px] flex flex-col justify-between relative overflow-hidden">
             <div className="flex justify-between items-center z-10">
               <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Replay Stream Index</span>
-              <span className="text-xs font-mono text-bloomberg-green font-bold">Nifty 50: {lastTickPrice.toLocaleString()}</span>
+              <span className="text-xs font-mono text-[#22c55e] font-bold">Nifty 50: {lastTickPrice.toLocaleString()}</span>
             </div>
             
             {/* Visual simulation elements */}
@@ -228,7 +228,7 @@ export default function PaperTrading() {
               <div className="w-[80%] h-[60%] border-b border-l border-gray-800 flex items-end">
                 <div className="w-full flex items-end justify-around h-full px-4">
                   {[40, 60, 45, 70, 50, 80, 65, 85, 75, 90].map((h, i) => (
-                    <div key={i} className="w-6 bg-brand/40 rounded-t" style={{ height: `${h}%` }} />
+                    <div key={i} className="w-6 bg-[#22d3ee]/40 rounded-t" style={{ height: `${h}%` }} />
                   ))}
                 </div>
               </div>
@@ -249,14 +249,14 @@ export default function PaperTrading() {
           </div>
 
           {/* Ledger - Trade Book & Positions */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-brand" /> Active Replay Positions
+                <BookOpen className="w-4 h-4 text-[#22d3ee]" /> Active Replay Positions
               </h2>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] text-gray-400 font-mono uppercase">Floating PnL</span>
-                <span className={`text-sm font-bold font-mono ${floatingPnL >= 0 ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                <span className={`text-sm font-bold font-mono ${floatingPnL >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                   {floatingPnL >= 0 ? '+' : ''}₹{floatingPnL.toLocaleString()}
                 </span>
               </div>
@@ -289,7 +289,7 @@ export default function PaperTrading() {
                           <td className="py-3 text-white font-bold">{pos.symbol}</td>
                           <td className="py-3">
                             <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                              isLong ? 'bg-bloomberg-green/10 text-bloomberg-green' : 'bg-bloomberg-red/10 text-bloomberg-red'
+                              isLong ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-[#ef4444]/10 text-[#ef4444]'
                             }`}>
                               {isLong ? 'LONG' : 'SHORT'}
                             </span>
@@ -297,13 +297,13 @@ export default function PaperTrading() {
                           <td className="py-3 text-right font-mono">{pos.qty}</td>
                           <td className="py-3 text-right font-mono">₹{pos.entryPrice}</td>
                           <td className="py-3 text-right font-mono">₹{pos.currentPrice}</td>
-                          <td className={`py-3 text-right font-mono ${pos.pnl >= 0 ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                          <td className={`py-3 text-right font-mono ${pos.pnl >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                             {pos.pnl >= 0 ? '+' : ''}₹{pos.pnl}
                           </td>
                           <td className="py-3 text-center">
                             <button
                               onClick={() => handleClosePosition(pos.id)}
-                              className="px-2.5 py-1 rounded bg-bloomberg-red/10 hover:bg-bloomberg-red/20 text-bloomberg-red text-[10px] font-bold uppercase transition-all"
+                              className="px-2.5 py-1 rounded bg-[#ef4444]/10 hover:bg-[#ef4444]/20 text-[#ef4444] text-[10px] font-bold uppercase transition-all"
                             >
                               Exit Position
                             </button>
@@ -318,7 +318,7 @@ export default function PaperTrading() {
           </div>
 
           {/* Order Book Log */}
-          <div className="glass-panel p-6 rounded-2xl">
+          <div className="card p-6 rounded-lg">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
               Replay Transaction Audit Book
             </h2>
@@ -343,7 +343,7 @@ export default function PaperTrading() {
                       <td className="py-2.5 text-gray-500">{o.id}</td>
                       <td className="py-2.5 text-white font-semibold font-sans">{o.symbol}</td>
                       <td className="py-2.5">
-                        <span className={o.action === 'BUY' ? 'text-bloomberg-green' : 'text-bloomberg-red'}>
+                        <span className={o.action === 'BUY' ? 'text-[#22c55e]' : 'text-[#ef4444]'}>
                           {o.action}
                         </span>
                       </td>
@@ -351,7 +351,7 @@ export default function PaperTrading() {
                       <td className="py-2.5 text-right">₹{o.price}</td>
                       <td className="py-2.5 text-right">{o.qty}</td>
                       <td className="py-2.5 text-center">
-                        <span className="text-[10px] font-bold text-bloomberg-green uppercase">
+                        <span className="text-[10px] font-bold text-[#22c55e] uppercase">
                           {o.status}
                         </span>
                       </td>
@@ -368,7 +368,7 @@ export default function PaperTrading() {
         <div className="space-y-6">
           
           {/* Order placement panel */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">
               Instant Order Entry
             </h2>
@@ -382,7 +382,7 @@ export default function PaperTrading() {
                 <input
                   type="text"
                   required
-                  className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                  className="w-full input-field p-3 rounded-xl text-xs font-mono"
                   value={symbol}
                   onChange={(e) => setSymbol(e.target.value)}
                 />
@@ -395,7 +395,7 @@ export default function PaperTrading() {
                   onClick={() => setAction('BUY')}
                   className={`py-2 rounded-xl text-xs font-bold uppercase transition-all ${
                     action === 'BUY' 
-                      ? 'bg-bloomberg-green text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]' 
+                      ? 'bg-[#22c55e] text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]' 
                       : 'bg-gray-900 text-gray-400'
                   }`}
                 >
@@ -406,7 +406,7 @@ export default function PaperTrading() {
                   onClick={() => setAction('SELL')}
                   className={`py-2 rounded-xl text-xs font-bold uppercase transition-all ${
                     action === 'SELL' 
-                      ? 'bg-bloomberg-red text-white shadow-[0_0_12px_rgba(255,51,51,0.3)]' 
+                      ? 'bg-[#ef4444] text-white shadow-[0_0_12px_rgba(255,51,51,0.3)]' 
                       : 'bg-gray-900 text-gray-400'
                   }`}
                 >
@@ -427,7 +427,7 @@ export default function PaperTrading() {
                       onClick={() => setOrderType(t)}
                       className={`py-2 rounded-xl text-xs font-semibold uppercase transition-all ${
                         orderType === t 
-                          ? 'bg-brand text-white border border-brand/20 shadow-glass-inset' 
+                          ? 'bg-[#22d3ee] text-white border border-[#22d3ee]/20 ' 
                           : 'bg-gray-900 text-gray-400'
                       }`}
                     >
@@ -446,7 +446,7 @@ export default function PaperTrading() {
                   <input
                     type="number"
                     required
-                    className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                    className="w-full input-field p-3 rounded-xl text-xs font-mono"
                     value={qty}
                     onChange={(e) => setQty(parseInt(e.target.value) || 0)}
                   />
@@ -460,7 +460,7 @@ export default function PaperTrading() {
                     type="number"
                     step="any"
                     disabled={orderType === 'MARKET'}
-                    className="w-full glass-input p-3 rounded-xl text-xs font-mono disabled:opacity-40"
+                    className="w-full input-field p-3 rounded-xl text-xs font-mono disabled:opacity-40"
                     value={limitPrice}
                     onChange={(e) => setLimitPrice(e.target.value)}
                   />
@@ -475,7 +475,7 @@ export default function PaperTrading() {
                 </div>
                 <div className="flex justify-between">
                   <span>Required Margin</span>
-                  <span className="text-brand font-bold">₹{(qty * (orderType === 'MARKET' ? lastTickPrice : parseFloat(limitPrice)) * 0.05).toFixed(2)}</span>
+                  <span className="text-[#22d3ee] font-bold">₹{(qty * (orderType === 'MARKET' ? lastTickPrice : parseFloat(limitPrice)) * 0.05).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -484,8 +484,8 @@ export default function PaperTrading() {
                 type="submit"
                 className={`w-full py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all text-white flex items-center justify-center gap-2 ${
                   action === 'BUY' 
-                    ? 'bg-bloomberg-green hover:bg-bloomberg-green/90 hover:shadow-[0_0_15px_rgba(0,255,102,0.4)]' 
-                    : 'bg-bloomberg-red hover:bg-bloomberg-red/90 hover:shadow-[0_0_15px_rgba(255,51,51,0.4)]'
+                    ? 'bg-[#22c55e] hover:bg-[#22c55e]/90 hover:shadow-[0_0_15px_rgba(0,255,102,0.4)]' 
+                    : 'bg-[#ef4444] hover:bg-[#ef4444]/90 hover:shadow-[0_0_15px_rgba(255,51,51,0.4)]'
                 }`}
               >
                 Place Simulated {action} Order
@@ -494,9 +494,9 @@ export default function PaperTrading() {
           </div>
 
           {/* Replay state metrics card */}
-          <div className="glass-panel p-6 rounded-2xl space-y-4">
+          <div className="card p-6 rounded-lg space-y-4">
             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-              <CircleDollarSign className="w-4 h-4 text-brand" /> Replay Account Balances
+              <CircleDollarSign className="w-4 h-4 text-[#22d3ee]" /> Replay Account Balances
             </h3>
             <div className="space-y-3 font-mono text-xs">
               <div className="flex justify-between border-b border-gray-900 pb-2">

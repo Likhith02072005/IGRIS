@@ -18,10 +18,10 @@ export default function EntryPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-background text-gray-400">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#0a0a0a] text-[#666]">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand mx-auto mb-4"></div>
-        <p className="text-sm tracking-widest uppercase">Initializing IGRIS Terminal...</p>
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#22d3ee] mx-auto mb-4" />
+        <p className="text-sm">Loading...</p>
       </div>
     </div>
   );

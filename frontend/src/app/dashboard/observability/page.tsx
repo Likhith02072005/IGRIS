@@ -61,14 +61,14 @@ export default function ObservabilityUI() {
       {/* Metrics Cards Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'CPU Utilization', val: `${metrics.cpu}%`, icon: Cpu, progress: metrics.cpu, color: 'bg-brand' },
+          { label: 'CPU Utilization', val: `${metrics.cpu}%`, icon: Cpu, progress: metrics.cpu, color: 'bg-[#22d3ee]' },
           { label: 'Memory Allocation', val: `${metrics.memory}%`, icon: HardDrive, progress: metrics.memory, color: 'bg-indigo-500' },
-          { label: 'Redis Queue Backlog', val: `${metrics.redisQueue} items`, icon: Activity, progress: Math.min(100, (metrics.redisQueue / 20) * 100), color: 'bg-bloomberg-green' },
+          { label: 'Redis Queue Backlog', val: `${metrics.redisQueue} items`, icon: Activity, progress: Math.min(100, (metrics.redisQueue / 20) * 100), color: 'bg-[#22c55e]' },
           { label: 'DB Connection Pool', val: `${metrics.dbPool} open`, icon: Database, progress: 30, color: 'bg-emerald-500' },
         ].map(item => {
           const Icon = item.icon;
           return (
-            <div key={item.label} className="glass-panel p-5 rounded-2xl space-y-4">
+            <div key={item.label} className="card p-5 rounded-lg space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{item.label}</span>
                 <Icon className="w-4.5 h-4.5 text-gray-500" />
@@ -86,15 +86,15 @@ export default function ObservabilityUI() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Latency Plot */}
-        <div className="lg:col-span-2 glass-panel p-6 rounded-2xl space-y-4">
+        <div className="lg:col-span-2 card p-6 rounded-lg space-y-4">
           <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
             WebSocket Latency Profiler (ms)
           </span>
           <div className="flex items-end justify-between h-48 bg-gray-950/60 border border-gray-900 rounded-xl p-4 font-mono text-[9px] text-gray-500">
             {[8, 12, 10, 15, 9, 11, 7, 13, 8].map((v, i) => (
               <div key={i} className="flex flex-col items-center flex-1">
-                <span className="mb-2 text-bloomberg-green font-bold">{v}ms</span>
-                <div className="w-4.5 bg-bloomberg-green/45 rounded-t" style={{ height: `${v * 8}px` }} />
+                <span className="mb-2 text-[#22c55e] font-bold">{v}ms</span>
+                <div className="w-4.5 bg-[#22c55e]/45 rounded-t" style={{ height: `${v * 8}px` }} />
                 <span className="mt-2">Node {i+1}</span>
               </div>
             ))}
@@ -102,14 +102,14 @@ export default function ObservabilityUI() {
         </div>
 
         {/* Real-time System Log Console */}
-        <div className="glass-panel p-6 rounded-2xl flex flex-col justify-between h-[272px]">
+        <div className="card p-6 rounded-lg flex flex-col justify-between h-[272px]">
           <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-900 pb-2">
-            <Terminal className="w-4 h-4 text-brand" /> System Logger Output
+            <Terminal className="w-4 h-4 text-[#22d3ee]" /> System Logger Output
           </div>
 
           <div className="flex-1 overflow-y-auto font-mono text-[10px] text-gray-400 space-y-2.5 leading-relaxed scrollbar-none">
             {logs.map((log, idx) => (
-              <div key={idx} className="border-l-2 border-brand/40 pl-2">
+              <div key={idx} className="border-l-2 border-[#22d3ee]/40 pl-2">
                 {log}
               </div>
             ))}

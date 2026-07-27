@@ -105,14 +105,14 @@ export default function StrategyBuilder() {
 
       {/* Notifications */}
       {error && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-bloomberg-red/10 border border-bloomberg-red/30 text-bloomberg-red text-xs">
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-[#ef4444]/10 border border-[#ef4444]/30 text-[#ef4444] text-xs">
           <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
       {success && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-bloomberg-green/10 border border-bloomberg-green/30 text-bloomberg-green text-xs font-semibold">
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-[#22c55e]/10 border border-[#22c55e]/30 text-[#22c55e] text-xs font-semibold">
           <Save className="w-5 h-5 flex-shrink-0" />
           <span>Strategy compiled and saved successfully! Redirecting to Workspace...</span>
         </div>
@@ -122,9 +122,9 @@ export default function StrategyBuilder() {
       <form onSubmit={handleSubmit} className="space-y-6">
         
         {/* Step 1: Identity */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <Layers className="w-4 h-4 text-brand" /> 1. Strategy Identity
+            <Layers className="w-4 h-4 text-[#22d3ee]" /> 1. Strategy Identity
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -135,7 +135,7 @@ export default function StrategyBuilder() {
               <input
                 type="text"
                 required
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 placeholder="e.g. Trend Following Straddle"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -148,7 +148,7 @@ export default function StrategyBuilder() {
               </label>
               <input
                 type="text"
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 placeholder="Brief summary of the algorithm's thesis"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -162,7 +162,7 @@ export default function StrategyBuilder() {
                 Category
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
@@ -175,7 +175,7 @@ export default function StrategyBuilder() {
                 Index / Instrument
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={instrument}
                 onChange={(e) => setInstrument(e.target.value)}
               >
@@ -188,7 +188,7 @@ export default function StrategyBuilder() {
                 Primary Timeframe
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={timeframe}
                 onChange={(e) => setTimeframe(e.target.value)}
               >
@@ -199,9 +199,9 @@ export default function StrategyBuilder() {
         </div>
 
         {/* Step 2: Signal Logic */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <Cpu className="w-4 h-4 text-brand" /> 2. Signal Execution Logic
+            <Cpu className="w-4 h-4 text-[#22d3ee]" /> 2. Signal Execution Logic
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -211,7 +211,7 @@ export default function StrategyBuilder() {
               </label>
               <textarea
                 rows={4}
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="CROSS_UP(CLOSE, EMA_9) AND RSI_14 > 50"
                 value={entryLogic}
                 onChange={(e) => setEntryLogic(e.target.value)}
@@ -224,7 +224,7 @@ export default function StrategyBuilder() {
               </label>
               <textarea
                 rows={4}
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="CROSS_DOWN(CLOSE, EMA_9) OR TIME_1515"
                 value={exitLogic}
                 onChange={(e) => setExitLogic(e.target.value)}
@@ -255,9 +255,9 @@ export default function StrategyBuilder() {
         </div>
 
         {/* Step 3: Target & Risk Rules */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <DollarSign className="w-4 h-4 text-brand" /> 3. Risk & Sizing Controls
+            <DollarSign className="w-4 h-4 text-[#22d3ee]" /> 3. Risk & Sizing Controls
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -268,7 +268,7 @@ export default function StrategyBuilder() {
               <input
                 type="number"
                 step="any"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="50.0"
                 value={target}
                 onChange={(e) => setTarget(e.target.value)}
@@ -282,7 +282,7 @@ export default function StrategyBuilder() {
               <input
                 type="number"
                 step="any"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="25.0"
                 value={stopLoss}
                 onChange={(e) => setStopLoss(e.target.value)}
@@ -296,7 +296,7 @@ export default function StrategyBuilder() {
               <input
                 type="number"
                 step="any"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="Optional"
                 value={trailingStop}
                 onChange={(e) => setTrailingStop(e.target.value)}
@@ -310,7 +310,7 @@ export default function StrategyBuilder() {
               <input
                 type="number"
                 step="any"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="1.0"
                 value={riskPercent}
                 onChange={(e) => setRiskPercent(e.target.value)}
@@ -326,7 +326,7 @@ export default function StrategyBuilder() {
               <input
                 type="number"
                 step="any"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 value={positionSize}
                 onChange={(e) => setPositionSize(e.target.value)}
               />
@@ -338,7 +338,7 @@ export default function StrategyBuilder() {
               </label>
               <input
                 type="text"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 value={tradingWindow}
                 onChange={(e) => setTradingWindow(e.target.value)}
               />
@@ -350,7 +350,7 @@ export default function StrategyBuilder() {
               </label>
               <input
                 type="number"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 value={maxTradesPerDay}
                 onChange={(e) => setMaxTradesPerDay(e.target.value)}
               />
@@ -359,14 +359,14 @@ export default function StrategyBuilder() {
         </div>
 
         {/* Step 4: Notes */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <Calendar className="w-4 h-4 text-brand" /> 4. Operator Journal Notes
+            <Calendar className="w-4 h-4 text-[#22d3ee]" /> 4. Operator Journal Notes
           </h2>
           <div>
             <textarea
               rows={3}
-              className="w-full glass-input p-3 rounded-xl text-xs"
+              className="w-full input-field p-3 rounded-xl text-xs"
               placeholder="Record any comments, version changes, or market conditions for this deployment..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -387,7 +387,7 @@ export default function StrategyBuilder() {
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 "
           >
             <Save className="w-4 h-4" />
             {loading ? 'Compiling Code...' : 'Compile & Save Strategy'}

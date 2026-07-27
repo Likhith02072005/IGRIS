@@ -92,8 +92,8 @@ export default function PluginMarketplace() {
         ].map(cat => {
           const Icon = cat.icon;
           return (
-            <div key={cat.label} className="glass-panel p-5 rounded-2xl flex items-center gap-4 hover:border-gray-700/80 transition-all cursor-pointer">
-              <div className="p-3 bg-brand/10 border border-brand/20 text-brand rounded-xl">
+            <div key={cat.label} className="card p-5 rounded-lg flex items-center gap-4 hover:border-gray-700/80 transition-all cursor-pointer">
+              <div className="p-3 bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] rounded-xl">
                 <Icon className="w-5 h-5" />
               </div>
               <div>
@@ -114,8 +114,8 @@ export default function PluginMarketplace() {
           return (
             <div 
               key={plugin.id} 
-              className={`glass-panel p-6 rounded-2xl border flex flex-col justify-between gap-6 transition-all ${
-                isInstalled ? 'border-brand/25' : 'border-gray-800'
+              className={`card p-6 rounded-lg border flex flex-col justify-between gap-6 transition-all ${
+                isInstalled ? 'border-[#22d3ee]/25' : 'border-gray-800'
               }`}
             >
               
@@ -135,14 +135,14 @@ export default function PluginMarketplace() {
               <div className="flex justify-between items-center border-t border-gray-900 pt-4 text-[10px] font-mono text-gray-500">
                 <span>By: {plugin.author}</span>
                 {isInstalled ? (
-                  <span className="flex items-center gap-1 text-bloomberg-green font-bold uppercase">
+                  <span className="flex items-center gap-1 text-[#22c55e] font-bold uppercase">
                     <CheckCircle2 className="w-4 h-4" /> Installed
                   </span>
                 ) : (
                   <button
                     onClick={() => handleInstall(plugin.id)}
                     disabled={isInstalling}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand hover:bg-brand/90 text-white font-bold uppercase tracking-wider text-[9px] transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold uppercase tracking-wider text-[9px] transition-colors"
                   >
                     <DownloadCloud className={`w-3.5 h-3.5 ${isInstalling ? 'animate-bounce' : ''}`} />
                     {isInstalling ? 'Installing...' : 'Deploy Plugin'}

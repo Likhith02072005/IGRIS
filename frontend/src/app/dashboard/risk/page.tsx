@@ -41,7 +41,7 @@ export default function RiskDashboard() {
 
       {/* Main Alert Banner when Kill Switch is Active */}
       {killSwitchActive && (
-        <div className="flex items-center gap-4 p-5 rounded-2xl bg-bloomberg-red/10 border-2 border-bloomberg-red/45 text-bloomberg-red shadow-[0_0_30px_rgba(255,51,51,0.15)] animate-pulse">
+        <div className="flex items-center gap-4 p-5 rounded-lg bg-[#ef4444]/10 border-2 border-[#ef4444]/45 text-[#ef4444] shadow-[0_0_30px_rgba(255,51,51,0.15)] animate-pulse">
           <ShieldAlert className="w-8 h-8 flex-shrink-0" />
           <div>
             <h3 className="font-extrabold uppercase text-sm tracking-wide text-white">Master Kill Switch Active</h3>
@@ -56,14 +56,14 @@ export default function RiskDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Daily loss limit progress */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Intraday Loss Limit</span>
             <span className="text-xs font-mono font-bold text-white">${currentLoss} / ${dailyLossLimit}</span>
           </div>
           <div className="h-2.5 w-full bg-gray-900 rounded-full overflow-hidden">
             <div 
-              className="h-full bg-brand" 
+              className="h-full bg-[#22d3ee]" 
               style={{ width: `${(currentLoss / dailyLossLimit) * 100}%` }} 
             />
           </div>
@@ -74,14 +74,14 @@ export default function RiskDashboard() {
         </div>
 
         {/* Max Drawdown */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Maximum Drawdown Gauge</span>
-            <span className="text-xs font-mono font-bold text-bloomberg-red">-3.12% / -10.00%</span>
+            <span className="text-xs font-mono font-bold text-[#ef4444]">-3.12% / -10.00%</span>
           </div>
           <div className="h-2.5 w-full bg-gray-900 rounded-full overflow-hidden">
             <div 
-              className="h-full bg-bloomberg-red" 
+              className="h-full bg-[#ef4444]" 
               style={{ width: '31.2%' }} 
             />
           </div>
@@ -92,7 +92,7 @@ export default function RiskDashboard() {
         </div>
 
         {/* Value at Risk (VaR) */}
-        <div className="glass-panel p-6 rounded-2xl space-y-4">
+        <div className="card p-6 rounded-lg space-y-4">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Value at Risk (95% VaR)</span>
             <span className="text-xs font-mono font-bold text-white">$3,120.00</span>
@@ -118,7 +118,7 @@ export default function RiskDashboard() {
         <div className="lg:col-span-2 space-y-6">
           
           {/* Capital Exposure details */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">
               Platform Exposures and Margin Assets
             </h2>
@@ -137,20 +137,20 @@ export default function RiskDashboard() {
               </div>
               <div className="border-b border-gray-900 pb-3">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Exchange Margins Available</span>
-                <span className="text-bloomberg-green font-mono font-bold">$94,210.00</span>
+                <span className="text-[#22c55e] font-mono font-bold">$94,210.00</span>
               </div>
             </div>
           </div>
 
           {/* Active exposure limits list */}
-          <div className="glass-panel p-6 rounded-2xl space-y-4">
+          <div className="card p-6 rounded-lg space-y-4">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white">
               Strategy Position Risk Indices
             </h2>
             <div className="space-y-4">
               {[
-                { name: 'IGRIS Options Straddle', risk: 'Low', pct: 25, color: 'bg-bloomberg-green' },
-                { name: 'Momentum Catcher Buying', risk: 'Medium', pct: 50, color: 'bg-brand' },
+                { name: 'IGRIS Options Straddle', risk: 'Low', pct: 25, color: 'bg-[#22c55e]' },
+                { name: 'Momentum Catcher Buying', risk: 'Medium', pct: 50, color: 'bg-[#22d3ee]' },
                 { name: 'VWAP Reversal Fade', risk: 'Minimal', pct: 10, color: 'bg-emerald-500' },
               ].map(item => (
                 <div key={item.name} className="space-y-1.5 text-xs font-semibold">
@@ -171,10 +171,10 @@ export default function RiskDashboard() {
         {/* Right Side: Emergency Kill Switch Box */}
         <div className="space-y-6">
           
-          <div className="glass-panel p-6 rounded-2xl text-center space-y-6 relative overflow-hidden border border-bloomberg-red/20">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-bloomberg-red" />
+          <div className="card p-6 rounded-lg text-center space-y-6 relative overflow-hidden border border-[#ef4444]/20">
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#ef4444]" />
             
-            <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-bloomberg-red/10 border border-bloomberg-red/25 text-bloomberg-red mb-3 animate-pulse">
+            <div className="inline-flex items-center justify-center p-3 rounded-lg bg-[#ef4444]/10 border border-[#ef4444]/25 text-[#ef4444] mb-3 animate-pulse">
               <Power className="w-8 h-8" />
             </div>
 
@@ -191,8 +191,8 @@ export default function RiskDashboard() {
               onClick={handleKillSwitch}
               className={`w-full py-4 rounded-xl font-bold text-xs uppercase tracking-wider transition-all text-white hover:shadow-[0_0_20px_rgba(255,51,51,0.3)] ${
                 killSwitchActive 
-                  ? 'bg-bloomberg-green hover:bg-bloomberg-green/90' 
-                  : 'bg-bloomberg-red hover:bg-bloomberg-red/90'
+                  ? 'bg-[#22c55e] hover:bg-[#22c55e]/90' 
+                  : 'bg-[#ef4444] hover:bg-[#ef4444]/90'
               }`}
             >
               {killSwitchActive ? 'Deactivate Kill Override' : 'ACTIVATE OVERRIDE ABORT'}

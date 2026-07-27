@@ -183,7 +183,7 @@ export default function StrategiesList() {
           
           <Link
             href="/dashboard/strategies/builder"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
           >
             <Plus className="w-4 h-4" />
             Build Strategy
@@ -192,11 +192,11 @@ export default function StrategiesList() {
       </div>
 
       {/* Strategies List Container */}
-      <div className="glass-panel rounded-2xl overflow-hidden">
+      <div className="card rounded-lg overflow-hidden">
         
         {loading ? (
           <div className="p-12 text-center text-gray-500">
-            <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-3 text-brand" />
+            <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-3 text-[#22d3ee]" />
             <p className="text-xs font-mono uppercase tracking-widest">Accessing strategies database...</p>
           </div>
         ) : (
@@ -231,7 +231,7 @@ export default function StrategiesList() {
                     <td className="p-4 max-w-sm">
                       <Link 
                         href={`/dashboard/strategies/${strat.id}`}
-                        className="text-white font-bold text-sm tracking-wide hover:text-brand hover:underline transition-colors"
+                        className="text-white font-bold text-sm tracking-wide hover:text-[#22d3ee] hover:underline transition-colors"
                       >
                         {strat.name}
                       </Link>
@@ -240,7 +240,7 @@ export default function StrategiesList() {
                       </p>
                     </td>
                     <td className="p-4">
-                      <span className="px-2 py-0.5 rounded text-[10px] bg-brand/10 border border-brand/20 text-brand font-bold">
+                      <span className="px-2 py-0.5 rounded text-[10px] bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] font-bold">
                         {strat.category}
                       </span>
                     </td>
@@ -251,10 +251,10 @@ export default function StrategiesList() {
                     </td>
                     <td className="p-4">
                       <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase ${
-                        strat.status === 'ACTIVE' ? 'text-bloomberg-green' : 'text-amber-500'
+                        strat.status === 'ACTIVE' ? 'text-[#22c55e]' : 'text-amber-500'
                       }`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${
-                          strat.status === 'ACTIVE' ? 'bg-bloomberg-green' : 'bg-amber-500'
+                          strat.status === 'ACTIVE' ? 'bg-[#22c55e]' : 'bg-amber-500'
                         }`} />
                         {strat.status}
                       </span>
@@ -262,7 +262,7 @@ export default function StrategiesList() {
                     <td className="p-4 text-center">
                       <Link
                         href={`/dashboard/backtesting?strategyId=${strat.id}`}
-                        className="inline-flex items-center gap-1.5 text-[10px] font-bold text-brand hover:underline uppercase tracking-wider"
+                        className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[#22d3ee] hover:underline uppercase tracking-wider"
                       >
                         Backtest
                         <ChevronRight className="w-3.5 h-3.5" />
@@ -280,7 +280,7 @@ export default function StrategiesList() {
       {/* Comparison Modal */}
       {compareModal && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="w-full max-w-5xl glass-panel p-6 rounded-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-5xl card p-6 rounded-lg relative max-h-[90vh] overflow-y-auto">
             {/* Close */}
             <button 
               onClick={() => setCompareModal(false)}
@@ -292,7 +292,7 @@ export default function StrategiesList() {
             {/* Header */}
             <div className="mb-6">
               <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <Award className="w-4 h-4 text-brand" /> Strategy Leaderboard Comparison
+                <Award className="w-4 h-4 text-[#22d3ee]" /> Strategy Leaderboard Comparison
               </h2>
               <p className="text-[11px] text-gray-500">
                 Performance rank based on combined win rates, Sharpe ratio, and profit factors.
@@ -334,8 +334,8 @@ export default function StrategiesList() {
                         <span className="text-[10px] text-gray-500 uppercase">{r.category}</span>
                       </td>
                       <td className="p-3 text-right font-mono text-white">{r.winRate}%</td>
-                      <td className="p-3 text-right font-mono text-bloomberg-green">+${r.netProfit.toLocaleString()}</td>
-                      <td className="p-3 text-right font-mono text-bloomberg-red">-{r.drawdown}%</td>
+                      <td className="p-3 text-right font-mono text-[#22c55e]">+${r.netProfit.toLocaleString()}</td>
+                      <td className="p-3 text-right font-mono text-[#ef4444]">-{r.drawdown}%</td>
                       <td className="p-3 text-right font-mono text-white">{r.profitFactor}</td>
                       <td className="p-3 text-right font-mono text-white">{r.sharpe}</td>
                       <td className="p-3 text-right font-mono text-white">{r.sortino}</td>
@@ -343,7 +343,7 @@ export default function StrategiesList() {
                       <td className="p-3 text-right font-mono text-white">{r.avgRR}:1</td>
                       <td className="p-3 text-right font-mono text-gray-400">{r.tradeCount}</td>
                       <td className="p-3 text-right font-mono text-gray-400">{r.longestWinStreak} / {r.longestLossStreak}</td>
-                      <td className="p-3 text-right font-mono text-brand font-bold">{r.score}</td>
+                      <td className="p-3 text-right font-mono text-[#22d3ee] font-bold">{r.score}</td>
                     </tr>
                   ))}
                 </tbody>

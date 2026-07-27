@@ -206,9 +206,9 @@ export default function Backtesting() {
         
         {/* Left Side: Parameters Form */}
         <div className="lg:col-span-1">
-          <div className="glass-panel p-6 rounded-2xl space-y-5">
+          <div className="card p-6 rounded-lg space-y-5">
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-              <Layers className="w-4 h-4 text-brand" /> Simulation Inputs
+              <Layers className="w-4 h-4 text-[#22d3ee]" /> Simulation Inputs
             </h2>
 
             <form onSubmit={handleRunBacktest} className="space-y-4">
@@ -218,7 +218,7 @@ export default function Backtesting() {
                 </label>
                 <select
                   required
-                  className="w-full glass-input p-3 rounded-xl text-xs"
+                  className="w-full input-field p-3 rounded-xl text-xs"
                   value={selectedStrategy}
                   onChange={(e) => setSelectedStrategy(e.target.value)}
                 >
@@ -231,7 +231,7 @@ export default function Backtesting() {
                   Instrument
                 </label>
                 <select
-                  className="w-full glass-input p-3 rounded-xl text-xs"
+                  className="w-full input-field p-3 rounded-xl text-xs"
                   value={instrument}
                   onChange={(e) => setInstrument(e.target.value)}
                 >
@@ -249,7 +249,7 @@ export default function Backtesting() {
                     Timeframe
                   </label>
                   <select
-                    className="w-full glass-input p-3 rounded-xl text-xs"
+                    className="w-full input-field p-3 rounded-xl text-xs"
                     value={timeframe}
                     onChange={(e) => setTimeframe(e.target.value)}
                   >
@@ -266,7 +266,7 @@ export default function Backtesting() {
                   <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
                     Expiry Type
                   </label>
-                  <select className="w-full glass-input p-3 rounded-xl text-xs">
+                  <select className="w-full input-field p-3 rounded-xl text-xs">
                     <option value="WEEKLY">Weekly</option>
                     <option value="MONTHLY">Monthly</option>
                   </select>
@@ -281,7 +281,7 @@ export default function Backtesting() {
                   <input
                     type="date"
                     required
-                    className="w-full glass-input p-2.5 rounded-xl text-xs font-mono"
+                    className="w-full input-field p-2.5 rounded-xl text-xs font-mono"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
                   />
@@ -294,7 +294,7 @@ export default function Backtesting() {
                   <input
                     type="date"
                     required
-                    className="w-full glass-input p-2.5 rounded-xl text-xs font-mono"
+                    className="w-full input-field p-2.5 rounded-xl text-xs font-mono"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
                   />
@@ -308,7 +308,7 @@ export default function Backtesting() {
                 <input
                   type="number"
                   required
-                  className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                  className="w-full input-field p-3 rounded-xl text-xs font-mono"
                   value={capital}
                   onChange={(e) => setCapital(e.target.value)}
                 />
@@ -323,7 +323,7 @@ export default function Backtesting() {
                     type="number"
                     step="any"
                     required
-                    className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                    className="w-full input-field p-3 rounded-xl text-xs font-mono"
                     value={slippage}
                     onChange={(e) => setSlippage(e.target.value)}
                   />
@@ -337,7 +337,7 @@ export default function Backtesting() {
                     type="number"
                     step="any"
                     required
-                    className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                    className="w-full input-field p-3 rounded-xl text-xs font-mono"
                     value={brokerage}
                     onChange={(e) => setBrokerage(e.target.value)}
                   />
@@ -347,7 +347,7 @@ export default function Backtesting() {
               <button
                 type="submit"
                 disabled={running}
-                className="w-full py-3.5 rounded-xl bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+                className="w-full py-3.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
               >
                 {running ? (
                   <>
@@ -369,7 +369,7 @@ export default function Backtesting() {
         <div className="lg:col-span-3 space-y-6">
           
           {!results && !running && (
-            <div className="glass-panel p-12 text-center text-gray-500 rounded-2xl h-full flex flex-col justify-center items-center min-h-[500px]">
+            <div className="card p-12 text-center text-gray-500 rounded-lg h-full flex flex-col justify-center items-center min-h-[500px]">
               <Play className="w-12 h-12 text-gray-700 mb-4 animate-pulse" />
               <p className="text-sm font-bold uppercase tracking-wider text-white">Simulation Engine Ready</p>
               <p className="text-xs text-gray-500 mt-2 max-w-sm">
@@ -379,8 +379,8 @@ export default function Backtesting() {
           )}
 
           {running && (
-            <div className="glass-panel p-12 text-center text-gray-500 rounded-2xl h-full flex flex-col justify-center items-center min-h-[500px]">
-              <RefreshCw className="w-12 h-12 text-brand mb-4 animate-spin" />
+            <div className="card p-12 text-center text-gray-500 rounded-lg h-full flex flex-col justify-center items-center min-h-[500px]">
+              <RefreshCw className="w-12 h-12 text-[#22d3ee] mb-4 animate-spin" />
               <p className="text-sm font-bold uppercase tracking-wider text-white">Backtester Dispatch Active</p>
               <p className="text-xs text-gray-500 mt-2">
                 Running strategies on historical candles... Checking entries, exits, targets, and stop losses.
@@ -392,17 +392,17 @@ export default function Backtesting() {
             <>
               {/* Summary KPIs Row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="glass-panel p-5 rounded-xl">
+                <div className="card p-5 rounded-xl">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Net profit</span>
-                  <h3 className="text-xl font-bold text-bloomberg-green font-mono">
+                  <h3 className="text-xl font-bold text-[#22c55e] font-mono">
                     +${results.metrics.net_profit.toLocaleString()}
                   </h3>
-                  <span className="text-[9px] text-bloomberg-green font-mono">
+                  <span className="text-[9px] text-[#22c55e] font-mono">
                     +{((results.metrics.net_profit / parseFloat(capital)) * 100).toFixed(2)}% ROI
                   </span>
                 </div>
 
-                <div className="glass-panel p-5 rounded-xl">
+                <div className="card p-5 rounded-xl">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Win Rate %</span>
                   <h3 className="text-xl font-bold text-white font-mono">{results.metrics.win_rate}%</h3>
                   <span className="text-[9px] text-gray-500 font-mono">
@@ -410,23 +410,23 @@ export default function Backtesting() {
                   </span>
                 </div>
 
-                <div className="glass-panel p-5 rounded-xl">
+                <div className="card p-5 rounded-xl">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Max Drawdown</span>
-                  <h3 className="text-xl font-bold text-bloomberg-red font-mono">-{results.metrics.drawdown}%</h3>
+                  <h3 className="text-xl font-bold text-[#ef4444] font-mono">-{results.metrics.drawdown}%</h3>
                   <span className="text-[9px] text-gray-500 font-mono">Low Risk Profile</span>
                 </div>
 
-                <div className="glass-panel p-5 rounded-xl">
+                <div className="card p-5 rounded-xl">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Sharpe Ratio</span>
-                  <h3 className="text-xl font-bold text-brand font-mono">{results.metrics.sharpe}</h3>
+                  <h3 className="text-xl font-bold text-[#22d3ee] font-mono">{results.metrics.sharpe}</h3>
                   <span className="text-[9px] text-gray-500 font-mono">Sortino: {results.metrics.sortino}</span>
                 </div>
               </div>
 
               {/* Ratios & Drawdowns Detailed Grid */}
-              <div className="glass-panel p-5 rounded-2xl">
+              <div className="card p-5 rounded-lg">
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                  <BarChart2 className="w-4 h-4 text-brand" /> Detailed Performance Ratios
+                  <BarChart2 className="w-4 h-4 text-[#22d3ee]" /> Detailed Performance Ratios
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-semibold text-gray-300">
                   <div className="border-b border-gray-900 pb-2">
@@ -439,7 +439,7 @@ export default function Backtesting() {
                   </div>
                   <div className="border-b border-gray-900 pb-2">
                     <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Expectancy Value</span>
-                    <span className="text-bloomberg-green font-mono">+${results.metrics.expectancy}</span>
+                    <span className="text-[#22c55e] font-mono">+${results.metrics.expectancy}</span>
                   </div>
                   <div className="border-b border-gray-900 pb-2">
                     <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Average Win / Loss</span>
@@ -459,7 +459,7 @@ export default function Backtesting() {
               </div>
 
               {/* Equity Curve Visual Table Alternative */}
-              <div className="glass-panel p-5 rounded-2xl space-y-4">
+              <div className="card p-5 rounded-lg space-y-4">
                 <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
                   Equity Curve Value Progression
                 </h3>
@@ -467,7 +467,7 @@ export default function Backtesting() {
                   {results.equity_curve.map((curve, idx) => (
                     <div key={idx} className="flex flex-col items-center flex-1">
                       <div 
-                        className="w-4 bg-brand/40 rounded-t"
+                        className="w-4 bg-[#22d3ee]/40 rounded-t"
                         style={{ 
                           height: `${Math.max(10, ((curve.equity - parseFloat(capital)) / results.metrics.net_profit) * 80)}px` 
                         }}
@@ -482,7 +482,7 @@ export default function Backtesting() {
               </div>
 
               {/* Individual Trade Logs */}
-              <div className="glass-panel p-6 rounded-2xl">
+              <div className="card p-6 rounded-lg">
                 <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
                   Simulation Trade Book Logs
                 </h2>
@@ -505,13 +505,13 @@ export default function Backtesting() {
                           <td className="py-2.5 text-gray-500">{t.id}</td>
                           <td className="py-2.5 text-white font-bold font-sans">{t.symbol}</td>
                           <td className="py-2.5">
-                            <span className={t.direction === 'BUY' ? 'text-bloomberg-green' : 'text-bloomberg-red'}>
+                            <span className={t.direction === 'BUY' ? 'text-[#22c55e]' : 'text-[#ef4444]'}>
                               {t.direction}
                             </span>
                           </td>
                           <td className="py-2.5 text-right">${t.entry_price}</td>
                           <td className="py-2.5 text-right">${t.exit_price}</td>
-                          <td className={`py-2.5 text-right ${t.pnl >= 0 ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                          <td className={`py-2.5 text-right ${t.pnl >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                             {t.pnl >= 0 ? '+' : ''}${t.pnl.toLocaleString()}
                           </td>
                           <td className="py-2.5 text-gray-400 font-sans">{t.exit_reason}</td>

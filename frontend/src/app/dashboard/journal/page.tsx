@@ -125,7 +125,7 @@ export default function TradeJournal() {
 
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
         >
           <Plus className="w-4 h-4" />
           {showAddForm ? 'Close Journal Console' : 'Add Journal Entry'}
@@ -134,9 +134,9 @@ export default function TradeJournal() {
 
       {/* Form Section */}
       {showAddForm && (
-        <form onSubmit={handleAddEntry} className="glass-panel p-6 rounded-2xl space-y-6 max-w-3xl mx-auto">
+        <form onSubmit={handleAddEntry} className="card p-6 rounded-lg space-y-6 max-w-3xl mx-auto">
           <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-brand" /> Document Trade Metrics
+            <Sliders className="w-4 h-4 text-[#22d3ee]" /> Document Trade Metrics
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -145,7 +145,7 @@ export default function TradeJournal() {
                 Strategy Name
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={strategy}
                 onChange={(e) => setStrategy(e.target.value)}
               >
@@ -160,7 +160,7 @@ export default function TradeJournal() {
                 Direction
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={direction}
                 onChange={(e) => setDirection(e.target.value as 'BUY' | 'SELL')}
               >
@@ -174,7 +174,7 @@ export default function TradeJournal() {
                 Confidence
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={confidence}
                 onChange={(e) => setConfidence(e.target.value as 'HIGH' | 'MEDIUM' | 'LOW')}
               >
@@ -194,7 +194,7 @@ export default function TradeJournal() {
                 type="number"
                 step="any"
                 required
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 value={entry}
                 onChange={(e) => setEntry(e.target.value)}
               />
@@ -208,7 +208,7 @@ export default function TradeJournal() {
                 type="number"
                 step="any"
                 required
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 value={exit}
                 onChange={(e) => setExit(e.target.value)}
               />
@@ -222,7 +222,7 @@ export default function TradeJournal() {
                 type="number"
                 step="any"
                 required
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 value={pnl}
                 onChange={(e) => setPnl(e.target.value)}
               />
@@ -239,7 +239,7 @@ export default function TradeJournal() {
                 <input
                   type="number"
                   step="any"
-                  className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                  className="w-full input-field p-3 rounded-xl text-xs font-mono"
                   placeholder="Delta"
                   value={delta}
                   onChange={(e) => setDelta(e.target.value)}
@@ -249,7 +249,7 @@ export default function TradeJournal() {
                 <input
                   type="number"
                   step="any"
-                  className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                  className="w-full input-field p-3 rounded-xl text-xs font-mono"
                   placeholder="Theta"
                   value={theta}
                   onChange={(e) => setTheta(e.target.value)}
@@ -259,7 +259,7 @@ export default function TradeJournal() {
                 <input
                   type="number"
                   step="any"
-                  className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                  className="w-full input-field p-3 rounded-xl text-xs font-mono"
                   placeholder="Gamma"
                   value={gamma}
                   onChange={(e) => setGamma(e.target.value)}
@@ -275,7 +275,7 @@ export default function TradeJournal() {
                 Execution Emotion / Mindset
               </label>
               <select
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 value={emotion}
                 onChange={(e) => setEmotion(e.target.value)}
               >
@@ -293,7 +293,7 @@ export default function TradeJournal() {
               </label>
               <input
                 type="text"
-                className="w-full glass-input p-3 rounded-xl text-xs font-mono"
+                className="w-full input-field p-3 rounded-xl text-xs font-mono"
                 placeholder="IgrisPattern, Intraday"
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
@@ -309,7 +309,7 @@ export default function TradeJournal() {
               <textarea
                 rows={3}
                 required
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 placeholder="Details on indicators, setups, and charts alerts"
                 value={reasonText}
                 onChange={(e) => setReasonText(e.target.value)}
@@ -322,7 +322,7 @@ export default function TradeJournal() {
               </label>
               <textarea
                 rows={3}
-                className="w-full glass-input p-3 rounded-xl text-xs"
+                className="w-full input-field p-3 rounded-xl text-xs"
                 placeholder="Aura, discipline checks, improvements"
                 value={notesText}
                 onChange={(e) => setNotesText(e.target.value)}
@@ -340,7 +340,7 @@ export default function TradeJournal() {
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand hover:bg-brand/90 text-white font-bold text-xs uppercase tracking-wider transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all"
             >
               <Save className="w-4 h-4" /> Save Journal Entry
             </button>
@@ -353,7 +353,7 @@ export default function TradeJournal() {
         {entries.map(entry => {
           const isWin = entry.pnl >= 0;
           return (
-            <div key={entry.id} className="glass-panel p-6 rounded-2xl space-y-4 relative overflow-hidden group hover:border-brand/35 transition-all">
+            <div key={entry.id} className="card p-6 rounded-lg space-y-4 relative overflow-hidden group hover:border-[#22d3ee]/35 transition-all">
               {/* Header metrics */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-900/60 pb-4">
                 <div className="flex items-center gap-4">
@@ -362,7 +362,7 @@ export default function TradeJournal() {
                     <span className="text-[10px] text-gray-500 font-mono mt-0.5 block">{entry.date} {entry.time}</span>
                   </div>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                    entry.direction === 'BUY' ? 'bg-bloomberg-green/10 text-bloomberg-green' : 'bg-bloomberg-red/10 text-bloomberg-red'
+                    entry.direction === 'BUY' ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-[#ef4444]/10 text-[#ef4444]'
                   }`}>
                     {entry.direction === 'BUY' ? 'LONG' : 'SHORT'}
                   </span>
@@ -375,7 +375,7 @@ export default function TradeJournal() {
                 <div className="flex items-center gap-6">
                   <div className="text-right">
                     <span className="text-[9px] text-gray-500 font-mono block uppercase">Net Profit</span>
-                    <span className={`font-mono text-sm font-bold ${isWin ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                    <span className={`font-mono text-sm font-bold ${isWin ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                       {isWin ? '+' : ''}${entry.pnl.toLocaleString()}
                     </span>
                   </div>

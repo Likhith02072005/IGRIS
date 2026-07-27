@@ -147,7 +147,7 @@ export default function MissionControl() {
           <span className="text-gray-500 font-mono">Last Update: {lastUpdated.toLocaleTimeString()}</span>
           <button 
             onClick={handleMasterHalt}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-bloomberg-red hover:bg-bloomberg-red/90 text-white font-bold uppercase tracking-wider rounded-xl transition-all"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#ef4444] hover:bg-[#ef4444]/90 text-white font-bold uppercase tracking-wider rounded-xl transition-all"
           >
             <AlertOctagon className="w-4 h-4" /> Master Emergency Halt
           </button>
@@ -158,11 +158,11 @@ export default function MissionControl() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
           { label: 'Total Algorithmic Capital', val: '₹1,00,00,000.00', color: 'text-white' },
-          { label: "Today's Net ROI PnL", val: `+₹${strategies.reduce((a, b) => a + b.pnl, 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: 'text-bloomberg-green' },
-          { label: 'Max Peak Drawdown', val: '-4.80%', color: 'text-bloomberg-red' },
-          { label: 'Active Execution Sockets', val: '3 Nodes Online', color: 'text-brand' },
+          { label: "Today's Net ROI PnL", val: `+₹${strategies.reduce((a, b) => a + b.pnl, 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: 'text-[#22c55e]' },
+          { label: 'Max Peak Drawdown', val: '-4.80%', color: 'text-[#ef4444]' },
+          { label: 'Active Execution Sockets', val: '3 Nodes Online', color: 'text-[#22d3ee]' },
         ].map(card => (
-          <div key={card.label} className="glass-panel p-5 rounded-2xl">
+          <div key={card.label} className="card p-5 rounded-lg">
             <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">{card.label}</span>
             <span className={`text-lg font-bold font-mono ${card.color}`}>{card.val}</span>
           </div>
@@ -170,7 +170,7 @@ export default function MissionControl() {
       </div>
 
       {/* Strategies list dashboard */}
-      <div className="glass-panel rounded-2xl border border-gray-800/80 overflow-hidden">
+      <div className="card rounded-lg border border-gray-800/80 overflow-hidden">
         <div className="p-5 border-b border-gray-900 bg-[#060a16]/65 flex justify-between items-center text-xs font-bold text-gray-400">
           <span>Active Strategy Grid</span>
           <span>Sorting: Total Capital</span>
@@ -206,7 +206,7 @@ export default function MissionControl() {
                     </td>
                     <td className="p-4">
                       <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${
-                        isRunning ? 'bg-bloomberg-green/10 text-bloomberg-green' : isSuspended ? 'bg-bloomberg-red/10 text-bloomberg-red' : 'bg-gray-800 text-gray-400'
+                        isRunning ? 'bg-[#22c55e]/10 text-[#22c55e]' : isSuspended ? 'bg-[#ef4444]/10 text-[#ef4444]' : 'bg-gray-800 text-gray-400'
                       }`}>
                         {s.status}
                       </span>
@@ -216,20 +216,20 @@ export default function MissionControl() {
                       <span className="text-[9px] text-gray-500 block">Exposure: {s.exposure}%</span>
                     </td>
                     <td className="p-4 text-right font-mono text-white">₹{s.capital.toLocaleString()}</td>
-                    <td className={`p-4 text-right font-mono ${isPnlPositive ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                    <td className={`p-4 text-right font-mono ${isPnlPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                       {isPnlPositive ? '+' : ''}₹{s.pnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ({s.todayReturn}%)
                     </td>
-                    <td className="p-4 text-right font-mono text-bloomberg-red">{s.drawdown}%</td>
+                    <td className="p-4 text-right font-mono text-[#ef4444]">{s.drawdown}%</td>
                     <td className="p-4">
                       <div className="flex items-center gap-1">
-                        <Network className="w-3.5 h-3.5 text-brand" />
+                        <Network className="w-3.5 h-3.5 text-[#22d3ee]" />
                         <span>{s.broker} ({s.latency}ms)</span>
                       </div>
                     </td>
                     <td className="p-4">
-                      <span className="text-bloomberg-green">H:{s.health}%</span>
+                      <span className="text-[#22c55e]">H:{s.health}%</span>
                       <span className="text-gray-500 mx-1">|</span>
-                      <span className="text-brand">AI:{s.aiScore}%</span>
+                      <span className="text-[#22d3ee]">AI:{s.aiScore}%</span>
                     </td>
                     <td className="p-4 text-center">
                       {/* Mini SVG curve path */}
@@ -255,7 +255,7 @@ export default function MissionControl() {
                         ) : (
                           <button 
                             onClick={() => handleAction(s.id, 'PLAY')}
-                            className="p-2 rounded bg-gray-900 border border-gray-800 text-bloomberg-green hover:text-white transition-colors"
+                            className="p-2 rounded bg-gray-900 border border-gray-800 text-[#22c55e] hover:text-white transition-colors"
                             title="Resume Strategy"
                           >
                             <Play className="w-3.5 h-3.5" />
@@ -263,7 +263,7 @@ export default function MissionControl() {
                         )}
                         <button 
                           onClick={() => handleAction(s.id, 'HALT')}
-                          className="p-2 rounded bg-bloomberg-red/10 border border-bloomberg-red/35 text-bloomberg-red hover:bg-bloomberg-red/20 transition-colors"
+                          className="p-2 rounded bg-[#ef4444]/10 border border-[#ef4444]/35 text-[#ef4444] hover:bg-[#ef4444]/20 transition-colors"
                           title="Halt & Liquidate"
                         >
                           <AlertOctagon className="w-3.5 h-3.5" />

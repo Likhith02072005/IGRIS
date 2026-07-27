@@ -75,10 +75,10 @@ export default function MarketDashboard() {
           </p>
         </div>
 
-        <div className="flex items-center gap-4 bg-gray-950/80 border border-gray-900 px-4 py-2.5 rounded-xl text-xs shadow-glass-inset">
+        <div className="flex items-center gap-4 bg-gray-950/80 border border-gray-900 px-4 py-2.5 rounded-xl text-xs ">
           <span className="font-mono text-gray-400 font-bold">NIFTY 50 SPOT:</span>
           <span className="font-mono text-white font-bold animate-pulse">{indexPrice.toLocaleString()}</span>
-          <span className="text-[10px] text-bloomberg-green font-mono font-bold">+0.46%</span>
+          <span className="text-[10px] text-[#22c55e] font-mono font-bold">+0.46%</span>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ export default function MarketDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         
         {/* Option Chain (Cols 1 to 3) */}
-        <div className="lg:col-span-3 glass-panel rounded-2xl overflow-hidden flex flex-col justify-between">
+        <div className="lg:col-span-3 card rounded-lg overflow-hidden flex flex-col justify-between">
           
           <div className="p-5 border-b border-gray-900 bg-[#060a16]/65 flex justify-between items-center">
             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Nifty Options Strike Board</span>
@@ -101,7 +101,7 @@ export default function MarketDashboard() {
               <thead>
                 {/* Headers calls/puts */}
                 <tr className="border-b border-gray-900 bg-gray-950/30 text-[9px] text-gray-500 uppercase tracking-wider font-bold">
-                  <th colSpan={5} className="py-2 border-r border-gray-900 text-center text-brand">Calls (Bullish)</th>
+                  <th colSpan={5} className="py-2 border-r border-gray-900 text-center text-[#22d3ee]">Calls (Bullish)</th>
                   <th className="py-2 bg-gray-950 text-center text-white">Strike</th>
                   <th colSpan={5} className="py-2 border-l border-gray-900 text-center text-indigo-400">Puts (Bearish)</th>
                 </tr>
@@ -129,25 +129,25 @@ export default function MarketDashboard() {
                     <tr 
                       key={s.strike} 
                       className={`hover:bg-gray-900/20 transition-colors ${
-                        Math.abs(s.strike - indexPrice) <= 25 ? 'bg-brand/5 font-extrabold border-y border-brand/20' : ''
+                        Math.abs(s.strike - indexPrice) <= 25 ? 'bg-[#22d3ee]/5 font-extrabold border-y border-[#22d3ee]/20' : ''
                       }`}
                     >
                       {/* Call columns */}
-                      <td className={`py-3 text-gray-400 ${isCallITM ? 'bg-bloomberg-green/5' : ''}`}>{s.callOI.toLocaleString()}</td>
-                      <td className={`py-3 text-gray-500 ${isCallITM ? 'bg-bloomberg-green/5' : ''}`}>{s.callVol.toLocaleString()}</td>
-                      <td className={`py-3 text-gray-500 ${isCallITM ? 'bg-bloomberg-green/5' : ''}`}>{s.callIV}%</td>
-                      <td className={`py-3 text-white font-bold font-mono ${isCallITM ? 'bg-bloomberg-green/5' : ''}`}>${s.callLTP}</td>
-                      <td className={`py-3 border-r border-gray-900 font-mono ${isCallITM ? 'bg-bloomberg-green/5' : ''} ${s.callDelta >= 0.7 ? 'text-bloomberg-green' : 'text-gray-400'}`}>
+                      <td className={`py-3 text-gray-400 ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>{s.callOI.toLocaleString()}</td>
+                      <td className={`py-3 text-gray-500 ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>{s.callVol.toLocaleString()}</td>
+                      <td className={`py-3 text-gray-500 ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>{s.callIV}%</td>
+                      <td className={`py-3 text-white font-bold font-mono ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>${s.callLTP}</td>
+                      <td className={`py-3 border-r border-gray-900 font-mono ${isCallITM ? 'bg-[#22c55e]/5' : ''} ${s.callDelta >= 0.7 ? 'text-[#22c55e]' : 'text-gray-400'}`}>
                         {s.callDelta}
                       </td>
 
                       {/* Strike Price */}
-                      <td className="py-3 bg-[#060a16] text-white font-bold font-sans text-xs border-x border-gray-900 shadow-glass-inset">
+                      <td className="py-3 bg-[#060a16] text-white font-bold font-sans text-xs border-x border-gray-900 ">
                         {s.strike}
                       </td>
 
                       {/* Put columns */}
-                      <td className={`py-3 border-l border-gray-900 font-mono ${isPutITM ? 'bg-indigo-500/5' : ''} ${Math.abs(s.putDelta) >= 0.7 ? 'text-bloomberg-red' : 'text-gray-400'}`}>
+                      <td className={`py-3 border-l border-gray-900 font-mono ${isPutITM ? 'bg-indigo-500/5' : ''} ${Math.abs(s.putDelta) >= 0.7 ? 'text-[#ef4444]' : 'text-gray-400'}`}>
                         {s.putDelta}
                       </td>
                       <td className={`py-3 text-white font-bold font-mono ${isPutITM ? 'bg-indigo-500/5' : ''}`}>${s.putLTP}</td>
@@ -167,19 +167,19 @@ export default function MarketDashboard() {
         <div className="space-y-6">
           
           {/* Market breadth & volume leaders */}
-          <div className="glass-panel p-6 rounded-2xl space-y-6">
+          <div className="card p-6 rounded-lg space-y-6">
             <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-              <Activity className="w-4 h-4 text-brand" /> Market Breadth
+              <Activity className="w-4 h-4 text-[#22d3ee]" /> Market Breadth
             </h2>
 
             {/* Advance Decline */}
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-bold">
-                <span className="text-bloomberg-green">Advances: 34</span>
-                <span className="text-bloomberg-red">Declines: 16</span>
+                <span className="text-[#22c55e]">Advances: 34</span>
+                <span className="text-[#ef4444]">Declines: 16</span>
               </div>
-              <div className="h-2.5 w-full bg-bloomberg-red rounded-full flex overflow-hidden">
-                <div className="h-full bg-bloomberg-green" style={{ width: '68%' }} />
+              <div className="h-2.5 w-full bg-[#ef4444] rounded-full flex overflow-hidden">
+                <div className="h-full bg-[#22c55e]" style={{ width: '68%' }} />
               </div>
               <div className="flex justify-between text-[10px] text-gray-500 font-mono font-bold">
                 <span>Breadth: Bullish</span>
@@ -194,10 +194,10 @@ export default function MarketDashboard() {
               </span>
               <div className="space-y-2 text-xs font-semibold text-gray-300">
                 {[
-                  { name: 'Nifty IT', change: '+1.45%', color: 'text-bloomberg-green' },
-                  { name: 'Nifty Bank', change: '+0.82%', color: 'text-bloomberg-green' },
-                  { name: 'Nifty Auto', change: '-1.20%', color: 'text-bloomberg-red' },
-                  { name: 'Nifty Pharma', change: '-0.65%', color: 'text-bloomberg-red' },
+                  { name: 'Nifty IT', change: '+1.45%', color: 'text-[#22c55e]' },
+                  { name: 'Nifty Bank', change: '+0.82%', color: 'text-[#22c55e]' },
+                  { name: 'Nifty Auto', change: '-1.20%', color: 'text-[#ef4444]' },
+                  { name: 'Nifty Pharma', change: '-0.65%', color: 'text-[#ef4444]' },
                 ].map(sector => (
                   <div key={sector.name} className="flex justify-between border-b border-gray-900 pb-2">
                     <span>{sector.name}</span>

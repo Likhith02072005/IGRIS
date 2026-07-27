@@ -114,11 +114,11 @@ export default function PortfolioPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         {/* Q1: Money Making */}
-        <div className="glass-panel p-5 rounded-2xl border-l-4 border-bloomberg-green">
+        <div className="card p-5 rounded-lg border-l-4 border-[#22c55e]">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Net Portfolio Value</span>
           <div className="flex items-baseline gap-3">
             <h3 className="text-2xl font-bold text-white font-mono">$103,797.50</h3>
-            <span className="text-xs font-bold text-bloomberg-green font-mono flex items-center gap-0.5">
+            <span className="text-xs font-bold text-[#22c55e] font-mono flex items-center gap-0.5">
               <TrendingUp className="w-3.5 h-3.5" /> +3.79% overall
             </span>
           </div>
@@ -126,7 +126,7 @@ export default function PortfolioPage() {
         </div>
 
         {/* Q2: Risk Level */}
-        <div className="glass-panel p-5 rounded-2xl border-l-4 border-indigo-500">
+        <div className="card p-5 rounded-lg border-l-4 border-indigo-500">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Portfolio Exposure Limit</span>
           <div className="flex items-baseline gap-3">
             <h3 className="text-2xl font-bold text-white font-mono">75.00%</h3>
@@ -136,11 +136,11 @@ export default function PortfolioPage() {
         </div>
 
         {/* Q3: Top Performer */}
-        <div className="glass-panel p-5 rounded-2xl border-l-4 border-brand">
+        <div className="card p-5 rounded-lg border-l-4 border-[#22d3ee]">
           <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Top Performing Algorithm</span>
           <div className="flex items-baseline gap-3">
             <h3 className="text-2xl font-bold text-white font-mono">IGRIS Straddle</h3>
-            <span className="text-xs font-bold text-brand font-mono">Sharpe: 2.84</span>
+            <span className="text-xs font-bold text-[#22d3ee] font-mono">Sharpe: 2.84</span>
           </div>
           <span className="text-[10px] text-gray-400 font-mono mt-1 block">Today return: +2.45% ROI</span>
         </div>
@@ -157,8 +157,8 @@ export default function PortfolioPage() {
           return (
             <div 
               key={strat.id} 
-              className={`glass-panel rounded-2xl overflow-hidden border transition-all duration-300 ${
-                isExpanded ? 'border-brand/40 shadow-[0_0_20px_rgba(59,130,246,0.15)]' : 'border-gray-800/80 hover:border-gray-700/80'
+              className={`card rounded-lg overflow-hidden border transition-all duration-300 ${
+                isExpanded ? 'border-[#22d3ee]/40 shadow-[0_0_20px_rgba(59,130,246,0.15)]' : 'border-gray-800/80 hover:border-gray-700/80'
               }`}
             >
               
@@ -173,7 +173,7 @@ export default function PortfolioPage() {
                   <div>
                     <h3 className="text-sm font-extrabold text-white tracking-wide">{strat.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-bloomberg-green' : 'bg-gray-600'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-[#22c55e]' : 'bg-gray-600'}`} />
                       <span className="text-[9px] font-mono text-gray-500 uppercase tracking-wider">
                         {isLive ? 'Live Deployment' : 'System Paused'}
                       </span>
@@ -190,7 +190,7 @@ export default function PortfolioPage() {
 
                   <div>
                     <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Today Return</span>
-                    <span className={`font-mono font-bold ${isPnlPositive ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
+                    <span className={`font-mono font-bold ${isPnlPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
                       {isPnlPositive ? '+' : ''}{strat.todayReturn}% (${strat.todayPnL.toLocaleString()})
                     </span>
                   </div>
@@ -204,15 +204,15 @@ export default function PortfolioPage() {
                   <div className="flex gap-4">
                     <div>
                       <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Risk</span>
-                      <span className="text-bloomberg-red font-mono font-bold">{strat.riskScore}/10</span>
+                      <span className="text-[#ef4444] font-mono font-bold">{strat.riskScore}/10</span>
                     </div>
                     <div>
                       <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Health</span>
-                      <span className="text-bloomberg-green font-mono font-bold">{strat.healthScore}%</span>
+                      <span className="text-[#22c55e] font-mono font-bold">{strat.healthScore}%</span>
                     </div>
                     <div>
                       <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">AI Score</span>
-                      <span className="text-brand font-mono font-bold">{strat.aiScore}%</span>
+                      <span className="text-[#22d3ee] font-mono font-bold">{strat.aiScore}%</span>
                     </div>
                   </div>
                 </div>
@@ -223,8 +223,8 @@ export default function PortfolioPage() {
                     onClick={(e) => toggleStatus(strat.id, e)}
                     className={`px-3 py-1.5 rounded-lg text-[9px] font-extrabold uppercase tracking-wider transition-colors border ${
                       isLive 
-                        ? 'bg-bloomberg-red/10 border-bloomberg-red/35 text-bloomberg-red hover:bg-bloomberg-red/20' 
-                        : 'bg-bloomberg-green/10 border-bloomberg-green/35 text-bloomberg-green hover:bg-bloomberg-green/20'
+                        ? 'bg-[#ef4444]/10 border-[#ef4444]/35 text-[#ef4444] hover:bg-[#ef4444]/20' 
+                        : 'bg-[#22c55e]/10 border-[#22c55e]/35 text-[#22c55e] hover:bg-[#22c55e]/20'
                     }`}
                   >
                     {isLive ? 'Pause' : 'Activate'}
@@ -242,14 +242,14 @@ export default function PortfolioPage() {
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
                     {/* Equity Progression Bar Chart Mock */}
-                    <div className="glass-panel p-5 rounded-xl space-y-3">
+                    <div className="card p-5 rounded-xl space-y-3">
                       <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
                         Capital Curve Progression
                       </span>
                       <div className="flex items-end justify-between h-24 bg-gray-950/60 rounded-lg p-2 text-[9px] font-mono text-gray-500 border border-gray-900">
                         {[1, 2, 3, 4, 5, 6].map((step, idx) => (
                           <div key={idx} className="flex flex-col items-center flex-1">
-                            <div className="w-3 bg-brand/50 rounded-t" style={{ height: `${20 + idx * 12}px` }} />
+                            <div className="w-3 bg-[#22d3ee]/50 rounded-t" style={{ height: `${20 + idx * 12}px` }} />
                             <span className="mt-1">W{step}</span>
                           </div>
                         ))}
@@ -257,40 +257,40 @@ export default function PortfolioPage() {
                     </div>
 
                     {/* Monthly Performance Heatmap Mock */}
-                    <div className="glass-panel p-5 rounded-xl space-y-3">
+                    <div className="card p-5 rounded-xl space-y-3">
                       <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
                         Returns Profile Heatmap
                       </span>
                       <div className="grid grid-cols-6 gap-2 text-[10px] font-mono text-center font-bold">
-                        <div className="p-2 bg-bloomberg-green/25 border border-bloomberg-green/30 text-bloomberg-green rounded">Jan<br/>+1.8%</div>
-                        <div className="p-2 bg-bloomberg-green/10 border border-bloomberg-green/15 text-bloomberg-green rounded">Feb<br/>+0.6%</div>
-                        <div className="p-2 bg-bloomberg-red/20 border border-bloomberg-red/25 text-bloomberg-red rounded">Mar<br/>-1.2%</div>
-                        <div className="p-2 bg-bloomberg-green/30 border border-bloomberg-green/45 text-bloomberg-green rounded">Apr<br/>+2.4%</div>
+                        <div className="p-2 bg-[#22c55e]/25 border border-[#22c55e]/30 text-[#22c55e] rounded">Jan<br/>+1.8%</div>
+                        <div className="p-2 bg-[#22c55e]/10 border border-[#22c55e]/15 text-[#22c55e] rounded">Feb<br/>+0.6%</div>
+                        <div className="p-2 bg-[#ef4444]/20 border border-[#ef4444]/25 text-[#ef4444] rounded">Mar<br/>-1.2%</div>
+                        <div className="p-2 bg-[#22c55e]/30 border border-[#22c55e]/45 text-[#22c55e] rounded">Apr<br/>+2.4%</div>
                         <div className="p-2 bg-gray-900 border border-gray-800 text-gray-500 rounded">May<br/>0.0%</div>
-                        <div className="p-2 bg-bloomberg-green/20 border border-bloomberg-green/25 text-bloomberg-green rounded">Jun<br/>+1.5%</div>
+                        <div className="p-2 bg-[#22c55e]/20 border border-[#22c55e]/25 text-[#22c55e] rounded">Jun<br/>+1.5%</div>
                       </div>
                     </div>
 
                     {/* Distribution Profile */}
-                    <div className="glass-panel p-5 rounded-xl space-y-3">
+                    <div className="card p-5 rounded-xl space-y-3">
                       <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
                         Win / Loss Distribution
                       </span>
                       <div className="space-y-2 text-xs">
                         <div className="flex justify-between">
                           <span className="text-gray-400">Winning Trades</span>
-                          <span className="text-bloomberg-green font-bold">18 trades (60.0%)</span>
+                          <span className="text-[#22c55e] font-bold">18 trades (60.0%)</span>
                         </div>
                         <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
-                          <div className="h-full bg-bloomberg-green" style={{ width: '60%' }} />
+                          <div className="h-full bg-[#22c55e]" style={{ width: '60%' }} />
                         </div>
 
                         <div className="flex justify-between mt-2">
                           <span className="text-gray-400">Losing Trades</span>
-                          <span className="text-bloomberg-red font-bold">12 trades (40.0%)</span>
+                          <span className="text-[#ef4444] font-bold">12 trades (40.0%)</span>
                         </div>
                         <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
-                          <div className="h-full bg-bloomberg-red" style={{ width: '40%' }} />
+                          <div className="h-full bg-[#ef4444]" style={{ width: '40%' }} />
                         </div>
                       </div>
                     </div>
@@ -301,13 +301,13 @@ export default function PortfolioPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed">
                     <div className="bg-gray-950/65 border border-gray-900 p-5 rounded-xl">
                       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-brand" /> Strategy Deployment Notes
+                        <FileText className="w-3.5 h-3.5 text-[#22d3ee]" /> Strategy Deployment Notes
                       </span>
                       <p className="text-gray-300 font-medium">{strat.notes}</p>
                     </div>
 
-                    <div className="bg-brand/5 border border-brand/20 p-5 rounded-xl">
-                      <span className="text-[9px] font-bold text-brand uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+                    <div className="bg-[#22d3ee]/5 border border-[#22d3ee]/20 p-5 rounded-xl">
+                      <span className="text-[9px] font-bold text-[#22d3ee] uppercase tracking-wider block mb-2 flex items-center gap-1.5">
                         <Bot className="w-4 h-4" /> AI Research Analysis
                       </span>
                       <p className="text-gray-300 font-medium">{strat.aiAnalysis}</p>
@@ -317,7 +317,7 @@ export default function PortfolioPage() {
                   {/* Option chain charges summary */}
                   <div className="flex justify-between items-center text-[10px] font-mono text-gray-500 border-t border-gray-900/60 pt-4">
                     <span>Broker Charges Year-to-Date: $120.40</span>
-                    <span className="text-brand hover:underline cursor-pointer flex items-center">
+                    <span className="text-[#22d3ee] hover:underline cursor-pointer flex items-center">
                       View Full Strategy Metrics Sheet <ChevronRight className="w-3 h-3" />
                     </span>
                   </div>
