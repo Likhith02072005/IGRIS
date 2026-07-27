@@ -1,0 +1,274 @@
+//@version=5
+indicator("Likhith Trading System v2", overlay=true, max_labels_count=500)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 1: USER INPUTS
+// ═══════════════════════════════════════════════════════════════
+mode = input.string("Positional", "Trading Mode", options=["Intraday", "Positional"])
+sl_pct = input.float(2.0, "Stop Loss %", minval=0.5, maxval=10.0, step=0.5)
+t1_pct = input.float(3.0, "Target 1 %", minval=1.0, maxval=20.0, step=0.5)
+t2_pct = input.float(6.0, "Target 2 %", minval=1.0, maxval=30.0, step=0.5)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 2: EMA LINES
+// ═══════════════════════════════════════════════════════════════
+ema9   = ta.ema(close, 9)
+ema20  = ta.ema(close, 20)
+ema50  = ta.ema(close, 50)
+ema200 = ta.ema(close, 200)
+
+plot(ema9,   "EMA 9",   color=color.new(color.yellow, 0),  linewidth=1)
+plot(ema20,  "EMA 20",  color=color.new(color.blue, 0),    linewidth=1)
+plot(ema50,  "EMA 50",  color=color.new(color.orange, 0),  linewidth=2)
+plot(ema200, "EMA 200", color=color.new(color.red, 0),     linewidth=2)
+
+// Price vs EMA position
+above_ema20  = close > ema20
+above_ema50  = close > ema50
+above_ema200 = close > ema200
+// EMA golden cross (EMA20 crossing above EMA50) — strong bullish signal
+ema_golden_cross = ta.crossover(ema20, ema50)
+ema_death_cross  = ta.crossunder(ema20, ema50)
+
+plotshape(ema_golden_cross, "Golden Cross", shape.xcross, location.belowbar, color.new(color.gold, 0), size=size.small, text="GX")
+plotshape(ema_death_cross,  "Death Cross",  shape.xcross, location.abovebar, color.new(color.maroon, 0), size=size.small, text="DX")
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 3: BOLLINGER BANDS
+// ═══════════════════════════════════════════════════════════════
+bb_basis = ta.sma(close, 20)
+bb_dev   = ta.stdev(close, 20)
+bb_upper = bb_basis + 2.0 * bb_dev
+bb_lower = bb_basis - 2.0 * bb_dev
+bb_width = (bb_upper - bb_lower) / bb_basis * 100  // BB width % — squeeze detection
+
+p_upper = plot(bb_upper, "BB Upper", color=color.new(color.purple, 60), linewidth=1)
+p_lower = plot(bb_lower, "BB Lower", color=color.new(color.purple, 60), linewidth=1)
+fill(p_upper, p_lower, color=color.new(color.purple, 90))
+
+bb_squeeze = bb_width < ta.sma(bb_width, 20) * 0.85  // Tight band = big move coming
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 4: RSI
+// ═══════════════════════════════════════════════════════════════
+rsi = ta.rsi(close, 14)
+
+// RSI zones from our chat:
+// >74     = DANGER (we told user NOT to buy Zydus at 74, JK Tyre at 92, HDFC at 76)
+// 65-74   = CAUTION (momentum may be fading)
+// 45-65   = HEALTHY ENTRY ZONE (best buy zone per our analysis)
+// 30-44   = OVERSOLD BOUNCE territory
+// <30     = EXTREMELY OVERSOLD
+
+rsi_danger   = rsi > 74
+rsi_caution  = rsi >= 65 and rsi <= 74
+rsi_healthy  = rsi >= 45 and rsi < 65
+rsi_oversold = rsi < 35
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 5: MACD
+// ═══════════════════════════════════════════════════════════════
+[macd_line, signal_line, hist] = ta.macd(close, 12, 26, 9)
+macd_bullish       = macd_line > signal_line
+macd_bearish       = macd_line < signal_line
+macd_crossover     = ta.crossover(macd_line, signal_line)   // Bullish flip
+macd_crossunder    = ta.crossunder(macd_line, signal_line)  // Bearish flip
+macd_above_zero    = macd_line > 0
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 6: SUPERTREND
+// ═══════════════════════════════════════════════════════════════
+[supertrend, st_direction] = ta.supertrend(3.0, 10)
+st_bull = st_direction < 0
+st_bear = st_direction > 0
+
+plot(st_bull ? supertrend : na, "ST Bull", color=color.green, linewidth=2)
+plot(st_bear ? supertrend : na, "ST Bear", color=color.red,   linewidth=2)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 7: ADX — TREND STRENGTH (added based on our analysis)
+// We constantly checked ADX in our chats:
+//   ADX > 25 = strong trend (Axis Bank ADX 44 = strong)
+//   ADX 15-25 = developing trend
+//   ADX < 15 = weak/no trend — avoid trading
+// ═══════════════════════════════════════════════════════════════
+adx_len    = 14
+dmi_plus   = ta.rma(math.max(high - high[1], 0), adx_len)
+dmi_minus  = ta.rma(math.max(low[1] - low, 0),   adx_len)
+tr_val     = ta.rma(ta.tr(true), adx_len)
+di_plus    = 100 * dmi_plus  / tr_val
+di_minus   = 100 * dmi_minus / tr_val
+dx         = 100 * math.abs(di_plus - di_minus) / (di_plus + di_minus)
+adx        = ta.rma(dx, adx_len)
+
+adx_strong  = adx > 25   // Strong trend — trade with confidence
+adx_weak    = adx < 15   // Weak trend — avoid new entries
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 8: VOLUME ANALYSIS
+// ═══════════════════════════════════════════════════════════════
+vol_avg      = ta.sma(volume, 20)
+high_volume  = volume > vol_avg * 1.5   // 1.5x avg = institutional interest
+spike_volume = volume > vol_avg * 3.0   // 3x avg = massive institutional move
+                                         // (like JK Tyre 14-18x on results day)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 9: GAP DETECTION (critical from our chat)
+// We discussed gap-ups/downs constantly — don't buy at gap-up open
+// ═══════════════════════════════════════════════════════════════
+gap_up   = open > close[1] * 1.005   // Gap up >0.5%
+gap_down = open < close[1] * 0.995   // Gap down >0.5%
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 10: VWAP
+// ═══════════════════════════════════════════════════════════════
+vwap_val       = ta.vwap(hlc3)
+above_vwap     = close > vwap_val
+plot(vwap_val, "VWAP", color=color.new(color.teal, 0), linewidth=1, style=plot.style_circles)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 11: SIGNAL ENGINE — 3 TIERS (improved from our chat)
+//
+// STRONG BUY  = all conditions perfect (what we look for)
+// MODERATE BUY = most conditions aligned (cautious entry)
+// AVOID       = RSI danger zone (like JK Tyre at 92 — we said don't buy)
+// ═══════════════════════════════════════════════════════════════
+
+// STRONG BUY — all 6 conditions met
+strong_buy = above_ema20 and
+             above_ema50 and
+             rsi_healthy and
+             macd_bullish and
+             st_bull and
+             high_volume and
+             adx_strong and
+             above_vwap and
+             not gap_up   // Don't chase gap-ups — key lesson from our chat
+
+// MODERATE BUY — 4 of 5 core conditions (some flexibility)
+moderate_buy = above_ema20 and
+               above_ema50 and
+               (rsi >= 40 and rsi < 68) and
+               macd_bullish and
+               st_bull and
+               not rsi_danger
+
+// BOUNCE BUY — oversold recovery (like INFY after IT selloff)
+bounce_buy = rsi_oversold and
+             macd_crossover and
+             spike_volume and
+             not st_bear
+
+// SELL SIGNAL — from our chat: sell when RSI overbought + momentum dying
+sell_signal = (close < ema20 or rsi_danger) and
+              macd_bearish and
+              st_bear
+
+// DANGER WARNING — RSI too high, don't buy (e.g. JK Tyre RSI 92, HDFC 76)
+danger_zone = rsi > 74 and not sell_signal
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 12: SIGNAL PLOTS
+// ═══════════════════════════════════════════════════════════════
+plotshape(strong_buy,   "STRONG BUY",   shape.labelup,   location.belowbar, color.new(color.lime, 0),   textcolor=color.black, text="★ BUY",  size=size.normal)
+plotshape(moderate_buy and not strong_buy, "BUY",  shape.labelup,   location.belowbar, color.new(color.green, 20),  textcolor=color.white, text="BUY",   size=size.small)
+plotshape(bounce_buy,   "BOUNCE",       shape.labelup,   location.belowbar, color.new(color.aqua, 0),   textcolor=color.black, text="↑ BOUNCE", size=size.small)
+plotshape(sell_signal,  "SELL",         shape.labeldown, location.abovebar, color.new(color.red, 0),    textcolor=color.white, text="SELL",  size=size.normal)
+plotshape(danger_zone,  "AVOID",        shape.labeldown, location.abovebar, color.new(color.orange, 0), textcolor=color.white, text="⚠ AVOID", size=size.small)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 13: STOP-LOSS & TARGET LINES (key lesson from our chat)
+// Every trade needs a stop-loss BEFORE entry — repeated throughout our conversation
+// ═══════════════════════════════════════════════════════════════
+var float entry_price = na
+var line sl_line = na
+var line t1_line = na
+var line t2_line = na
+
+if strong_buy or (moderate_buy and not strong_buy)
+    entry_price := close
+    if not na(sl_line) then line.delete(sl_line)
+    if not na(t1_line) then line.delete(t1_line)
+    if not na(t2_line) then line.delete(t2_line)
+    sl_price = entry_price * (1 - sl_pct / 100)
+    t1_price = entry_price * (1 + t1_pct / 100)
+    t2_price = entry_price * (1 + t2_pct / 100)
+    sl_line := line.new(bar_index, sl_price, bar_index + 20, sl_price, color=color.red,    width=1, style=line.style_dashed)
+    t1_line := line.new(bar_index, t1_price, bar_index + 20, t1_price, color=color.green,  width=1, style=line.style_dashed)
+    t2_line := line.new(bar_index, t2_price, bar_index + 20, t2_price, color=color.lime,   width=1, style=line.style_dotted)
+    label.new(bar_index + 1, sl_price, "SL: " + str.tostring(math.round(sl_price, 2)), color=color.new(color.red, 80),   textcolor=color.red,   size=size.small)
+    label.new(bar_index + 1, t1_price, "T1: " + str.tostring(math.round(t1_price, 2)), color=color.new(color.green, 80), textcolor=color.green, size=size.small)
+    label.new(bar_index + 1, t2_price, "T2: " + str.tostring(math.round(t2_price, 2)), color=color.new(color.lime, 80),  textcolor=color.lime,  size=size.small)
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 14: BACKGROUND ZONES
+// ═══════════════════════════════════════════════════════════════
+bgcolor(rsi > 74           ? color.new(color.red,    90) : na, title="Danger — RSI overbought")
+bgcolor(rsi >= 65 and rsi <= 74 ? color.new(color.orange, 95) : na, title="Caution zone")
+bgcolor(rsi >= 45 and rsi < 65  ? color.new(color.green,  97) : na, title="Healthy entry zone")
+bgcolor(rsi < 35           ? color.new(color.aqua,   92) : na, title="Oversold — watch for bounce")
+bgcolor(bb_squeeze         ? color.new(color.yellow, 95) : na, title="BB Squeeze — big move coming")
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION 15: DASHBOARD TABLE (enhanced from our chat context)
+// ═══════════════════════════════════════════════════════════════
+var table dash = table.new(position.top_right, 2, 12,
+     bgcolor     = color.new(color.black, 75),
+     border_color= color.new(color.gray, 50),
+     border_width= 1,
+     frame_color = color.new(color.gray, 30),
+     frame_width = 1)
+
+// Color helpers
+rsi_col  = rsi > 74 ? color.red : rsi < 35 ? color.lime : rsi >= 45 and rsi < 65 ? color.green : color.yellow
+adx_col  = adx > 25 ? color.lime : adx < 15 ? color.red : color.yellow
+vol_col  = spike_volume ? color.lime : high_volume ? color.green : color.gray
+st_col   = st_bull ? color.lime : color.red
+macd_col = macd_bullish ? color.lime : color.red
+ema_col  = above_ema20 and above_ema50 ? color.lime : above_ema20 ? color.yellow : color.red
+vwap_col = above_vwap ? color.lime : color.red
+
+// RSI status text
+rsi_status = rsi > 74 ? "DANGER" : rsi >= 65 ? "CAUTION" : rsi >= 45 ? "HEALTHY" : rsi < 35 ? "OVERSOLD" : "NEUTRAL"
+
+// Signal status
+sig_status = strong_buy ? "★ STRONG BUY" : moderate_buy ? "BUY" : bounce_buy ? "BOUNCE" : sell_signal ? "SELL" : danger_zone ? "⚠ AVOID" : "NEUTRAL"
+sig_col    = strong_buy ? color.lime : moderate_buy ? color.green : bounce_buy ? color.aqua : sell_signal ? color.red : danger_zone ? color.orange : color.gray
+
+if barstate.islast
+    // Header
+    table.cell(dash, 0, 0,  "LIKHITH SYSTEM",     text_color=color.white,  text_size=size.small, bgcolor=color.new(color.navy, 40), text_font_face=font.family_monospace)
+    table.cell(dash, 1, 0,  mode,                  text_color=color.yellow, text_size=size.small, bgcolor=color.new(color.navy, 40))
+    // Signal
+    table.cell(dash, 0, 1,  "SIGNAL",              text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 1,  sig_status,            text_color=sig_col,      text_size=size.small)
+    // RSI
+    table.cell(dash, 0, 2,  "RSI (14)",            text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 2,  str.tostring(math.round(rsi, 1)) + " " + rsi_status, text_color=rsi_col, text_size=size.small)
+    // ADX
+    table.cell(dash, 0, 3,  "ADX (Trend)",         text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 3,  str.tostring(math.round(adx, 1)) + (adx > 25 ? " STRONG" : adx < 15 ? " WEAK" : " MED"), text_color=adx_col, text_size=size.small)
+    // Supertrend
+    table.cell(dash, 0, 4,  "Supertrend",          text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 4,  st_bull ? "BULLISH ↑" : "BEARISH ↓", text_color=st_col, text_size=size.small)
+    // MACD
+    table.cell(dash, 0, 5,  "MACD",                text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 5,  macd_bullish ? "BULLISH ↑" : "BEARISH ↓", text_color=macd_col, text_size=size.small)
+    // EMA position
+    table.cell(dash, 0, 6,  "EMA 20/50",           text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 6,  above_ema20 and above_ema50 ? "ABOVE BOTH ✓" : above_ema20 ? "ABOVE 20" : "BELOW ✗", text_color=ema_col, text_size=size.small)
+    // VWAP
+    table.cell(dash, 0, 7,  "VWAP",                text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 7,  above_vwap ? "ABOVE ↑" : "BELOW ↓", text_color=vwap_col, text_size=size.small)
+    // Volume
+    table.cell(dash, 0, 8,  "Volume",              text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 8,  spike_volume ? "SPIKE 🔥" : high_volume ? "HIGH ✓" : "NORMAL", text_color=vol_col, text_size=size.small)
+    // BB Squeeze
+    table.cell(dash, 0, 9,  "BB Squeeze",          text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 9,  bb_squeeze ? "YES ⚡" : "NO", text_color=bb_squeeze ? color.yellow : color.gray, text_size=size.small)
+    // Gap
+    table.cell(dash, 0, 10, "Gap",                 text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 10, gap_up ? "GAP UP ⚠" : gap_down ? "GAP DOWN ⚠" : "NONE", text_color=gap_up or gap_down ? color.orange : color.gray, text_size=size.small)
+    // EMA Values
+    table.cell(dash, 0, 11, "EMA 20/50/200",       text_color=color.white,  text_size=size.small)
+    table.cell(dash, 1, 11, str.tostring(math.round(ema20,1)) + " / " + str.tostring(math.round(ema50,1)) + " / " + str.tostring(math.round(ema200,1)), text_color=color.gray, text_size=size.tiny)
