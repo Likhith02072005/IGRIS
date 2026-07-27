@@ -18,7 +18,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: ALLOWED_ORIGINS
-        value: "*" # Once Vercel is deployed, change this to the Vercel URL in the Render dashboard
+        value: "https://frontend-topaz-pi-51.vercel.app"
 
 databases:
   - name: igris-db
