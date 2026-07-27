@@ -3,8 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from '../../components/layout/Sidebar';
+import CapitalEditModal from '../../components/layout/CapitalEditModal';
 import { useAuthStore, hydrateAuth } from '../../store/auth';
-import { Bell, Power } from 'lucide-react';
+import { useCapitalStore, hydrateCapital } from '../../store/capital';
+import { Bell, Power, Edit3 } from 'lucide-react';
 
 export default function DashboardLayout({
   children,
@@ -14,16 +16,19 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { isAuthenticated, user, clearAuth } = useAuthStore();
+  const { capital } = useCapitalStore();
+  const [isCapitalModalOpen, setIsCapitalModalOpen] = useState(false);
 
   // Top Navbar Ticker States
   const [nifty, setNifty] = useState({ price: 24302.50, pct: 0.46 });
   const [banknifty, setBanknifty] = useState({ price: 52410.80, pct: -0.35 });
   const [vix, setVix] = useState({ price: 13.42, pct: -4.14 });
-  const [latency, setLatency] = useState(9); // keeping state, even if not shown
 
   // Dynamic simulated price feeds
   useEffect(() => {
     hydrateAuth();
+    hydrateCapital();
+
     if (!useAuthStore.getState().isAuthenticated) {
       router.push('/auth/login');
     }
@@ -44,7 +49,6 @@ export default function DashboardLayout({
         const newPrice = Number(Math.max(8.0, prev.price + delta).toFixed(2));
         return { price: newPrice, pct: Number((((newPrice - 14.0) / 14.0) * 100).toFixed(2)) };
       });
-      setLatency(prev => Math.max(4, Math.min(25, prev + Math.floor((Math.random() - 0.5) * 3))));
     }, 4000);
 
     return () => clearInterval(interval);
@@ -102,13 +106,21 @@ export default function DashboardLayout({
             </div>
           </div>
 
-          {/* Right Block - Portfolio Value, Today PnL and Controls */}
+          {/* Right Block - Portfolio Value (Clickable to edit!), Today PnL and Controls */}
           <div className="flex items-center gap-6 flex-shrink-0 text-sm">
             
-            <div className="flex items-center gap-2">
-              <span className="text-[#666]">Portfolio</span>
-              <span>₹1,00,00,000.00</span>
-            </div>
+            {/* Clickable Portfolio Capital Badge */}
+            <button
+              onClick={() => setIsCapitalModalOpen(true)}
+              className="flex items-center gap-2 px-2.5 py-1 rounded bg-[#111111] border border-[#1a1a1a] hover:border-[#22d3ee] transition-all group cursor-pointer"
+              title="Click to adjust your capital"
+            >
+              <span className="text-[#666] group-hover:text-white transition-colors">Capital:</span>
+              <span className="font-mono text-white font-semibold group-hover:text-[#22d3ee]">
+                ₹{capital.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+              <Edit3 className="w-3 h-3 text-[#666] group-hover:text-[#22d3ee] ml-0.5" />
+            </button>
 
             <div className="flex items-center gap-2">
               <span className="text-[#666]">Today</span>
@@ -139,6 +151,12 @@ export default function DashboardLayout({
           {children}
         </main>
       </div>
+
+      {/* Capital Edit Modal */}
+      <CapitalEditModal
+        isOpen={isCapitalModalOpen}
+        onClose={() => setIsCapitalModalOpen(false)}
+      />
     </div>
   );
 }

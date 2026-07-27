@@ -6,6 +6,8 @@ import {
   Play, Pause, AlertOctagon, Activity, Network, CircleDollarSign, Zap
 } from 'lucide-react';
 
+import { useCapitalStore } from '../../../store/capital';
+
 interface RunningStrategy {
   id: string;
   name: string;
@@ -27,6 +29,7 @@ interface RunningStrategy {
 }
 
 export default function MissionControl() {
+  const { capital } = useCapitalStore();
   const [strategies, setStrategies] = useState<RunningStrategy[]>([
     {
       id: 'strat_1',
@@ -157,7 +160,7 @@ export default function MissionControl() {
       {/* Overview stats answering the core questions */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
-          { label: 'Total Algorithmic Capital', val: '₹1,00,00,000.00', color: 'text-white' },
+          { label: 'Total Algorithmic Capital', val: `₹${capital.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, color: 'text-white' },
           { label: "Today's Net ROI PnL", val: `+₹${strategies.reduce((a, b) => a + b.pnl, 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: 'text-[#22c55e]' },
           { label: 'Max Peak Drawdown', val: '-4.80%', color: 'text-[#ef4444]' },
           { label: 'Active Execution Sockets', val: '3 Nodes Online', color: 'text-[#22d3ee]' },

@@ -6,6 +6,8 @@ import {
   TrendingUp, CircleDollarSign, Check, X, ShieldCheck
 } from 'lucide-react';
 
+import { useCapitalStore } from '../../../store/capital';
+
 interface Order {
   id: string;
   time: string;
@@ -28,6 +30,7 @@ interface Position {
 }
 
 export default function PaperTrading() {
+  const { capital } = useCapitalStore();
   // Replay states
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState<1 | 2 | 5 | 10>(1);
@@ -501,15 +504,15 @@ export default function PaperTrading() {
             <div className="space-y-3 font-mono text-xs">
               <div className="flex justify-between border-b border-gray-900 pb-2">
                 <span className="text-gray-500">Virtual Opening Bal.</span>
-                <span className="text-white font-bold">₹1,00,00,000.00</span>
+                <span className="text-white font-bold">₹{capital.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between border-b border-gray-900 pb-2">
                 <span className="text-gray-500">Available Margins</span>
-                <span className="text-white font-bold">₹94,21,000.00</span>
+                <span className="text-white font-bold">₹{(capital * 0.9421).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between border-b border-gray-900 pb-2">
                 <span className="text-gray-500">Utilized Margins</span>
-                <span className="text-white font-bold">₹5,79,000.00</span>
+                <span className="text-white font-bold">₹{(capital * 0.0579).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </div>
           </div>
