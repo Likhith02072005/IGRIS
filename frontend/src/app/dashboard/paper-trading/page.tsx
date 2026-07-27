@@ -257,7 +257,7 @@ export default function PaperTrading() {
               <div className="flex items-center gap-2">
                 <span className="text-[10px] text-gray-400 font-mono uppercase">Floating PnL</span>
                 <span className={`text-sm font-bold font-mono ${floatingPnL >= 0 ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
-                  {floatingPnL >= 0 ? '+' : ''}${floatingPnL.toLocaleString()}
+                  {floatingPnL >= 0 ? '+' : ''}₹{floatingPnL.toLocaleString()}
                 </span>
               </div>
             </div>
@@ -295,10 +295,10 @@ export default function PaperTrading() {
                             </span>
                           </td>
                           <td className="py-3 text-right font-mono">{pos.qty}</td>
-                          <td className="py-3 text-right font-mono">${pos.entryPrice}</td>
-                          <td className="py-3 text-right font-mono">${pos.currentPrice}</td>
+                          <td className="py-3 text-right font-mono">₹{pos.entryPrice}</td>
+                          <td className="py-3 text-right font-mono">₹{pos.currentPrice}</td>
                           <td className={`py-3 text-right font-mono ${pos.pnl >= 0 ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
-                            {pos.pnl >= 0 ? '+' : ''}${pos.pnl}
+                            {pos.pnl >= 0 ? '+' : ''}₹{pos.pnl}
                           </td>
                           <td className="py-3 text-center">
                             <button
@@ -348,7 +348,7 @@ export default function PaperTrading() {
                         </span>
                       </td>
                       <td className="py-2.5">{o.type}</td>
-                      <td className="py-2.5 text-right">${o.price}</td>
+                      <td className="py-2.5 text-right">₹{o.price}</td>
                       <td className="py-2.5 text-right">{o.qty}</td>
                       <td className="py-2.5 text-center">
                         <span className="text-[10px] font-bold text-bloomberg-green uppercase">
@@ -471,11 +471,11 @@ export default function PaperTrading() {
               <div className="bg-gray-950/60 border border-gray-900 p-3.5 rounded-xl space-y-2 text-[10px] font-mono text-gray-400">
                 <div className="flex justify-between">
                   <span>Ticker Last Traded</span>
-                  <span className="text-white">${lastTickPrice.toLocaleString()}</span>
+                  <span className="text-white">₹{lastTickPrice.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Required Margin</span>
-                  <span className="text-brand font-bold">${(qty * (orderType === 'MARKET' ? lastTickPrice : parseFloat(limitPrice)) * 0.05).toFixed(2)}</span>
+                  <span className="text-brand font-bold">₹{(qty * (orderType === 'MARKET' ? lastTickPrice : parseFloat(limitPrice)) * 0.05).toFixed(2)}</span>
                 </div>
               </div>
 
@@ -501,15 +501,15 @@ export default function PaperTrading() {
             <div className="space-y-3 font-mono text-xs">
               <div className="flex justify-between border-b border-gray-900 pb-2">
                 <span className="text-gray-500">Virtual Opening Bal.</span>
-                <span className="text-white font-bold">$100,000.00</span>
+                <span className="text-white font-bold">₹1,00,00,000.00</span>
               </div>
               <div className="flex justify-between border-b border-gray-900 pb-2">
                 <span className="text-gray-500">Available Margins</span>
-                <span className="text-white font-bold">$94,210.00</span>
+                <span className="text-white font-bold">₹94,21,000.00</span>
               </div>
               <div className="flex justify-between border-b border-gray-900 pb-2">
                 <span className="text-gray-500">Utilized Margins</span>
-                <span className="text-white font-bold">$5,790.00</span>
+                <span className="text-white font-bold">₹5,79,000.00</span>
               </div>
             </div>
           </div>

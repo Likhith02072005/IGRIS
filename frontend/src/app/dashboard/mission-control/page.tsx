@@ -33,8 +33,8 @@ export default function MissionControl() {
       name: 'IGRIS Options Straddle',
       status: 'RUNNING',
       position: '+2 Lots BANKNIFTY 52400CE',
-      capital: 45000,
-      pnl: 1102.50,
+      capital: 4500000,
+      pnl: 110250.00,
       todayReturn: 2.45,
       overallReturn: 12.8,
       drawdown: -2.15,
@@ -45,15 +45,15 @@ export default function MissionControl() {
       connection: 'CONNECTED',
       health: 96,
       aiScore: 92,
-      equityCurve: [40000, 41200, 40800, 42900, 43800, 45000, 46102.5]
+      equityCurve: [4000000, 4120000, 4080000, 4290000, 4380000, 4500000, 4610250]
     },
     {
       id: 'strat_2',
       name: 'Momentum Catcher Buying',
       status: 'RUNNING',
       position: 'FLAT',
-      capital: 30000,
-      pnl: -450.00,
+      capital: 3000000,
+      pnl: -45000.00,
       todayReturn: -1.50,
       overallReturn: 8.4,
       drawdown: -4.80,
@@ -64,14 +64,14 @@ export default function MissionControl() {
       connection: 'CONNECTED',
       health: 88,
       aiScore: 85,
-      equityCurve: [28000, 29000, 31000, 30500, 30100, 29550]
+      equityCurve: [2800000, 2900000, 3100000, 3050000, 3010000, 2955000]
     },
     {
       id: 'strat_3',
       name: 'Mean Reversion VWAP',
       status: 'PAUSED',
       position: 'FLAT',
-      capital: 25000,
+      capital: 2500000,
       pnl: 0.00,
       todayReturn: 0.00,
       overallReturn: 4.2,
@@ -83,7 +83,7 @@ export default function MissionControl() {
       connection: 'CONNECTED',
       health: 98,
       aiScore: 90,
-      equityCurve: [24000, 24500, 25000, 25000, 25000]
+      equityCurve: [2400000, 2450000, 2500000, 2500000, 2500000]
     }
   ]);
 
@@ -157,8 +157,8 @@ export default function MissionControl() {
       {/* Overview stats answering the core questions */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
-          { label: 'Total Algorithmic Capital', val: '$100,000.00', color: 'text-white' },
-          { label: "Today's Net ROI PnL", val: `+$${strategies.reduce((a, b) => a + b.pnl, 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: 'text-bloomberg-green' },
+          { label: 'Total Algorithmic Capital', val: '₹1,00,00,000.00', color: 'text-white' },
+          { label: "Today's Net ROI PnL", val: `+₹${strategies.reduce((a, b) => a + b.pnl, 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: 'text-bloomberg-green' },
           { label: 'Max Peak Drawdown', val: '-4.80%', color: 'text-bloomberg-red' },
           { label: 'Active Execution Sockets', val: '3 Nodes Online', color: 'text-brand' },
         ].map(card => (
@@ -215,9 +215,9 @@ export default function MissionControl() {
                       <span className="text-white block font-mono">{s.position}</span>
                       <span className="text-[9px] text-gray-500 block">Exposure: {s.exposure}%</span>
                     </td>
-                    <td className="p-4 text-right font-mono text-white">${s.capital.toLocaleString()}</td>
+                    <td className="p-4 text-right font-mono text-white">₹{s.capital.toLocaleString()}</td>
                     <td className={`p-4 text-right font-mono ${isPnlPositive ? 'text-bloomberg-green' : 'text-bloomberg-red'}`}>
-                      {isPnlPositive ? '+' : ''}${s.pnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ({s.todayReturn}%)
+                      {isPnlPositive ? '+' : ''}₹{s.pnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ({s.todayReturn}%)
                     </td>
                     <td className="p-4 text-right font-mono text-bloomberg-red">{s.drawdown}%</td>
                     <td className="p-4">

@@ -128,7 +128,7 @@ export default function DashboardLayout({
               <CircleDollarSign className="w-4.5 h-4.5 text-brand" />
               <div>
                 <span className="text-[8px] text-gray-500 font-bold block uppercase tracking-wider">Portfolio Net Asset</span>
-                <span className="text-xs font-bold text-white font-mono">$100,000.00</span>
+                <span className="text-xs font-bold text-white font-mono">₹1,00,00,000.00</span>
               </div>
             </div>
 
@@ -137,7 +137,7 @@ export default function DashboardLayout({
               <ArrowUpRight className="w-4.5 h-4.5 text-bloomberg-green" />
               <div>
                 <span className="text-[8px] text-gray-500 font-bold block uppercase tracking-wider">Today&apos;s PnL</span>
-                <span className="text-xs font-bold text-bloomberg-green font-mono">+$2,450.00</span>
+                <span className="text-xs font-bold text-bloomberg-green font-mono">+₹24,500.00</span>
               </div>
             </div>
 

@@ -90,7 +90,7 @@ export default function DashboardHome() {
             <DollarSign className="w-4 h-4 text-brand" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-white font-mono">$100,000.00</h3>
+            <h3 className="text-2xl font-bold text-white font-mono">₹1,00,00,000.00</h3>
             <span className="text-[10px] text-bloomberg-green font-mono flex items-center gap-1 mt-1">
               <TrendingUp className="w-3 h-3" /> +15.4% Max Allowed
             </span>
@@ -104,7 +104,7 @@ export default function DashboardHome() {
             <Activity className="w-4 h-4 text-bloomberg-green" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-bloomberg-green font-mono">+$2,450.00</h3>
+            <h3 className="text-2xl font-bold text-bloomberg-green font-mono">+₹24,500.00</h3>
             <span className="text-[10px] text-bloomberg-green font-mono flex items-center gap-1 mt-1">
               <TrendingUp className="w-3 h-3" /> +2.45% intraday
             </span>
@@ -118,7 +118,7 @@ export default function DashboardHome() {
             <Activity className="w-4 h-4 text-bloomberg-green" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-bloomberg-green font-mono">+$8,910.00</h3>
+            <h3 className="text-2xl font-bold text-bloomberg-green font-mono">+₹89,100.00</h3>
             <span className="text-[10px] text-bloomberg-green font-mono flex items-center gap-1 mt-1">
               <TrendingUp className="w-3 h-3" /> +8.91% week-to-date
             </span>
@@ -147,7 +147,7 @@ export default function DashboardHome() {
           { label: 'Sortino Ratio', val: '3.12', color: 'text-brand', status: 'Excellent' },
           { label: 'Calmar Ratio', val: '3.45', color: 'text-brand', status: 'Low Risk' },
           { label: 'Profit Factor', val: '1.92', color: 'text-bloomberg-green', status: 'Healthy' },
-          { label: 'Expectancy', val: '+$142.00', color: 'text-bloomberg-green', status: 'Positive' },
+          { label: 'Expectancy', val: '+₹1,420.00', color: 'text-bloomberg-green', status: 'Positive' },
           { label: 'Win Rate %', val: '62.5%', color: 'text-bloomberg-green', status: 'Avg 52 Trades' },
         ].map(item => (
           <div key={item.label} className="glass-panel p-4 rounded-xl flex flex-col justify-between h-24">
@@ -176,11 +176,11 @@ export default function DashboardHome() {
                 { label: 'Open Trades', val: '2' },
                 { label: 'Closed Trades', val: '142' },
                 { label: 'Loss %', val: '37.5%' },
-                { label: 'Net Profit', val: '+$15,420.00' },
-                { label: 'Largest Win', val: '+$4,500.00' },
-                { label: 'Largest Loss', val: '-$1,800.00' },
-                { label: 'Avg Win', val: '+$940.00' },
-                { label: 'Avg Loss', val: '-$512.00' },
+                { label: 'Net Profit', val: '+₹1,54,200.00' },
+                { label: 'Largest Win', val: '+₹45,000.00' },
+                { label: 'Largest Loss', val: '-₹18,000.00' },
+                { label: 'Avg Win', val: '+₹9,400.00' },
+                { label: 'Avg Loss', val: '-₹5,120.00' },
                 { label: 'Avg Hold Time', val: '42 mins' },
                 { label: 'Daily Return', val: '+0.42%' },
                 { label: 'Monthly Return', val: '+9.45%' },
@@ -208,10 +208,10 @@ export default function DashboardHome() {
             {/* Visual allocation gauge */}
             <div className="space-y-4">
               {[
-                { name: 'Nifty Options (Straddles)', alloc: '45%', amount: '$45,000.00', color: 'bg-brand' },
-                { name: 'BankNifty Momentum Buying', alloc: '30%', amount: '$30,000.00', color: 'bg-indigo-500' },
-                { name: 'Liquid Funds / Collateral', alloc: '15%', amount: '$15,000.00', color: 'bg-emerald-500' },
-                { name: 'Midcap Directional Selling', alloc: '10%', amount: '$10,000.00', color: 'bg-amber-500' },
+                { name: 'Nifty Options (Straddles)', alloc: '45%', amount: '₹45,00,000.00', color: 'bg-brand' },
+                { name: 'BankNifty Momentum Buying', alloc: '30%', amount: '₹30,00,000.00', color: 'bg-indigo-500' },
+                { name: 'Liquid Funds / Collateral', alloc: '15%', amount: '₹15,00,000.00', color: 'bg-emerald-500' },
+                { name: 'Midcap Directional Selling', alloc: '10%', amount: '₹10,00,000.00', color: 'bg-amber-500' },
               ].map(asset => (
                 <div key={asset.name} className="space-y-1.5">
                   <div className="flex justify-between text-xs font-semibold">
