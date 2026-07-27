@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: igris-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5001
+      - key: DATABASE_URL
+        fromDatabase:
+          name: igris-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*" # Once Vercel is deployed, change this to the Vercel URL in the Render dashboard
+
+databases:
+  - name: igris-db
+    plan: free
