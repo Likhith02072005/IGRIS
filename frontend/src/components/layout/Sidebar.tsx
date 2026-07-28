@@ -21,7 +21,8 @@ import {
   Activity,
   ShoppingBag,
   PieChart,
-  Cpu
+  Cpu,
+  Zap
 } from 'lucide-react';
 
 const navItems = [
@@ -30,6 +31,7 @@ const navItems = [
   { name: 'Portfolio', path: '/dashboard/portfolio', icon: FolderKanban },
   { name: 'Portfolio Optimizer', path: '/dashboard/portfolio/optimizer', icon: PieChart },
   { name: 'Strategies', path: '/dashboard/strategies', icon: Code2 },
+  { name: 'Nifty Martingale AI (25)', path: '/dashboard/strategies/nifty-martingale', icon: Zap },
   { name: 'Strategy Builder', path: '/dashboard/strategies/builder', icon: FileCode2 },
   { name: 'Backtesting', path: '/dashboard/backtesting', icon: History },
   { name: 'Backtest Validation', path: '/dashboard/backtesting/validation', icon: BarChart3 },

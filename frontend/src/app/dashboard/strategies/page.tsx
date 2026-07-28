@@ -65,6 +65,7 @@ export default function StrategiesList() {
       // If DB is fresh and returns empty list, we seed default templates locally for instant visual premium feel.
       if (data.length === 0) {
         setStrategies([
+          { id: 'nifty-martingale', name: 'Nifty Trend Buying (x2 Martingale AI)', description: '25-Indicator AI signal consensus option buying with x2 Martingale scaling (1 → 2 → 4 → 8 lots). Net P&L ₹6.07L over 2.5 yrs.', category: 'OPTIONS', instrument: 'NIFTY', timeframe: '15m', direction: 'BOTH', target: 4000, stopLoss: 8000, status: 'ACTIVE' },
           { id: '1', name: 'IGRIS', description: 'Wait first 30min candle setups. Buy Put/Call on level revisit.', category: 'OPTIONS', instrument: 'BANKNIFTY', timeframe: '30m', direction: 'BOTH', target: 50, stopLoss: 100, status: 'ACTIVE' },
           { id: '2', name: 'Momentum Catcher', description: 'Early momentum breakout option buying.', category: 'MOMENTUM', instrument: 'NIFTY', timeframe: '5m', direction: 'BOTH', target: 40, stopLoss: 40, status: 'ACTIVE' },
           { id: '3', name: 'Opening Range Breakout', description: '30 minute Opening Range Breakout (ORB).', category: 'MOMENTUM', instrument: 'NIFTY', timeframe: '30m', direction: 'BOTH', target: 80, stopLoss: 40, status: 'ACTIVE' },

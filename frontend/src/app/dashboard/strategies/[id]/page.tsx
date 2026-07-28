@@ -181,6 +181,12 @@ export default function IgrisStrategyWorkspace() {
   const router = useRouter();
   const strategyId = params.id as string;
 
+  useEffect(() => {
+    if (strategyId === 'nifty-martingale') {
+      router.replace('/dashboard/strategies/nifty-martingale');
+    }
+  }, [strategyId, router]);
+
   // Header and Status states
   const [timeStr, setTimeStr] = useState('--:--:--');
   const [isLive, setIsLive] = useState(true);
