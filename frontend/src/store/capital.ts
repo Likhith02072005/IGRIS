@@ -7,7 +7,7 @@ interface CapitalState {
 }
 
 export const useCapitalStore = create<CapitalState>((set) => ({
-  capital: 10000000, // Default ₹1,00,00,000 (1 Crore)
+  capital: 500000, // Default ₹5,00,000 (5 Lakhs)
   setCapital: (amount) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('user_capital', amount.toString());
@@ -18,7 +18,7 @@ export const useCapitalStore = create<CapitalState>((set) => ({
     if (typeof window !== 'undefined') {
       localStorage.removeItem('user_capital');
     }
-    set({ capital: 10000000 });
+    set({ capital: 500000 });
   },
 }));
 
@@ -29,6 +29,10 @@ export const hydrateCapital = () => {
     const val = parseFloat(stored);
     if (!isNaN(val) && val > 0) {
       useCapitalStore.setState({ capital: val });
+    } else {
+      useCapitalStore.setState({ capital: 500000 });
     }
+  } else {
+    useCapitalStore.setState({ capital: 500000 });
   }
 };

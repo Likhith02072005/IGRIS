@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useCapitalStore } from '../../../../store/capital';
 import { 
   TrendingUp, TrendingDown, ShieldAlert, Zap, Activity, CheckCircle2, 
   RefreshCw, Layers, Sliders, Calendar, ArrowUpRight, ArrowDownRight, Bot,
-  Info, Award, PlayCircle, Lock
+  Info, Award, PlayCircle, Lock, RotateCcw, Play, Plus, X
 } from 'lucide-react';
 
 interface IndicatorSignal {
@@ -17,6 +18,19 @@ interface IndicatorSignal {
   signal: 'BULLISH' | 'BEARISH' | 'NEUTRAL';
   weight: number;
   description: string;
+}
+
+interface SimulatedTrade {
+  id: string;
+  time: string;
+  action: 'BUY 24300 CE' | 'BUY 24200 PE';
+  step: number;
+  lots: number;
+  qty: number;
+  entryPrice: number;
+  exitPrice: number;
+  pnl: number;
+  result: 'WIN' | 'LOSS';
 }
 
 const INDICATORS_25: IndicatorSignal[] = [
@@ -48,18 +62,69 @@ const INDICATORS_25: IndicatorSignal[] = [
 ];
 
 export default function NiftyMartingaleStrategyPage() {
-  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'SIGNALS' | 'MARTINGALE' | 'DRAWDOWN' | 'HEATMAP'>('OVERVIEW');
-  const [martingaleStep, setMartingaleStep] = useState<number>(1);
+  const { capital, setCapital } = useCapitalStore();
+  const [activeTab, setActiveTab] = useState<'LIVE_EXECUTION' | 'OVERVIEW' | 'SIGNALS' | 'MARTINGALE' | 'DRAWDOWN' | 'HEATMAP'>('LIVE_EXECUTION');
   const [isAutoExecuting, setIsAutoExecuting] = useState<boolean>(true);
-  const [lastExecutedTime, setLastExecutedTime] = useState<string>('09:45 AM');
+  
+  // Live Fresh Session States (Reset to 0 Mode)
+  const [sessionPnL, setSessionPnL] = useState<number>(0);
+  const [currentStep, setCurrentStep] = useState<number>(1); // 1, 2, 3, 4
+  const [trades, setTrades] = useState<SimulatedTrade[]>([]);
+  const [winCount, setWinCount] = useState<number>(0);
+  const [lossCount, setLossCount] = useState<number>(0);
 
-  // Calculate AI Signal Consensus
-  const totalWeight = INDICATORS_25.reduce((a, b) => a + b.weight, 0);
-  const bullishWeight = INDICATORS_25.filter(i => i.signal === 'BULLISH').reduce((a, b) => a + b.weight, 0);
-  const consensusPercentage = Math.round((bullishWeight / totalWeight) * 100);
+  // Auto-set capital to min 5L if not set
+  useEffect(() => {
+    if (capital < 500000) {
+      setCapital(500000);
+    }
+  }, [capital, setCapital]);
 
-  // Martingale Lot Sequence Helper
-  const getMartingaleLots = (step: number) => Math.pow(2, step - 1); // 1, 2, 4, 8
+  // Martingale Lot Helper
+  const currentLots = Math.pow(2, currentStep - 1); // Step 1: 1 lot, Step 2: 2 lots, Step 3: 4 lots, Step 4: 8 lots
+  const currentQty = currentLots * 65;
+
+  // Execute Simulated Trade
+  const handleSimulateTrade = (outcome: 'WIN' | 'LOSS') => {
+    const timeStr = new Date().toLocaleTimeString();
+    const isWin = outcome === 'WIN';
+    const tradePnl = isWin ? 4000 * currentLots : -8000 * currentLots;
+
+    const newTrade: SimulatedTrade = {
+      id: `trade_${Date.now()}`,
+      time: timeStr,
+      action: 'BUY 24300 CE',
+      step: currentStep,
+      lots: currentLots,
+      qty: currentQty,
+      entryPrice: 120.0,
+      exitPrice: isWin ? 120.0 + (4000 / currentQty) : Math.max(10, 120.0 - (8000 / currentQty)),
+      pnl: tradePnl,
+      result: isWin ? 'WIN' : 'LOSS',
+    };
+
+    setTrades(prev => [newTrade, ...prev]);
+    setSessionPnL(prev => prev + tradePnl);
+
+    if (isWin) {
+      setWinCount(prev => prev + 1);
+      // Reset Martingale back to Step 1 on Win
+      setCurrentStep(1);
+    } else {
+      setLossCount(prev => prev + 1);
+      // Double lots on loss (up to max Step 4 / 8 Lots)
+      setCurrentStep(prev => Math.min(4, prev + 1));
+    }
+  };
+
+  // Reset Session to Fresh 0
+  const handleResetSession = () => {
+    setSessionPnL(0);
+    setCurrentStep(1);
+    setTrades([]);
+    setWinCount(0);
+    setLossCount(0);
+  };
 
   return (
     <div className="space-y-6">
@@ -69,32 +134,34 @@ export default function NiftyMartingaleStrategyPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 rounded bg-[#22d3ee]/10 text-[#22d3ee] font-mono text-xs border border-[#22d3ee]/20">
-              NIFTY OPTION BUYING
+              MIN CAPITAL: ₹5 LAKHS
             </span>
             <span className="px-2 py-0.5 rounded bg-[#22c55e]/10 text-[#22c55e] font-mono text-xs border border-[#22c55e]/20">
-              x2 MARTINGALE ENGINE
+              x2 MARTINGALE ENGINE (1→2→4→8 LOTS)
             </span>
             <span className="px-2 py-0.5 rounded bg-white/10 text-white font-mono text-xs border border-white/20">
-              25 INDICATORS
+              25 SIGNALS
             </span>
           </div>
           <h1 className="text-xl font-bold text-[#fafafa] mt-2">
-            Trend Buying — 25 Indicator AI Martingale Strategy
+            Nifty Option Buying — Martingale AI Engine
           </h1>
           <p className="text-xs text-[#666] mt-1">
-            Standalone Nifty Option Buying sleeve with x2 Martingale stop-and-reverse scaling (1 Lot → 2 Lots → 4 Lots → 8 Lots).
+            Fresh execution baseline starting at ₹5 Lakhs. Real-time 25 indicator AI signal consensus with x2 lot multiplier.
           </p>
         </div>
 
-        {/* AI Auto Execution Controls */}
+        {/* Reset & AI Controls */}
         <div className="flex items-center gap-3">
-          <div className="text-right">
-            <span className="text-[10px] text-[#666] uppercase block">AI Execution State</span>
-            <span className="text-xs font-mono text-[#22c55e] flex items-center gap-1 justify-end">
-              <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
-              {isAutoExecuting ? 'AUTO-TRADING ACTIVE' : 'PAUSED'}
-            </span>
-          </div>
+          <button
+            onClick={handleResetSession}
+            className="px-3.5 py-2 rounded bg-[#111111] border border-[#1a1a1a] hover:border-[#22d3ee] text-xs font-semibold text-[#fafafa] hover:text-[#22d3ee] flex items-center gap-1.5 transition-all"
+            title="Reset session PnL and trade log to 0"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-[#22d3ee]" />
+            Reset All to Fresh ₹5L
+          </button>
+
           <button
             onClick={() => setIsAutoExecuting(!isAutoExecuting)}
             className={`px-4 py-2 rounded text-xs font-semibold flex items-center gap-2 transition-colors ${
@@ -112,11 +179,12 @@ export default function NiftyMartingaleStrategyPage() {
       {/* Navigation Tabs */}
       <div className="flex border-b border-[#1a1a1a] gap-2 overflow-x-auto">
         {[
-          { id: 'OVERVIEW', label: 'Report Overview' },
-          { id: 'SIGNALS', label: '25 Indicator Signals (88%)' },
-          { id: 'MARTINGALE', label: 'x2 Martingale Sequence' },
-          { id: 'DRAWDOWN', label: 'Drawdown Recovery Table' },
-          { id: 'HEATMAP', label: 'Monthly Heatmap (2024-2026)' },
+          { id: 'LIVE_EXECUTION', label: '⚡ Fresh Live Session (₹5L Base)' },
+          { id: 'OVERVIEW', label: '📊 2.5-Yr Backtest Report' },
+          { id: 'SIGNALS', label: '🔍 25 Indicator Signals (88%)' },
+          { id: 'MARTINGALE', label: '🎲 x2 Martingale Matrix' },
+          { id: 'DRAWDOWN', label: '📉 Drawdown Recovery Table' },
+          { id: 'HEATMAP', label: '🗓 Monthly Heatmap' },
         ].map(tab => (
           <button
             key={tab.id}
@@ -131,6 +199,161 @@ export default function NiftyMartingaleStrategyPage() {
           </button>
         ))}
       </div>
+
+      {/* TAB 0: FRESH LIVE EXECUTION SESSION (Reset to 0 Mode) */}
+      {activeTab === 'LIVE_EXECUTION' && (
+        <div className="space-y-6">
+          
+          {/* Top Session Stats Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            
+            {/* Capital */}
+            <div className="card bg-[#111] border border-[#1a1a1a] p-4 rounded-lg">
+              <span className="text-[10px] text-[#666] uppercase block">Base Capital</span>
+              <span className="text-xl font-bold font-mono text-white block mt-1">
+                ₹{capital.toLocaleString('en-IN')}
+              </span>
+              <span className="text-[10px] text-[#22d3ee] mt-0.5 block">Minimum ₹5 Lakhs Base</span>
+            </div>
+
+            {/* Live Session Net PnL */}
+            <div className="card bg-[#111] border border-[#1a1a1a] p-4 rounded-lg">
+              <span className="text-[10px] text-[#666] uppercase block">Live Session P&L</span>
+              <span className={`text-xl font-bold font-mono block mt-1 ${
+                sessionPnL > 0 ? 'text-[#22c55e]' : sessionPnL < 0 ? 'text-[#ef4444]' : 'text-white'
+              }`}>
+                {sessionPnL >= 0 ? '+' : ''}₹{sessionPnL.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+              </span>
+              <span className="text-[10px] text-[#666] mt-0.5 block">
+                {trades.length === 0 ? 'Fresh Session (0 Trades)' : `${trades.length} Trades Executed`}
+              </span>
+            </div>
+
+            {/* Current Martingale Lot Sizing */}
+            <div className="card bg-[#111] border border-[#1a1a1a] p-4 rounded-lg">
+              <span className="text-[10px] text-[#666] uppercase block">Current Martingale Step</span>
+              <span className="text-xl font-bold font-mono text-[#22d3ee] block mt-1">
+                Step {currentStep}: {currentLots} Lot ({currentQty} Qty)
+              </span>
+              <span className="text-[10px] text-[#666] mt-0.5 block">Doubles on Loss → Resets on Win</span>
+            </div>
+
+            {/* Win Rate */}
+            <div className="card bg-[#111] border border-[#1a1a1a] p-4 rounded-lg">
+              <span className="text-[10px] text-[#666] uppercase block">Session Score</span>
+              <span className="text-xl font-bold font-mono text-[#22c55e] block mt-1">
+                {winCount} Wins / {lossCount} Losses
+              </span>
+              <span className="text-[10px] text-[#666] mt-0.5 block">
+                {trades.length > 0 ? `${Math.round((winCount / trades.length) * 100)}% Win Rate` : 'Ready to trade'}
+              </span>
+            </div>
+
+          </div>
+
+          {/* Interactive Trade Trigger Simulator */}
+          <div className="card bg-[#111] border border-[#1a1a1a] p-6 rounded-lg space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a1a] pb-4">
+              <div>
+                <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-[#22d3ee]" /> Live AI Trade Trigger Panel
+                </h3>
+                <p className="text-xs text-[#666] mt-0.5">
+                  Simulate live 25-indicator consensus trades with x2 Martingale lot scaling (1 Lot → 2 Lots → 4 Lots → 8 Lots).
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleSimulateTrade('WIN')}
+                  className="px-4 py-2 rounded bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/30 hover:bg-[#22c55e]/20 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                >
+                  <TrendingUp className="w-3.5 h-3.5" />
+                  Simulate Win (+{currentLots}x ₹4,000)
+                </button>
+
+                <button
+                  onClick={() => handleSimulateTrade('LOSS')}
+                  className="px-4 py-2 rounded bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/30 hover:bg-[#ef4444]/20 text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                >
+                  <TrendingDown className="w-3.5 h-3.5" />
+                  Simulate Loss (-{currentLots}x ₹8,000)
+                </button>
+
+                <button
+                  onClick={handleResetSession}
+                  className="px-3 py-2 rounded bg-[#0a0a0a] border border-[#1a1a1a] text-[#888] hover:text-white text-xs font-mono flex items-center gap-1 transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  Reset 0
+                </button>
+              </div>
+            </div>
+
+            {/* Active Execution State Details */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono pt-2">
+              <div className="p-3 bg-[#0a0a0a] rounded border border-[#1a1a1a]">
+                <span className="text-[#666] block mb-1">AI Consensus Signal:</span>
+                <span className="text-[#22c55e] font-bold">22/25 Indicators Bullish (88%)</span>
+              </div>
+
+              <div className="p-3 bg-[#0a0a0a] rounded border border-[#1a1a1a]">
+                <span className="text-[#666] block mb-1">Current Order Sizing:</span>
+                <span className="text-[#22d3ee] font-bold">{currentLots} Lot ({currentQty} Nifty Qty)</span>
+              </div>
+
+              <div className="p-3 bg-[#0a0a0a] rounded border border-[#1a1a1a]">
+                <span className="text-[#666] block mb-1">Next Trade Target / SL:</span>
+                <span className="text-white font-bold">TP: +₹{4000 * currentLots} | SL: -₹{8000 * currentLots}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Session Trade Log Table */}
+          <div className="card bg-[#111] border border-[#1a1a1a] p-6 rounded-lg space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-sm font-semibold text-white">Fresh Session Trade Log</h3>
+              <span className="text-xs text-[#666] font-mono">{trades.length} Executed Trades</span>
+            </div>
+
+            {trades.length === 0 ? (
+              <div className="p-8 text-center bg-[#0a0a0a] rounded border border-[#1a1a1a] text-[#666] text-xs">
+                Session reset to 0. Click <span className="text-[#22c55e]">Simulate Win</span> or <span className="text-[#ef4444]">Simulate Loss</span> above to test AI Martingale trades with ₹5 Lakhs minimum capital!
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs font-mono text-left">
+                  <thead>
+                    <tr className="border-b border-[#1a1a1a] text-[#666] uppercase text-[10px]">
+                      <th className="py-2.5 px-3">TIME</th>
+                      <th className="py-2.5 px-3">ACTION</th>
+                      <th className="py-2.5 px-3">STEP</th>
+                      <th className="py-2.5 px-3">LOTS (QTY)</th>
+                      <th className="py-2.5 px-3">ENTRY → EXIT</th>
+                      <th className="py-2.5 px-3 text-right">REALIZED P&L</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#1a1a1a]">
+                    {trades.map((t) => (
+                      <tr key={t.id} className={t.result === 'WIN' ? 'bg-[#22c55e]/5' : 'bg-[#ef4444]/5'}>
+                        <td className="py-3 px-3 text-[#888]">{t.time}</td>
+                        <td className="py-3 px-3 font-bold text-white">{t.action}</td>
+                        <td className="py-3 px-3 text-[#22d3ee]">Step {t.step}</td>
+                        <td className="py-3 px-3 text-white">{t.lots} Lot ({t.qty})</td>
+                        <td className="py-3 px-3 text-[#888]">₹{t.entryPrice.toFixed(2)} → ₹{t.exitPrice.toFixed(2)}</td>
+                        <td className={`py-3 px-3 text-right font-bold ${t.pnl >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                          {t.pnl >= 0 ? '+' : ''}₹{t.pnl.toLocaleString('en-IN')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+        </div>
+      )}
 
       {/* TAB 1: REPORT OVERVIEW (Matching exact screenshot KPIs) */}
       {activeTab === 'OVERVIEW' && (
@@ -321,7 +544,7 @@ export default function NiftyMartingaleStrategyPage() {
               </div>
               <div className="text-center border-l border-[#1a1a1a] pl-6">
                 <span className="text-[10px] text-[#666] uppercase block">Next AI Execution</span>
-                <span className="text-xs font-mono text-[#22c55e] font-semibold">BUY NIFTY 24300 CE @ {lastExecutedTime}</span>
+                <span className="text-xs font-mono text-[#22c55e] font-semibold">BUY NIFTY 24300 CE</span>
               </div>
             </div>
           </div>
@@ -379,9 +602,8 @@ export default function NiftyMartingaleStrategyPage() {
               ].map((item) => (
                 <div 
                   key={item.step}
-                  onClick={() => setMartingaleStep(item.step)}
-                  className={`p-4 bg-[#0a0a0a] rounded border ${item.color} cursor-pointer hover:bg-[#151515] transition-colors ${
-                    martingaleStep === item.step ? 'ring-2 ring-[#22d3ee]' : ''
+                  className={`p-4 bg-[#0a0a0a] rounded border ${item.color} ${
+                    currentStep === item.step ? 'ring-2 ring-[#22d3ee]' : ''
                   }`}
                 >
                   <div className="flex justify-between items-center mb-2">
@@ -421,7 +643,7 @@ export default function NiftyMartingaleStrategyPage() {
         </div>
       )}
 
-      {/* TAB 4: DRAWDOWN RECOVERY ANALYSIS TABLE (Exact replica of user screenshot) */}
+      {/* TAB 4: DRAWDOWN RECOVERY ANALYSIS TABLE */}
       {activeTab === 'DRAWDOWN' && (
         <div className="space-y-6">
           
@@ -496,11 +718,11 @@ export default function NiftyMartingaleStrategyPage() {
                 </table>
               </div>
 
-              {/* Recovery Profile Description Panel (Exact screenshot match) */}
+              {/* Recovery Profile Description Panel */}
               <div className="bg-[#0a0a0a] p-5 rounded border border-[#1a1a1a] space-y-3">
                 <h3 className="text-xs font-semibold text-white">Recovery Profile</h3>
                 <p className="text-xs text-[#888] leading-relaxed">
-                  Across <span className="text-white font-bold">68 completed drawdown episodes</span>, average recovery is <span className="text-white font-bold">4 trading days</span> and the longest is <span className="text-white font-bold">22 days</span>; about <span className="text-[#22c55e] font-bold">96%</span> were reclaimed within ten trading days. The single deepest dip (-₹30,166) troughed 22 Jun 2026 and remains open at the 30 Jun 2026 cut-off.
+                  Across <span className="text-white font-bold">68 completed drawdown episodes</span>, average recovery is <span className="text-white font-bold">4 trading days</span> and the longest is <span className="text-white font-bold">22 days</span>; about <span className="text-[#22c55e] font-bold">96%</span> were reclaimed within ten trading days.
                 </p>
 
                 <div className="p-3 bg-[#22c55e]/10 border border-[#22c55e]/30 rounded text-xs text-[#22c55e]">
@@ -518,7 +740,7 @@ export default function NiftyMartingaleStrategyPage() {
       {activeTab === 'HEATMAP' && (
         <div className="space-y-6">
           
-          {/* Month-wise Performance Heatmap (Exact screenshot replica) */}
+          {/* Month-wise Performance Heatmap */}
           <div className="card bg-[#111] border border-[#1a1a1a] p-6 rounded-lg space-y-4">
             <h2 className="text-sm font-semibold text-white">Month-wise Performance Heatmap (₹ Thousands)</h2>
 
@@ -598,81 +820,6 @@ export default function NiftyMartingaleStrategyPage() {
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          {/* Yearly Profit Breakdown */}
-          <div className="card bg-[#111] border border-[#1a1a1a] p-6 rounded-lg space-y-4">
-            <h2 className="text-sm font-semibold text-white">Yearly Profit Breakdown</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Visual Bars */}
-              <div className="space-y-4 pt-2">
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white font-mono font-bold">2024 Net PnL</span>
-                    <span className="text-[#22c55e] font-mono">₹3,81,811 (₹3.8L)</span>
-                  </div>
-                  <div className="h-3 w-full bg-[#0a0a0a] rounded overflow-hidden">
-                    <div className="h-full bg-[#22d3ee]" style={{ width: '100%' }} />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white font-mono font-bold">2025 Net PnL</span>
-                    <span className="text-[#22c55e] font-mono">₹2,14,997 (₹2.1L)</span>
-                  </div>
-                  <div className="h-3 w-full bg-[#0a0a0a] rounded overflow-hidden">
-                    <div className="h-full bg-[#22d3ee]" style={{ width: '56%' }} />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-white font-mono font-bold">2026 (YTD 6 Months)</span>
-                    <span className="text-[#22c55e] font-mono">₹90,766 (₹0.9L)</span>
-                  </div>
-                  <div className="h-3 w-full bg-[#0a0a0a] rounded overflow-hidden">
-                    <div className="h-full bg-[#22d3ee]" style={{ width: '24%' }} />
-                  </div>
-                </div>
-              </div>
-
-              {/* Table */}
-              <table className="w-full text-xs font-mono text-left">
-                <thead>
-                  <tr className="border-b border-[#1a1a1a] text-[#666] uppercase text-[10px]">
-                    <th className="py-2 px-3">YEAR</th>
-                    <th className="py-2 px-3 text-right">NET P&L</th>
-                    <th className="py-2 px-3 text-right">AVG / MONTH</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#1a1a1a]">
-                  <tr>
-                    <td className="py-2.5 px-3 text-white font-bold">2024</td>
-                    <td className="py-2.5 px-3 text-right text-[#22c55e]">₹381,811</td>
-                    <td className="py-2.5 px-3 text-right text-white">₹25,151</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 px-3 text-white font-bold">2025</td>
-                    <td className="py-2.5 px-3 text-right text-[#22c55e]">₹214,997</td>
-                    <td className="py-2.5 px-3 text-right text-white">₹17,916</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2.5 px-3 text-white font-bold">2026</td>
-                    <td className="py-2.5 px-3 text-right text-[#22c55e]">₹90,766</td>
-                    <td className="py-2.5 px-3 text-right text-white">₹15,128</td>
-                  </tr>
-                  <tr className="bg-[#22d3ee]/5">
-                    <td className="py-3 px-3 text-[#22d3ee] font-bold">Overall</td>
-                    <td className="py-3 px-3 text-right text-[#22c55e] font-bold">₹607,574</td>
-                    <td className="py-3 px-3 text-right text-[#22d3ee] font-bold">₹20,252</td>
-                  </tr>
-                </tbody>
-              </table>
-
             </div>
           </div>
 

@@ -10,11 +10,11 @@ interface CapitalEditModalProps {
 }
 
 const PRESETS = [
+  { label: '₹5 Lakhs (Min)', value: 500000 },
   { label: '₹10 Lakhs', value: 1000000 },
   { label: '₹25 Lakhs', value: 2500000 },
   { label: '₹50 Lakhs', value: 5000000 },
   { label: '₹1 Crore', value: 10000000 },
-  { label: '₹2.5 Crores', value: 25000000 },
   { label: '₹5 Crores', value: 50000000 },
 ];
 
@@ -48,7 +48,7 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
 
   const handleReset = () => {
     resetCapital();
-    setInputValue('10000000');
+    setInputValue('500000');
     setError(null);
     onClose();
   };
@@ -81,7 +81,7 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
         </div>
 
         <p className="text-xs text-[#666] mb-4">
-          Set your customized trading capital balance. This will dynamically update across your portfolio, mission control, and paper trading simulations.
+          Set your customized trading capital balance (Min ₹5 Lakhs). This dynamically updates across your portfolio, mission control, and paper trading simulations.
         </p>
 
         {error && (
@@ -102,14 +102,14 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
               <input
                 type="number"
                 step="10000"
-                min="10000"
+                min="100000"
                 value={inputValue}
                 onChange={(e) => {
                   setInputValue(e.target.value);
                   setError(null);
                 }}
                 className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-md py-2.5 pl-8 pr-4 text-white text-sm font-mono focus:outline-none focus:border-[#22d3ee]"
-                placeholder="10000000"
+                placeholder="500000"
               />
             </div>
             <span className="text-[11px] text-[#22d3ee] mt-1 block font-mono">
@@ -146,7 +146,7 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
               className="flex items-center gap-1.5 px-3 py-2 rounded text-xs text-[#888] hover:text-white hover:bg-[#1a1a1a] transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              Reset Default (₹1 Cr)
+              Reset Base (₹5L)
             </button>
 
             <div className="flex items-center gap-2">
