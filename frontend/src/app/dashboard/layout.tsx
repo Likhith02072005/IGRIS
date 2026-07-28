@@ -124,7 +124,7 @@ export default function DashboardLayout({
 
             <div className="flex items-center gap-2">
               <span className="text-[#666]">Today</span>
-              <span className="text-[#22c55e]">+₹24,500.00</span>
+              <span className="text-white font-mono">₹0.00</span>
             </div>
 
             <div className="h-4 w-[1px] bg-[#1a1a1a]" />

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCapitalStore } from '../../store/capital';
 import CapitalEditModal from '../../components/layout/CapitalEditModal';
-import { Edit2 } from 'lucide-react';
+import { Edit2, RotateCcw, Zap } from 'lucide-react';
 
 // Simulated Tickers
 const initialTickers = [
@@ -30,6 +30,7 @@ export default function DashboardHome() {
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const { capital } = useCapitalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFreshMode, setIsFreshMode] = useState(true); // Default to Fresh 0 Mode
 
   // Simulate real-time ticker tick updates
   useEffect(() => {
@@ -54,31 +55,46 @@ export default function DashboardHome() {
       {/* Title section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-lg font-semibold text-[#fafafa]">
-            Overview
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-lg font-semibold text-[#fafafa]">
+              Overview
+            </h1>
+            <span className="px-2 py-0.5 rounded bg-[#22d3ee]/10 text-[#22d3ee] font-mono text-[11px] border border-[#22d3ee]/20">
+              {isFreshMode ? 'FRESH 0 MODE' : 'DEMO MODE'}
+            </span>
+          </div>
           <p className="text-xs text-[#666]">
             Last sync: {lastUpdated.toLocaleTimeString()}
           </p>
         </div>
         
-        {/* Ticker tape */}
-        <div className="flex items-center gap-3 text-xs">
-          {tickers.map((t, i) => {
-            const isPositive = t.change >= 0;
-            return (
-              <React.Fragment key={t.name}>
-                <div className="flex items-center gap-2">
-                  <span className="text-[#666]">{t.name}</span>
-                  <span className="font-mono text-[#fafafa]">{t.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-                  <span className={`font-mono ${isPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
-                    {isPositive ? '+' : ''}{t.pct}%
-                  </span>
-                </div>
-                {i < tickers.length - 1 && <span className="text-[#333]">|</span>}
-              </React.Fragment>
-            );
-          })}
+        {/* Actions & Ticker tape */}
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => setIsFreshMode(!isFreshMode)}
+            className="px-3 py-1.5 rounded bg-[#111111] border border-[#1a1a1a] hover:border-[#22d3ee] text-xs text-[#fafafa] hover:text-[#22d3ee] font-mono flex items-center gap-1.5 transition-all"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-[#22d3ee]" />
+            {isFreshMode ? 'Switch to Demo Mode' : 'Reset All to Fresh ₹0'}
+          </button>
+
+          <div className="hidden lg:flex items-center gap-3 text-xs">
+            {tickers.map((t, i) => {
+              const isPositive = t.change >= 0;
+              return (
+                <React.Fragment key={t.name}>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#666]">{t.name}</span>
+                    <span className="font-mono text-[#fafafa]">{t.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className={`font-mono ${isPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                      {isPositive ? '+' : ''}{t.pct}%
+                    </span>
+                  </div>
+                  {i < tickers.length - 1 && <span className="text-[#333]">|</span>}
+                </React.Fragment>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -105,7 +121,9 @@ export default function DashboardHome() {
         <div className="card bg-[#111] border border-[#1a1a1a] rounded-lg p-5 flex flex-col justify-between h-28">
           <span className="text-sm text-[#666]">Today&apos;s PnL</span>
           <div>
-            <h3 className="text-xl font-medium text-[#22c55e] font-mono">+₹24,500.00</h3>
+            <h3 className={`text-xl font-medium font-mono ${isFreshMode ? 'text-white' : 'text-[#22c55e]'}`}>
+              {isFreshMode ? '₹0.00' : '+₹24,500.00'}
+            </h3>
           </div>
         </div>
 
@@ -113,7 +131,9 @@ export default function DashboardHome() {
         <div className="card bg-[#111] border border-[#1a1a1a] rounded-lg p-5 flex flex-col justify-between h-28">
           <span className="text-sm text-[#666]">Weekly PnL</span>
           <div>
-            <h3 className="text-xl font-medium text-[#22c55e] font-mono">+₹89,100.00</h3>
+            <h3 className={`text-xl font-medium font-mono ${isFreshMode ? 'text-white' : 'text-[#22c55e]'}`}>
+              {isFreshMode ? '₹0.00' : '+₹89,100.00'}
+            </h3>
           </div>
         </div>
 
@@ -121,7 +141,9 @@ export default function DashboardHome() {
         <div className="card bg-[#111] border border-[#1a1a1a] rounded-lg p-5 flex flex-col justify-between h-28">
           <span className="text-sm text-[#666]">Max Drawdown</span>
           <div>
-            <h3 className="text-xl font-medium text-[#ef4444] font-mono">-4.12%</h3>
+            <h3 className={`text-xl font-medium font-mono ${isFreshMode ? 'text-white' : 'text-[#ef4444]'}`}>
+              {isFreshMode ? '0.00%' : '-4.12%'}
+            </h3>
           </div>
         </div>
       </div>
@@ -129,12 +151,12 @@ export default function DashboardHome() {
       {/* Advanced performance ratio cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {[
-          { label: 'Sharpe ratio', val: '2.84', color: 'text-[#22d3ee]' },
-          { label: 'Sortino ratio', val: '3.12', color: 'text-[#22d3ee]' },
-          { label: 'Calmar ratio', val: '3.45', color: 'text-[#22d3ee]' },
-          { label: 'Profit factor', val: '1.92', color: 'text-[#22c55e]' },
-          { label: 'Expectancy', val: '+₹1,420.00', color: 'text-[#22c55e]' },
-          { label: 'Win rate', val: '62.5%', color: 'text-[#22c55e]' },
+          { label: 'Sharpe ratio', val: isFreshMode ? '0.00' : '2.84', color: 'text-[#22d3ee]' },
+          { label: 'Sortino ratio', val: isFreshMode ? '0.00' : '3.12', color: 'text-[#22d3ee]' },
+          { label: 'Calmar ratio', val: isFreshMode ? '0.00' : '3.45', color: 'text-[#22d3ee]' },
+          { label: 'Profit factor', val: isFreshMode ? '0.00' : '1.92', color: 'text-[#22c55e]' },
+          { label: 'Expectancy', val: isFreshMode ? '₹0.00' : '+₹1,420.00', color: 'text-[#22c55e]' },
+          { label: 'Win rate', val: isFreshMode ? '0.0%' : '62.5%', color: 'text-[#22c55e]' },
         ].map(item => (
           <div key={item.label} className="card bg-[#111] border border-[#1a1a1a] rounded-lg p-4 flex flex-col justify-between h-20">
             <span className="text-xs text-[#666]">{item.label}</span>
@@ -151,23 +173,28 @@ export default function DashboardHome() {
           
           {/* Detailed Stats Block */}
           <div className="card bg-[#111] border border-[#1a1a1a] rounded-lg p-6">
-            <h2 className="text-base font-medium text-[#fafafa] mb-6">
-              Statistics
-            </h2>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-base font-medium text-[#fafafa]">
+                Statistics
+              </h2>
+              {isFreshMode && (
+                <span className="text-xs font-mono text-[#22d3ee]">Fresh Session Baseline</span>
+              )}
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { label: 'Open trades', val: '2' },
-                { label: 'Closed trades', val: '142' },
-                { label: 'Loss rate', val: '37.5%' },
-                { label: 'Net profit', val: '+₹1,54,200.00' },
-                { label: 'Largest win', val: '+₹45,000.00' },
-                { label: 'Largest loss', val: '-₹18,000.00' },
-                { label: 'Avg win', val: '+₹9,400.00' },
-                { label: 'Avg loss', val: '-₹5,120.00' },
-                { label: 'Avg hold time', val: '42 mins' },
-                { label: 'Daily return', val: '+0.42%' },
-                { label: 'Monthly return', val: '+9.45%' },
-                { label: 'Expectancy ratio', val: '1.83' },
+                { label: 'Open trades', val: isFreshMode ? '0' : '2' },
+                { label: 'Closed trades', val: isFreshMode ? '0' : '142' },
+                { label: 'Loss rate', val: isFreshMode ? '0.0%' : '37.5%' },
+                { label: 'Net profit', val: isFreshMode ? '₹0.00' : '+₹1,54,200.00' },
+                { label: 'Largest win', val: isFreshMode ? '₹0.00' : '+₹45,000.00' },
+                { label: 'Largest loss', val: isFreshMode ? '₹0.00' : '-₹18,000.00' },
+                { label: 'Avg win', val: isFreshMode ? '₹0.00' : '+₹9,400.00' },
+                { label: 'Avg loss', val: isFreshMode ? '₹0.00' : '-₹5,120.00' },
+                { label: 'Avg hold time', val: isFreshMode ? '0 mins' : '42 mins' },
+                { label: 'Daily return', val: isFreshMode ? '0.00%' : '+0.42%' },
+                { label: 'Monthly return', val: isFreshMode ? '0.00%' : '+9.45%' },
+                { label: 'Expectancy ratio', val: isFreshMode ? '0.00' : '1.83' },
               ].map(stat => (
                 <div key={stat.label} className="border-b border-[#1a1a1a] pb-3">
                   <span className="text-xs text-[#666] block mb-1">{stat.label}</span>
