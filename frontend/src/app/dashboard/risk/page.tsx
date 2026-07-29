@@ -59,7 +59,7 @@ export default function RiskDashboard() {
         <div className="card p-6 rounded-lg space-y-4">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Intraday Loss Limit</span>
-            <span className="text-xs font-mono font-bold text-white">${currentLoss} / ${dailyLossLimit}</span>
+            <span className="text-xs font-mono font-bold text-white">₹{currentLoss} / ₹{dailyLossLimit}</span>
           </div>
           <div className="h-2.5 w-full bg-gray-900 rounded-full overflow-hidden">
             <div 
@@ -69,7 +69,7 @@ export default function RiskDashboard() {
           </div>
           <div className="flex justify-between text-[10px] text-gray-500 font-mono">
             <span>Progress: {((currentLoss / dailyLossLimit) * 100).toFixed(1)}%</span>
-            <span>Limit Left: ${dailyLossLimit - currentLoss}</span>
+            <span>Limit Left: ₹{dailyLossLimit - currentLoss}</span>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ export default function RiskDashboard() {
         <div className="card p-6 rounded-lg space-y-4">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Value at Risk (95% VaR)</span>
-            <span className="text-xs font-mono font-bold text-white">$3,120.00</span>
+            <span className="text-xs font-mono font-bold text-white">₹3,120.00</span>
           </div>
           <div className="h-2.5 w-full bg-gray-900 rounded-full overflow-hidden">
             <div 
@@ -125,11 +125,11 @@ export default function RiskDashboard() {
             <div className="grid grid-cols-2 gap-6 text-xs font-semibold text-gray-300">
               <div className="border-b border-gray-900 pb-3">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Current Exposure</span>
-                <span className="text-white font-mono font-bold">$75,000.00</span>
+                <span className="text-white font-mono font-bold">₹75,000.00</span>
               </div>
               <div className="border-b border-gray-900 pb-3">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Margin Assets Used</span>
-                <span className="text-white font-mono font-bold">$5,790.00</span>
+                <span className="text-white font-mono font-bold">₹5,790.00</span>
               </div>
               <div className="border-b border-gray-900 pb-3">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Portfolio Heat</span>
@@ -137,7 +137,7 @@ export default function RiskDashboard() {
               </div>
               <div className="border-b border-gray-900 pb-3">
                 <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-1">Exchange Margins Available</span>
-                <span className="text-[#22c55e] font-mono font-bold">$94,210.00</span>
+                <span className="text-[#22c55e] font-mono font-bold">₹94,210.00</span>
               </div>
             </div>
           </div>

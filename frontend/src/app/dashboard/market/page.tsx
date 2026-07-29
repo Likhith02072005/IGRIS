@@ -136,7 +136,7 @@ export default function MarketDashboard() {
                       <td className={`py-3 text-gray-400 ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>{s.callOI.toLocaleString()}</td>
                       <td className={`py-3 text-gray-500 ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>{s.callVol.toLocaleString()}</td>
                       <td className={`py-3 text-gray-500 ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>{s.callIV}%</td>
-                      <td className={`py-3 text-white font-bold font-mono ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>${s.callLTP}</td>
+                      <td className={`py-3 text-white font-bold font-mono ${isCallITM ? 'bg-[#22c55e]/5' : ''}`}>₹{s.callLTP}</td>
                       <td className={`py-3 border-r border-gray-900 font-mono ${isCallITM ? 'bg-[#22c55e]/5' : ''} ${s.callDelta >= 0.7 ? 'text-[#22c55e]' : 'text-gray-400'}`}>
                         {s.callDelta}
                       </td>
@@ -150,7 +150,7 @@ export default function MarketDashboard() {
                       <td className={`py-3 border-l border-gray-900 font-mono ${isPutITM ? 'bg-indigo-500/5' : ''} ${Math.abs(s.putDelta) >= 0.7 ? 'text-[#ef4444]' : 'text-gray-400'}`}>
                         {s.putDelta}
                       </td>
-                      <td className={`py-3 text-white font-bold font-mono ${isPutITM ? 'bg-indigo-500/5' : ''}`}>${s.putLTP}</td>
+                      <td className={`py-3 text-white font-bold font-mono ${isPutITM ? 'bg-indigo-500/5' : ''}`}>₹{s.putLTP}</td>
                       <td className={`py-3 text-gray-500 ${isPutITM ? 'bg-indigo-500/5' : ''}`}>{s.putIV}%</td>
                       <td className={`py-3 text-gray-500 ${isPutITM ? 'bg-indigo-500/5' : ''}`}>{s.putVol.toLocaleString()}</td>
                       <td className={`py-3 text-gray-400 ${isPutITM ? 'bg-indigo-500/5' : ''}`}>{s.putOI.toLocaleString()}</td>
@@ -214,9 +214,9 @@ export default function MarketDashboard() {
               </span>
               <div className="space-y-2 text-xs font-semibold text-gray-300">
                 {[
-                  { symbol: 'RELIANCE', volume: '12.4M', price: '$3,120.40' },
-                  { symbol: 'HDFCBANK', volume: '8.2M', price: '$1,654.80' },
-                  { symbol: 'INFY', volume: '6.9M', price: '$1,545.30' },
+                  { symbol: 'RELIANCE', volume: '12.4M', price: '₹3,120.40' },
+                  { symbol: 'HDFCBANK', volume: '8.2M', price: '₹1,654.80' },
+                  { symbol: 'INFY', volume: '6.9M', price: '₹1,545.30' },
                 ].map(leader => (
                   <div key={leader.symbol} className="flex justify-between border-b border-gray-900 pb-2">
                     <span className="text-white font-bold">{leader.symbol}</span>

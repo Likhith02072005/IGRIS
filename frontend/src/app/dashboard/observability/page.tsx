@@ -22,7 +22,7 @@ export default function ObservabilityUI() {
   });
 
   const [logs, setLogs] = useState<string[]>([
-    "[13:20:00] [INFO] EventBus stream listener parsed tick BANKNIFTY26JUL52400CE LTP: $112.50",
+    "[13:20:00] [INFO] EventBus stream listener parsed tick BANKNIFTY26JUL52400CE LTP: ₹112.50",
     "[13:20:04] [INFO] RiskEngine checked order limits: APPROVED (daily drawdown under threshold)",
     "[13:20:08] [INFO] Broker execution adapter Dhan HQ dispatched LIMIT BUY order ID: dh_order_8492"
   ]);

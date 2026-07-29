@@ -140,7 +140,7 @@ export default function AnalyticsDashboard() {
                       <tr key={d.day} className="hover:bg-gray-900/10">
                         <td className="py-3.5 text-white font-bold">{d.day}</td>
                         <td className={`py-3.5 text-right font-mono ${isPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
-                          {isPositive ? '+' : ''}${d.pnl.toLocaleString()}
+                          {isPositive ? '+' : ''}₹{d.pnl.toLocaleString()}
                         </td>
                         <td className="py-3.5 text-right font-mono text-gray-400">{d.trades}</td>
                         <td className="py-3.5 text-right font-mono text-white">{d.winRate}%</td>
@@ -207,9 +207,9 @@ export default function AnalyticsDashboard() {
                     {monteCarloSteps.map(step => (
                       <tr key={step.step}>
                         <td className="py-2.5 text-white font-sans">{step.step}</td>
-                        <td className="py-2.5 text-right text-[#ef4444]">${step.p10.toLocaleString()}</td>
-                        <td className="py-2.5 text-right text-white">${step.p50.toLocaleString()}</td>
-                        <td className="py-2.5 text-right text-[#22c55e]">${step.p90.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-[#ef4444]">₹{step.p10.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-white">₹{step.p50.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-[#22c55e]">₹{step.p90.toLocaleString()}</td>
                       </tr>
                     ))}
                   </tbody>
