@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   ShieldAlert, ShieldCheck, Power, RefreshCw, Layers, TrendingUp, TrendingDown,
-  Play, Pause, AlertOctagon, Activity, Network, CircleDollarSign, Zap, RotateCcw, ChevronRight
+  Play, Pause, AlertOctagon, Activity, Network, CircleDollarSign, Zap, RotateCcw, ChevronRight,
+  ArrowRight, CheckCircle2, Cpu, Server, Database, Radio
 } from 'lucide-react';
 
 import { useCapitalStore } from '../../../store/capital';
@@ -28,9 +29,68 @@ interface RunningStrategy {
   aiScore: number;
 }
 
+const flowSteps = [
+  {
+    id: 'step1',
+    step: '01',
+    title: 'Market Tick Feed',
+    subtitle: 'NSE L2 Websocket Sockets',
+    icon: Radio,
+    color: 'from-blue-500 to-cyan-500',
+    detail: 'Streaming 100ms real-time Nifty 50 tick price data, order book depth, and live PCR options chain volume.',
+    latency: '3ms',
+    status: 'ACTIVE',
+  },
+  {
+    id: 'step2',
+    step: '02',
+    title: '25-Indicator AI Engine',
+    subtitle: 'Consensus Signal Scoring',
+    icon: Cpu,
+    color: 'from-[#7c3aed] to-indigo-600',
+    detail: 'Aggregates 25 quantitative technical signals (Supertrend, VWAP, EMA, RSI, MACD, Order Flow). Requires 20/25 (80%) consensus to trigger order.',
+    latency: '2ms',
+    status: '22/25 BULLISH',
+  },
+  {
+    id: 'step3',
+    step: '03',
+    title: 'Martingale Lot Scaler',
+    subtitle: 'Dynamic Lot Multiplier',
+    icon: Activity,
+    color: 'from-purple-500 to-pink-500',
+    detail: 'Calculates position size: 1 Lot (65 Qty) on Win → Scales x2 (2 Lots → 4 Lots → 8 Lots) after loss to guarantee net recovery.',
+    latency: '1ms',
+    status: '1 LOT (READY)',
+  },
+  {
+    id: 'step4',
+    step: '04',
+    title: 'Risk Oversight Gate',
+    subtitle: 'TP & SL Hard Stops',
+    icon: ShieldCheck,
+    color: 'from-emerald-500 to-teal-500',
+    detail: 'Enforces strictly TP +₹4,000 / SL -₹8,000 per lot. Hard stops automatically lock capital base from unexpected slippage.',
+    latency: '1ms',
+    status: 'PROTECTED',
+  },
+  {
+    id: 'step5',
+    step: '05',
+    title: 'FIX Broker Routing',
+    subtitle: 'AngelOne / Zerodha FIX',
+    icon: Server,
+    color: 'from-amber-500 to-orange-500',
+    detail: 'Dispatches sub-10ms DMA order to broker terminal. Monitors fill state, trail stops, and post-trade journal logging.',
+    latency: '8ms',
+    status: 'CONNECTED',
+  },
+];
+
 export default function MissionControl() {
   const { capital } = useCapitalStore();
-  const [isFreshMode, setIsFreshMode] = useState(true); // Default to Fresh 0 Baseline
+  const [isFreshMode, setIsFreshMode] = useState(true);
+  const [activeStep, setActiveStep] = useState<string>('step2');
 
   const [strategies, setStrategies] = useState<RunningStrategy[]>([
     {
@@ -119,13 +179,15 @@ export default function MissionControl() {
   const totalTodayPnL = isFreshMode ? 0 : 4500;
   const maxDrawdownPct = isFreshMode ? '0.00%' : '-2.15%';
 
+  const currentStepData = flowSteps.find(s => s.id === activeStep) || flowSteps[1];
+
   return (
-    <div className="space-y-8 relative z-10">
+    <div className="space-y-6 sm:space-y-8 relative z-10">
       
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e] font-heading">
               Platform Mission Control
             </h1>
@@ -159,7 +221,7 @@ export default function MissionControl() {
       </div>
 
       {/* Overview stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className="card p-5 rounded-2xl">
           <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block mb-1">Total Algorithmic Capital</span>
           <span className="text-xl font-bold font-mono text-[#1a1a2e]">
@@ -186,6 +248,87 @@ export default function MissionControl() {
           <span className="text-xl font-bold font-mono text-[#7c3aed]">
             3 Nodes Online
           </span>
+        </div>
+      </div>
+
+      {/* NEW: Interactive Execution Flow Diagram Component */}
+      <div className="card p-6 rounded-2xl border border-white/60 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <Zap className="w-5 h-5 text-[#7c3aed]" />
+              <h2 className="text-base font-bold text-[#1a1a2e] font-heading">
+                Interactive Algorithmic Execution Flow
+              </h2>
+            </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Click any stage in the flow pipeline below to inspect live signal data & latency metrics.
+            </p>
+          </div>
+          <span className="px-3 py-1 rounded-full bg-[#10b981]/15 text-[#10b981] font-mono text-xs font-bold self-start sm:self-auto">
+            15ms End-to-End Latency
+          </span>
+        </div>
+
+        {/* 5-Step Horizontal Flow Diagram */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 relative">
+          {flowSteps.map((step, idx) => {
+            const Icon = step.icon;
+            const isSelected = activeStep === step.id;
+            return (
+              <div
+                key={step.id}
+                onClick={() => setActiveStep(step.id)}
+                className={`p-4 rounded-xl border transition-all cursor-pointer relative flex flex-col justify-between h-36 ${
+                  isSelected
+                    ? 'bg-white shadow-md border-[#7c3aed] ring-2 ring-[#7c3aed]/20 scale-102'
+                    : 'bg-white/50 border-slate-200 hover:bg-white hover:border-slate-300'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold font-mono text-slate-400">STAGE {step.step}</span>
+                  <span className="px-1.5 py-0.5 rounded-md bg-slate-100 text-[9px] font-bold text-slate-600 font-mono">
+                    {step.latency}
+                  </span>
+                </div>
+
+                <div className="my-2">
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${step.color} text-white flex items-center justify-center mb-2 shadow-xs`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <h4 className="text-xs font-bold text-[#1a1a2e] truncate">{step.title}</h4>
+                  <p className="text-[10px] text-slate-500 truncate">{step.subtitle}</p>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                  <span className="text-[9px] font-bold text-[#10b981] font-mono">{step.status}</span>
+                  <CheckCircle2 className={`w-3.5 h-3.5 ${isSelected ? 'text-[#7c3aed]' : 'text-slate-300'}`} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Selected Step Expanded Detail Box */}
+        <div className="p-4 rounded-xl bg-gradient-to-br from-[#7c3aed]/5 to-[#0ea5e9]/5 border border-[#7c3aed]/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="px-2 py-0.5 rounded-md bg-[#7c3aed] text-white font-mono text-[10px] font-bold">
+                STAGE {currentStepData.step}
+              </span>
+              <h3 className="text-sm font-bold text-[#1a1a2e] font-heading">{currentStepData.title} ({currentStepData.subtitle})</h3>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
+              {currentStepData.detail}
+            </p>
+          </div>
+
+          <Link
+            href="/dashboard/strategies/nifty-martingale"
+            className="flex-shrink-0 px-4 py-2 rounded-xl bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#7c3aed]/20 transition-all cursor-pointer"
+          >
+            Inspect Strategy Engine <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </div>
 
