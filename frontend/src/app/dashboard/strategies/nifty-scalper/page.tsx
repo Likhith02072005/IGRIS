@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Zap, TrendingUp, TrendingDown, RefreshCw, AlertOctagon, ArrowLeft, CheckCircle2, Play, Pause,
-  ShieldCheck, Activity, BarChart2, DollarSign, Clock, Layers, Flame
+  ShieldCheck, Activity, BarChart2, DollarSign, Clock, Layers, Flame, Shield, Lock, Sliders
 } from 'lucide-react';
 
 import { useCapitalStore } from '../../../../store/capital';
@@ -13,7 +13,9 @@ interface ScalpTrade {
   id: string;
   timestamp: string;
   type: 'CALL' | 'PUT';
+  isHedged: boolean;
   strike: string;
+  hedgeLegStrike?: string;
   entryPrice: number;
   exitPrice: number;
   lots: number;
@@ -27,7 +29,6 @@ interface ScalpTrade {
 
 export default function NiftyScalperConsole() {
   const { capital } = useCapitalStore();
-  const [activeTab, setActiveTab] = useState<'CONSOLE' | 'TRADES' | 'INDICATORS'>('CONSOLE');
   
   // Ticker states
   const [niftySpot, setNiftySpot] = useState(24305.40);
@@ -36,16 +37,52 @@ export default function NiftyScalperConsole() {
   
   // Scalper state
   const [isEngineActive, setIsEngineActive] = useState(true);
+  const [isHedgedMode, setIsHedgedMode] = useState(true); // Default Delta-Hedged mode ENABLED
   const [currentLots, setCurrentLots] = useState(2); // Default 2 Lots for scalping
-  const [sessionPnL, setSessionPnL] = useState(4850);
-  const [tradesCount, setTradesCount] = useState(8);
-  const [winCount, setWinCount] = useState(6);
+  const [sessionPnL, setSessionPnL] = useState(6250);
+  const [tradesCount, setTradesCount] = useState(10);
+  const [winCount, setWinCount] = useState(8);
 
   const [trades, setTrades] = useState<ScalpTrade[]>([
     {
-      id: 'sclp_8',
-      timestamp: '09:42:15 AM',
+      id: 'sclp_10',
+      timestamp: '09:44:12 AM',
       type: 'CALL',
+      isHedged: true,
+      strike: '24300 CE (ATM)',
+      hedgeLegStrike: '24450 CE (OTM Hedge)',
+      entryPrice: 112.50,
+      exitPrice: 119.20,
+      lots: 2,
+      qty: 130,
+      target: 1200,
+      stopLoss: 450,
+      pnl: 871.00,
+      durationSec: 38,
+      status: 'CLOSED_WIN'
+    },
+    {
+      id: 'sclp_9',
+      timestamp: '09:41:05 AM',
+      type: 'PUT',
+      isHedged: true,
+      strike: '24300 PE (ATM)',
+      hedgeLegStrike: '24150 PE (OTM Hedge)',
+      entryPrice: 98.20,
+      exitPrice: 95.10,
+      lots: 2,
+      qty: 130,
+      target: 1200,
+      stopLoss: 450,
+      pnl: -403.00,
+      durationSec: 25,
+      status: 'CLOSED_LOSS'
+    },
+    {
+      id: 'sclp_8',
+      timestamp: '09:38:15 AM',
+      type: 'CALL',
+      isHedged: false,
       strike: '24300 CE',
       entryPrice: 112.50,
       exitPrice: 118.80,
@@ -55,36 +92,6 @@ export default function NiftyScalperConsole() {
       stopLoss: 750,
       pnl: 819.00,
       durationSec: 42,
-      status: 'CLOSED_WIN'
-    },
-    {
-      id: 'sclp_7',
-      timestamp: '09:38:04 AM',
-      type: 'PUT',
-      strike: '24300 PE',
-      entryPrice: 98.20,
-      exitPrice: 94.10,
-      lots: 2,
-      qty: 130,
-      target: 1500,
-      stopLoss: 750,
-      pnl: -533.00,
-      durationSec: 28,
-      status: 'CLOSED_LOSS'
-    },
-    {
-      id: 'sclp_6',
-      timestamp: '09:33:50 AM',
-      type: 'CALL',
-      strike: '24250 CE',
-      entryPrice: 134.00,
-      exitPrice: 142.50,
-      lots: 2,
-      qty: 130,
-      target: 1500,
-      stopLoss: 750,
-      pnl: 1105.00,
-      durationSec: 55,
       status: 'CLOSED_WIN'
     }
   ]);
@@ -103,27 +110,36 @@ export default function NiftyScalperConsole() {
     return () => clearInterval(interval);
   }, []);
 
-  // 1-Tap Trigger Scalp Handlers
+  // 1-Tap Trigger Scalp Handlers (Hedged or Naked)
   const handleTriggerScalp = (type: 'CALL' | 'PUT') => {
     const now = new Date();
     const timeStr = now.toLocaleTimeString();
-    const isWin = Math.random() > 0.3; // 70% win probability simulation
+    const isWin = Math.random() > 0.25; // 75% win rate when hedged
     const entry = type === 'CALL' ? 115.00 : 95.00;
-    const diff = isWin ? 6.5 : -3.5;
+    
+    const diff = isHedgedMode
+      ? (isWin ? 5.2 : -2.2)  // Hedged: Smaller risk, capped loss
+      : (isWin ? 6.5 : -3.5); // Naked: Standard risk
+
     const exit = Number((entry + diff).toFixed(2));
     const tradePnl = Math.round(diff * 65 * currentLots);
+    const atmStrike = Math.round(niftySpot / 50) * 50;
 
     const newTrade: ScalpTrade = {
       id: `sclp_${Date.now().toString().slice(-4)}`,
       timestamp: timeStr,
       type,
-      strike: `${Math.round(niftySpot / 50) * 50} ${type === 'CALL' ? 'CE' : 'PE'}`,
+      isHedged: isHedgedMode,
+      strike: `${atmStrike} ${type === 'CALL' ? 'CE (ATM)' : 'PE (ATM)'}`,
+      hedgeLegStrike: isHedgedMode
+        ? `${type === 'CALL' ? atmStrike + 150 : atmStrike - 150} ${type === 'CALL' ? 'CE (OTM Hedge)' : 'PE (OTM Hedge)'}`
+        : undefined,
       entryPrice: entry,
       exitPrice: exit,
       lots: currentLots,
       qty: currentLots * 65,
-      target: 1500 * currentLots,
-      stopLoss: 750 * currentLots,
+      target: (isHedgedMode ? 1200 : 1500) * currentLots,
+      stopLoss: (isHedgedMode ? 450 : 750) * currentLots,
       pnl: tradePnl,
       durationSec: Math.floor(Math.random() * 30) + 15,
       status: isWin ? 'CLOSED_WIN' : 'CLOSED_LOSS',
@@ -136,7 +152,7 @@ export default function NiftyScalperConsole() {
   };
 
   const handleFlattenAll = () => {
-    alert('INSTANT 0ms FLATTEN: Closed all active scalping orders across NSE DMA socket.');
+    alert('INSTANT 0ms FLATTEN: Closed all main & hedge leg positions simultaneously across NSE DMA socket.');
   };
 
   const winRate = tradesCount > 0 ? ((winCount / tradesCount) * 100).toFixed(1) : '0.0';
@@ -150,27 +166,47 @@ export default function NiftyScalperConsole() {
           <div className="flex items-center gap-3">
             <Link 
               href="/dashboard/strategies"
-              className="p-2 rounded-xl bg-white/80 border border-slate-200 text-slate-600 hover:text-[#7c3aed] transition-colors"
+              className="p-2.5 rounded-xl bg-white/80 border border-slate-200 text-slate-600 hover:text-[#7c3aed] transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-xl font-bold text-[#1a1a2e] font-heading flex items-center gap-2">
-                  High-Frequency Nifty 1m Scalper <Flame className="w-5 h-5 text-amber-500 fill-amber-500" />
+                  High-Frequency Nifty Scalper + Risk Hedge Engine <Flame className="w-5 h-5 text-amber-500 fill-amber-500" />
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] font-mono text-[10px] font-bold border border-[#10b981]/30">
-                  SUB-SECOND DMA
+                <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-700 font-mono text-[10px] font-bold border border-indigo-500/30 flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-indigo-600" /> DELTA HEDGE READY
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5 font-medium">
-                Ultra-fast 1-minute candle option scalping engine. Targets +6 Nifty pts (+₹1,500/lot) with tight -3 pts (-₹750/lot) risk lock.
+                Sub-second option scalping with optional OTM Wing Delta Hedging. Locks drawdown to a strict rupee cap.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          {/* Hedging Mode Switcher */}
+          <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-200/60 border border-slate-300/60">
+            <button
+              onClick={() => setIsHedgedMode(false)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                !isHedgedMode ? 'bg-white text-slate-800 shadow-xs' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              Naked Scalp
+            </button>
+            <button
+              onClick={() => setIsHedgedMode(true)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                isHedgedMode ? 'bg-[#7c3aed] text-white shadow-md shadow-[#7c3aed]/25' : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              <Shield className="w-3.5 h-3.5" /> Hedged Scalp
+            </button>
+          </div>
+
           <button
             onClick={() => setIsEngineActive(!isEngineActive)}
             className={`px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-xs ${
@@ -180,7 +216,7 @@ export default function NiftyScalperConsole() {
             }`}
           >
             {isEngineActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-            {isEngineActive ? 'Scalper Engine Active' : 'Engine Paused'}
+            {isEngineActive ? 'Engine Active' : 'Paused'}
           </button>
 
           <button
@@ -211,11 +247,11 @@ export default function NiftyScalperConsole() {
         </div>
 
         <div className="card p-4 rounded-2xl border-l-4 border-l-indigo-500">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Order Flow Delta</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Delta Neutral Shield</span>
           <span className="text-xl font-bold font-mono text-indigo-600 block mt-0.5">
-            {orderDelta.ratio}x Call Heavy
+            {isHedgedMode ? 'Δ ±0.12 (Hedged)' : 'Δ ±0.52 (Naked)'}
           </span>
-          <span className="text-[10px] text-slate-500 font-semibold block mt-1">+{orderDelta.calls} Call / -{orderDelta.puts} Put Vol</span>
+          <span className="text-[10px] text-slate-500 font-semibold block mt-1">OTM Protection Leg Paired</span>
         </div>
 
         <div className="card p-4 rounded-2xl border-l-4 border-l-amber-500">
@@ -239,12 +275,44 @@ export default function NiftyScalperConsole() {
         </div>
 
         <div className="card p-4 rounded-2xl border-l-4 border-l-teal-500 col-span-2 lg:col-span-1">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Target / Stop Loss Lock</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Target / Max Loss Risk Cap</span>
           <span className="text-sm font-bold font-mono text-[#10b981] block mt-1">
-            TP: +₹{(1500 * currentLots).toLocaleString()}
+            TP: +₹{((isHedgedMode ? 1200 : 1500) * currentLots).toLocaleString()}
           </span>
           <span className="text-xs font-bold font-mono text-[#ef4444] block">
-            SL: -₹{(750 * currentLots).toLocaleString()}
+            Max Risk: -₹{((isHedgedMode ? 450 : 750) * currentLots).toLocaleString()} {isHedgedMode ? '(Capped)' : ''}
+          </span>
+        </div>
+      </div>
+
+      {/* Hedging Mode Breakdown Banner */}
+      <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all ${
+        isHedgedMode 
+          ? 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200 text-indigo-900' 
+          : 'bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200 text-amber-900'
+      }`}>
+        <div className="flex items-center gap-3">
+          <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-xs ${
+            isHedgedMode ? 'bg-[#7c3aed]' : 'bg-amber-500'
+          }`}>
+            {isHedgedMode ? <Shield className="w-5 h-5" /> : <Flame className="w-5 h-5" />}
+          </div>
+          <div>
+            <h3 className="text-sm font-bold font-heading">
+              {isHedgedMode ? '🛡️ Delta-Hedged Option Scalping Active' : '⚡ Naked Option Scalping Active'}
+            </h3>
+            <p className="text-xs text-slate-600 mt-0.5">
+              {isHedgedMode 
+                ? `ATM Option Scalp + OTM Wing Protection Leg. Reduces maximum loss by 40% (Max loss capped at ₹450/lot).`
+                : `Pure directional naked option buying. Higher reward (+₹1,500/lot) with standard -₹750 SL.`
+              }
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 text-xs font-mono font-bold">
+          <span className="px-3 py-1.5 rounded-xl bg-white/80 border border-slate-200">
+            {isHedgedMode ? 'Max Loss: -₹450 / Lot' : 'Max Loss: -₹750 / Lot'}
           </span>
         </div>
       </div>
@@ -254,10 +322,10 @@ export default function NiftyScalperConsole() {
         <div className="flex justify-between items-center border-b border-slate-100 pb-4">
           <div>
             <h2 className="text-base font-bold text-[#1a1a2e] font-heading flex items-center gap-2">
-              ⚡ 1-Tap Instant DMA Scalp Triggers
+              ⚡ 1-Tap Instant DMA Scalp & Hedge Triggers
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Clicking a trigger below fires a sub-10ms market order with pre-attached +6pt TP & -3pt SL bracket orders.
+              Fires simultaneous market orders for main scalp and OTM protection leg with sub-10ms execution.
             </p>
           </div>
           <span className="px-3 py-1 rounded-full bg-[#7c3aed]/10 text-[#7c3aed] font-mono text-xs font-bold">
@@ -266,53 +334,61 @@ export default function NiftyScalperConsole() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Instant CALL Scalp Button */}
+          {/* CALL Trigger */}
           <button
             onClick={() => handleTriggerScalp('CALL')}
             className="p-6 rounded-2xl bg-gradient-to-br from-[#10b981] to-emerald-600 hover:from-[#059669] hover:to-emerald-700 text-white shadow-lg shadow-[#10b981]/25 transition-all cursor-pointer group text-left relative overflow-hidden"
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-100 font-mono">BULLISH MOMENTUM</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-100 font-mono">
+                {isHedgedMode ? 'HEDGED BULL SPREAD' : 'BULLISH MOMENTUM'}
+              </span>
               <TrendingUp className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
             </div>
-            <h3 className="text-2xl font-bold font-heading">BUY CALL SCALP</h3>
+            <h3 className="text-2xl font-bold font-heading">
+              {isHedgedMode ? 'BUY HEDGED CALL SPREAD' : 'BUY CALL SCALP'}
+            </h3>
             <p className="text-xs text-emerald-100 mt-1 font-medium">
-              Target: +₹{(1500 * currentLots).toLocaleString()} (+6 Pts) | SL: -₹{(750 * currentLots).toLocaleString()} (-3 Pts)
+              Target: +₹{((isHedgedMode ? 1200 : 1500) * currentLots).toLocaleString()} | Max Risk: -₹{((isHedgedMode ? 450 : 750) * currentLots).toLocaleString()}
             </p>
             <div className="mt-4 pt-3 border-t border-white/20 flex justify-between items-center text-xs font-mono font-bold">
               <span>{currentLots} Lots ({currentLots * 65} Qty)</span>
-              <span className="underline">Trigger Instant Order →</span>
+              <span className="underline">Trigger {isHedgedMode ? 'Hedged Order' : 'Instant Order'} →</span>
             </div>
           </button>
 
-          {/* Instant PUT Scalp Button */}
+          {/* PUT Trigger */}
           <button
             onClick={() => handleTriggerScalp('PUT')}
             className="p-6 rounded-2xl bg-gradient-to-br from-[#ef4444] to-rose-600 hover:from-[#dc2626] hover:to-rose-700 text-white shadow-lg shadow-[#ef4444]/25 transition-all cursor-pointer group text-left relative overflow-hidden"
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-rose-100 font-mono">BEARISH MOMENTUM</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-100 font-mono">
+                {isHedgedMode ? 'HEDGED BEAR SPREAD' : 'BEARISH MOMENTUM'}
+              </span>
               <TrendingDown className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
             </div>
-            <h3 className="text-2xl font-bold font-heading">BUY PUT SCALP</h3>
+            <h3 className="text-2xl font-bold font-heading">
+              {isHedgedMode ? 'BUY HEDGED PUT SPREAD' : 'BUY PUT SCALP'}
+            </h3>
             <p className="text-xs text-rose-100 mt-1 font-medium">
-              Target: +₹{(1500 * currentLots).toLocaleString()} (+6 Pts) | SL: -₹{(750 * currentLots).toLocaleString()} (-3 Pts)
+              Target: +₹{((isHedgedMode ? 1200 : 1500) * currentLots).toLocaleString()} | Max Risk: -₹{((isHedgedMode ? 450 : 750) * currentLots).toLocaleString()}
             </p>
             <div className="mt-4 pt-3 border-t border-white/20 flex justify-between items-center text-xs font-mono font-bold">
               <span>{currentLots} Lots ({currentLots * 65} Qty)</span>
-              <span className="underline">Trigger Instant Order →</span>
+              <span className="underline">Trigger {isHedgedMode ? 'Hedged Order' : 'Instant Order'} →</span>
             </div>
           </button>
         </div>
       </div>
 
-      {/* Live Scalp Order Log Table */}
+      {/* Live Scalp & Hedge Order Log Table */}
       <div className="card rounded-2xl border border-white/60 overflow-hidden">
         <div className="p-5 border-b border-slate-100 flex justify-between items-center text-xs font-bold text-slate-500">
           <span className="font-heading text-sm text-[#1a1a2e] flex items-center gap-2">
-            <Clock className="w-4 h-4 text-[#7c3aed]" /> Live Scalper Execution Log
+            <Clock className="w-4 h-4 text-[#7c3aed]" /> Live Scalper & Hedging Execution Log
           </span>
-          <span className="font-mono text-[#7c3aed]">{trades.length} Scalp Executions Today</span>
+          <span className="font-mono text-[#7c3aed]">{trades.length} Executions Today</span>
         </div>
 
         <div className="overflow-x-auto">
@@ -321,7 +397,8 @@ export default function NiftyScalperConsole() {
               <tr className="border-b border-slate-100 bg-white/40 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                 <th className="p-4">Time</th>
                 <th className="p-4">Order ID</th>
-                <th className="p-4">Type & Strike</th>
+                <th className="p-4">Strategy Mode</th>
+                <th className="p-4">Primary Strike & Hedge Leg</th>
                 <th className="p-4">Lots / Qty</th>
                 <th className="p-4 text-right">Entry → Exit</th>
                 <th className="p-4 text-right">Duration</th>
@@ -337,11 +414,19 @@ export default function NiftyScalperConsole() {
                     <td className="p-4 font-mono text-slate-500 text-[11px]">{t.timestamp}</td>
                     <td className="p-4 font-mono text-[#7c3aed] text-[11px] font-bold">{t.id}</td>
                     <td className="p-4">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
-                        t.type === 'CALL' ? 'bg-[#10b981]/15 text-[#10b981]' : 'bg-[#ef4444]/15 text-[#ef4444]'
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        t.isHedged ? 'bg-indigo-500/15 text-indigo-700 border border-indigo-500/30' : 'bg-amber-500/15 text-amber-700 border border-amber-500/30'
                       }`}>
-                        {t.type} · {t.strike}
+                        {t.isHedged ? 'DELTA HEDGED' : 'NAKED SCALP'}
                       </span>
+                    </td>
+                    <td className="p-4">
+                      <span className="font-bold text-[#1a1a2e] block">{t.strike}</span>
+                      {t.hedgeLegStrike && (
+                        <span className="text-[10px] text-indigo-600 font-mono block mt-0.5">
+                          + Leg: {t.hedgeLegStrike}
+                        </span>
+                      )}
                     </td>
                     <td className="p-4 font-mono text-slate-700">{t.lots} Lots ({t.qty} Qty)</td>
                     <td className="p-4 text-right font-mono text-slate-700">₹{t.entryPrice.toFixed(2)} → ₹{t.exitPrice.toFixed(2)}</td>
@@ -353,7 +438,7 @@ export default function NiftyScalperConsole() {
                       <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider ${
                         isWin ? 'bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20' : 'bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20'
                       }`}>
-                        {isWin ? 'PROFIT +6 PTS' : 'LOSS -3 PTS'}
+                        {isWin ? 'PROFIT' : 'CAPPED LOSS'}
                       </span>
                     </td>
                   </tr>
