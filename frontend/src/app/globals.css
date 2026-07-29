@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ═══════════════════════════════════════════════
-   IGRIS — White Glassmorphism Design System
-   High-Contrast Mobile Responsive Theme
+   IGRIS — Ultra-High Contrast & Mobile Sizing Engine
+   +50% Mobile Typography Boost & Fluid Scaling
    ═══════════════════════════════════════════════ */
 
 :root {
@@ -14,13 +14,13 @@
   --bg-mesh-1: #e0e7ff;
   --bg-mesh-2: #dbeafe;
   --bg-mesh-3: #ede9fe;
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.8);
   --glass-blur: 20px;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #475569;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --text-primary: #090d16;
+  --text-secondary: #1e293b;
+  --text-muted: #334155;
   --accent: #7c3aed;
   --accent-light: #a78bfa;
   --profit: #059669;
@@ -38,85 +38,153 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  font-size: 16px;
 }
 
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
 
-/* 📱 High-Contrast Mobile Responsive Overrides */
+/* 📱 +50% MOBILE ENLARGEMENT & FLUID FIT OVERRIDES (< 768px) */
 @media (max-width: 768px) {
+  html {
+    font-size: 18px !important; /* Base scaling boost */
+  }
+  
   body {
-    font-size: 16px !important;
+    font-size: 17px !important;
   }
   
-  /* Make all card titles & headers prominent on phone screens */
+  /* Headings Boost (+50% Larger) */
   h1 {
-    font-size: 1.4rem !important;
-    font-weight: 800 !important;
-    line-height: 1.3 !important;
-    color: #0f172a !important;
-  }
-  h2 {
-    font-size: 1.2rem !important;
-    font-weight: 800 !important;
-    line-height: 1.35 !important;
-    color: #0f172a !important;
+    font-size: 1.75rem !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+    color: #090d16 !important;
+    letter-spacing: -0.02em !important;
   }
   
-  /* Enlarge card padding and text */
+  h2 {
+    font-size: 1.45rem !important;
+    font-weight: 900 !important;
+    line-height: 1.3 !important;
+    color: #090d16 !important;
+  }
+  
+  h3 {
+    font-size: 1.25rem !important;
+    font-weight: 900 !important;
+    color: #090d16 !important;
+  }
+
+  /* Force all small micro-labels to 15px-16px Bold */
+  .text-\[9px\], .text-\[10px\], .text-\[11px\], .text-xs {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+  }
+  
+  .text-sm {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+  }
+  
+  .text-base {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+  }
+  
+  .text-lg {
+    font-size: 21px !important;
+    font-weight: 900 !important;
+  }
+  
+  .text-xl {
+    font-size: 24px !important;
+    font-weight: 900 !important;
+  }
+
+  .text-2xl {
+    font-size: 28px !important;
+    font-weight: 900 !important;
+  }
+
+  /* Card padding and solid background on phone screens */
   .card {
-    border-radius: 18px !important;
-    padding: 1.15rem !important;
-    background: rgba(255, 255, 255, 0.88) !important;
+    border-radius: 20px !important;
+    padding: 1.35rem !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: 1px solid rgba(203, 213, 225, 0.9) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
   }
   
   .card span {
-    font-size: 13px !important;
-    font-weight: 700 !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
     color: #334155 !important;
   }
-  
-  .card h3 {
+
+  .card .font-mono {
     font-size: 20px !important;
     font-weight: 800 !important;
-    color: #0f172a !important;
   }
   
-  /* Enlarge table typography */
-  table th, table td {
+  /* Tables Sizing on Phone Screens */
+  table th {
     font-size: 13px !important;
-    padding: 12px 10px !important;
+    font-weight: 900 !important;
+    color: #090d16 !important;
+    padding: 14px 12px !important;
   }
 
-  /* 📱 Sidebar Drawer Links Enlargement */
-  aside nav a {
-    font-size: 15px !important;
+  table td {
+    font-size: 14px !important;
     font-weight: 700 !important;
-    color: #0f172a !important;
-    padding-top: 13px !important;
-    padding-bottom: 13px !important;
-    padding-left: 14px !important;
-    padding-right: 14px !important;
+    color: #090d16 !important;
+    padding: 14px 12px !important;
+  }
+
+  /* Mobile Drawer Links Boost (+50% Larger) */
+  aside {
+    width: 90vw !important;
+    max-width: 360px !important;
+  }
+
+  aside nav a {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #090d16 !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
   
   aside nav a span {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    color: #0f172a !important;
-  }
-  
-  aside nav div span {
-    font-size: 11px !important;
-    color: #475569 !important;
+    font-size: 16px !important;
     font-weight: 800 !important;
+    color: #090d16 !important;
+  }
+
+  aside nav div span {
+    font-size: 12px !important;
+    color: #334155 !important;
+    font-weight: 900 !important;
+  }
+
+  /* Form inputs & buttons sizing */
+  .input-field, select, button {
+    font-size: 16px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
   }
 }
 
@@ -138,24 +206,6 @@ body::before {
 }
 
 /* ═══════════════════════════════════════════════
-   Scrollbar
-   ═══════════════════════════════════════════════ */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.4);
-  border-radius: 100px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.6);
-}
-
-/* ═══════════════════════════════════════════════
    Glass Card Component
    ═══════════════════════════════════════════════ */
 .card {
@@ -173,33 +223,12 @@ body::before {
   transform: translateY(-1px);
 }
 
-.card-static {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  box-shadow: var(--glass-shadow);
-}
-
-.card-solid {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: var(--radius);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-}
-
-/* ═══════════════════════════════════════════════
-   Glass Input
-   ═══════════════════════════════════════════════ */
 .input-field {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(203, 213, 225, 0.8);
-  border-radius: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  border-radius: 14px;
   color: var(--text-primary);
   padding: 12px 16px;
   font-family: 'DM Sans', 'Inter', sans-serif;
@@ -212,34 +241,14 @@ body::before {
 }
 .input-field:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
   background: #ffffff;
 }
 
-/* ═══════════════════════════════════════════════
-   Buttons
-   ═══════════════════════════════════════════════ */
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 22px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
-}
-.btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+.animate-fade-in {
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ═══════════════════════════════════════════════
-   Animations
-   ═══════════════════════════════════════════════ */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -249,8 +258,4 @@ body::before {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.animate-fade-in {
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

@@ -55,31 +55,31 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-40 lg:hidden transition-opacity"
+          className="fixed inset-0 bg-slate-950/75 backdrop-blur-md z-40 lg:hidden transition-opacity"
         />
       )}
 
       <aside
-        className={`fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 w-[85vw] max-w-[340px] sm:w-72 lg:w-64 ${
+        className={`fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 w-[90vw] max-w-[360px] sm:w-72 lg:w-64 ${
           isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
         style={{
-          background: 'rgba(255, 255, 255, 0.98)',
+          background: 'rgba(255, 255, 255, 0.99)',
           backdropFilter: 'blur(24px) saturate(200%)',
           WebkitBackdropFilter: 'blur(24px) saturate(200%)',
-          borderRight: '1px solid rgba(203, 213, 225, 0.8)',
+          borderRight: '1px solid rgba(203, 213, 225, 0.9)',
         }}
       >
         
         {/* Logo & Mobile Close */}
-        <div className="px-5 py-4.5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#0ea5e9] flex items-center justify-center shadow-md shadow-[#7c3aed]/20">
+        <div className="px-5 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-3.5">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#7c3aed] to-[#0ea5e9] flex items-center justify-center shadow-md shadow-[#7c3aed]/25">
               <Zap className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight font-heading">IGRIS</h1>
-              <span className="text-xs text-slate-600 font-bold">v1.1.0 · Trading Platform</span>
+              <h1 className="text-2xl font-black text-slate-950 tracking-tight font-heading">IGRIS</h1>
+              <span className="text-xs text-slate-600 font-extrabold">v1.1.0 · Trading Platform</span>
             </div>
           </div>
 
@@ -87,9 +87,9 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           {onClose && (
             <button
               onClick={onClose}
-              className="lg:hidden p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2.5 rounded-2xl text-slate-600 hover:text-slate-950 hover:bg-slate-100 transition-colors"
             >
-              <X className="w-6 h-6" />
+              <X className="w-7 h-7" />
             </button>
           )}
         </div>
@@ -98,11 +98,11 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         <div className="mx-4 h-px bg-slate-200" />
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-3.5 py-3 space-y-1.5 scrollbar-thin">
+        <nav className="flex-1 overflow-y-auto px-3.5 py-3.5 space-y-1.5 scrollbar-thin">
           {navItems.map((item, i) => {
             if ('divider' in item && item.divider) {
               return (
-                <div key={i} className="pt-4 pb-1.5 px-3">
+                <div key={i} className="pt-4 pb-2 px-3">
                   <span className="text-xs font-black text-slate-500 uppercase tracking-wider">
                     {item.label}
                   </span>
@@ -118,16 +118,16 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                 key={item.href}
                 href={item.href!}
                 onClick={() => onClose?.()}
-                className={`flex items-center gap-3.5 px-4 py-3.5 rounded-xl text-base sm:text-xs font-extrabold transition-all duration-200 cursor-pointer ${
+                className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-base sm:text-xs font-black transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-[#7c3aed]/15 text-[#7c3aed] shadow-xs border border-[#7c3aed]/30 font-black'
-                    : 'text-slate-800 hover:text-slate-950 hover:bg-slate-100/90'
+                    ? 'bg-[#7c3aed]/15 text-[#7c3aed] shadow-xs border border-[#7c3aed]/30'
+                    : 'text-slate-900 hover:text-slate-950 hover:bg-slate-100'
                 }`}
               >
                 <Icon className={`w-5 h-5 sm:w-4 sm:h-4 flex-shrink-0 ${
-                  item.label === 'Nifty 1m Scalper (DMA)' ? 'text-amber-600' : isActive ? 'text-[#7c3aed]' : 'text-slate-600'
+                  item.label === 'Nifty 1m Scalper (DMA)' ? 'text-amber-600' : isActive ? 'text-[#7c3aed]' : 'text-slate-700'
                 }`} />
-                <span className="truncate text-slate-900 font-bold">{item.label}</span>
+                <span className="truncate text-slate-950 font-extrabold">{item.label}</span>
                 {item.label === 'Nifty 1m Scalper (DMA)' && (
                   <span className="ml-auto px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-700 text-xs font-black">
                     1M
@@ -153,13 +153,13 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
               {user?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-black text-slate-900 truncate">{user?.name || 'Operator'}</p>
-              <p className="text-xs text-slate-600 font-bold truncate">{user?.email || 'operator@igris.lab'}</p>
+              <p className="text-sm font-black text-slate-950 truncate">{user?.name || 'Operator'}</p>
+              <p className="text-xs text-slate-600 font-extrabold truncate">{user?.email || 'operator@igris.lab'}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black text-[#ef4444] hover:bg-[#ef4444]/10 transition-all cursor-pointer border border-[#ef4444]/30 bg-red-50/40"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-xs font-black text-[#ef4444] hover:bg-[#ef4444]/10 transition-all cursor-pointer border border-[#ef4444]/30 bg-red-50/50"
           >
             <LogOut className="w-4 h-4" />
             Sign Out
