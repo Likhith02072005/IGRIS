@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuthStore } from '../../../store/auth';
 import { 
-  Code2, Plus, RefreshCw, BarChart2, ShieldAlert, Award, PlayCircle, CheckCircle2, ChevronRight, X
+  Code2, Plus, RefreshCw, BarChart2, ShieldAlert, Award, PlayCircle, CheckCircle2, ChevronRight, X, Zap
 } from 'lucide-react';
 
 interface Strategy {
@@ -40,10 +40,85 @@ interface ComparisonResult {
   rank: number;
 }
 
+const DEFAULT_STRATEGIES: Strategy[] = [
+  { 
+    id: 'nifty-martingale', 
+    name: 'Nifty Martingale AI (25 Indicators)', 
+    description: '25-Indicator signal consensus option buying with x2 Martingale lot scaling (1 -> 2 -> 4 -> 8 lots). Net P&L ₹6.07L backtested over 2.5 yrs.', 
+    category: 'OPTIONS', 
+    instrument: 'NIFTY 50', 
+    timeframe: '15m', 
+    direction: 'BOTH', 
+    target: 4000, 
+    stopLoss: 8000, 
+    status: 'ACTIVE' 
+  },
+  { 
+    id: '1', 
+    name: 'BankNifty Options Straddle Fader', 
+    description: 'First 30-min candle fades. Buy Put/Call on key CPR pivot level revisits with theta decay optimization.', 
+    category: 'OPTIONS', 
+    instrument: 'BANKNIFTY', 
+    timeframe: '30m', 
+    direction: 'BOTH', 
+    target: 50, 
+    stopLoss: 100, 
+    status: 'ACTIVE' 
+  },
+  { 
+    id: '2', 
+    name: 'Momentum Catcher Buying', 
+    description: 'Early opening range momentum breakout option buying on 5-minute charts.', 
+    category: 'MOMENTUM', 
+    instrument: 'NIFTY 50', 
+    timeframe: '5m', 
+    direction: 'BOTH', 
+    target: 40, 
+    stopLoss: 40, 
+    status: 'ACTIVE' 
+  },
+  { 
+    id: '3', 
+    name: 'Opening Range Breakout (ORB)', 
+    description: '30-minute Opening Range Breakout (ORB) with ADX volume confirmation.', 
+    category: 'MOMENTUM', 
+    instrument: 'NIFTY 50', 
+    timeframe: '30m', 
+    direction: 'BOTH', 
+    target: 80, 
+    stopLoss: 40, 
+    status: 'ACTIVE' 
+  },
+  { 
+    id: '4', 
+    name: 'Opening Range Fade', 
+    description: 'Fades the first breakout attempt and trades mean reversion back to central pivot.', 
+    category: 'MEAN_REVERSION', 
+    instrument: 'BANKNIFTY', 
+    timeframe: '15m', 
+    direction: 'BOTH', 
+    target: 60, 
+    stopLoss: 30, 
+    status: 'ACTIVE' 
+  },
+  { 
+    id: '5', 
+    name: 'VWAP Standard Deviation Reversal', 
+    description: 'Mean reversion trades off the 2nd and 3rd VWAP standard deviation bands.', 
+    category: 'MEAN_REVERSION', 
+    instrument: 'STOCKS', 
+    timeframe: '5m', 
+    direction: 'BOTH', 
+    target: 20, 
+    stopLoss: 10, 
+    status: 'DRAFT' 
+  },
+];
+
 export default function StrategiesList() {
   const { accessToken } = useAuthStore();
-  const [strategies, setStrategies] = useState<Strategy[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [strategies, setStrategies] = useState<Strategy[]>(DEFAULT_STRATEGIES);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Comparison selection
@@ -53,32 +128,23 @@ export default function StrategiesList() {
   const [compareModal, setCompareModal] = useState(false);
 
   const fetchStrategies = async () => {
-    setLoading(true);
-    setError(null);
+    if (!accessToken) return;
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies`, {
         headers: { 'Authorization': `Bearer ${accessToken}` },
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to fetch strategies.');
-      
-      // If DB is fresh and returns empty list, we seed default templates locally for instant visual premium feel.
-      if (data.length === 0) {
-        setStrategies([
-          { id: 'nifty-martingale', name: 'Nifty Trend Buying (x2 Martingale AI)', description: '25-Indicator AI signal consensus option buying with x2 Martingale scaling (1 → 2 → 4 → 8 lots). Net P&L ₹6.07L over 2.5 yrs.', category: 'OPTIONS', instrument: 'NIFTY', timeframe: '15m', direction: 'BOTH', target: 4000, stopLoss: 8000, status: 'ACTIVE' },
-          { id: '1', name: 'IGRIS', description: 'Wait first 30min candle setups. Buy Put/Call on level revisit.', category: 'OPTIONS', instrument: 'BANKNIFTY', timeframe: '30m', direction: 'BOTH', target: 50, stopLoss: 100, status: 'ACTIVE' },
-          { id: '2', name: 'Momentum Catcher', description: 'Early momentum breakout option buying.', category: 'MOMENTUM', instrument: 'NIFTY', timeframe: '5m', direction: 'BOTH', target: 40, stopLoss: 40, status: 'ACTIVE' },
-          { id: '3', name: 'Opening Range Breakout', description: '30 minute Opening Range Breakout (ORB).', category: 'MOMENTUM', instrument: 'NIFTY', timeframe: '30m', direction: 'BOTH', target: 80, stopLoss: 40, status: 'ACTIVE' },
-          { id: '4', name: 'Opening Range Fade', description: 'Fade first breakout and trade mean reversion.', category: 'MEAN_REVERSION', instrument: 'BANKNIFTY', timeframe: '15m', direction: 'BOTH', target: 60, stopLoss: 30, status: 'ACTIVE' },
-          { id: '5', name: 'VWAP Reversal', description: 'Mean reversion off the VWAP upper/lower bands.', category: 'MEAN_REVERSION', instrument: 'STOCKS', timeframe: '5m', direction: 'BOTH', target: 20, stopLoss: 10, status: 'DRAFT' },
-        ]);
-      } else {
-        setStrategies(data);
+      if (res.ok && Array.isArray(data) && data.length > 0) {
+        // Merge DB strategies with our default Nifty Martingale strategy
+        const hasNifty = data.some((s: any) => s.id === 'nifty-martingale');
+        if (!hasNifty) {
+          setStrategies([DEFAULT_STRATEGIES[0], ...data]);
+        } else {
+          setStrategies(data);
+        }
       }
     } catch (err: any) {
-      setError(err.message || 'Error occurred.');
-    } finally {
-      setLoading(false);
+      // Keep DEFAULT_STRATEGIES intact on network error
     }
   };
 
@@ -118,19 +184,19 @@ export default function StrategiesList() {
       setComparisonResults(data);
       setCompareModal(true);
     } catch (err: any) {
-      // Fallback mock comparison results for static/demo runs if server is database-empty
+      // Fallback mock comparison results in INR
       const fallback = selectedIds.map((id, index) => {
         const s = strategies.find(x => x.id === id);
-        const winRate = 52 + index * 4;
-        const profitFactor = 1.35 + index * 0.15;
-        const sharpe = 1.6 + index * 0.3;
-        const netProfit = 9500 + index * 2400;
-        const drawdown = 7.8 - index * 1.1;
+        const winRate = 58 + index * 4;
+        const profitFactor = 1.45 + index * 0.15;
+        const sharpe = 1.8 + index * 0.3;
+        const netProfit = 24500 + index * 12000;
+        const drawdown = 4.2 - index * 0.5;
         const score = winRate * 0.2 + sharpe * 20 - drawdown * 2;
         return {
           id,
           name: s?.name || `Strategy ${id}`,
-          category: s?.category || 'MOMENTUM',
+          category: s?.category || 'OPTIONS',
           winRate,
           netProfit,
           drawdown,
@@ -138,13 +204,13 @@ export default function StrategiesList() {
           sharpe,
           sortino: sharpe * 1.2,
           calmar: sharpe * 1.3,
-          expectancy: 50 + index * 20,
-          avgRR: 1.5 + index * 0.2,
-          tradeCount: 42 + index * 12,
-          longestWinStreak: 4 + index,
-          longestLossStreak: 5 - index,
+          expectancy: 1200 + index * 300,
+          avgRR: 1.8 + index * 0.2,
+          tradeCount: 65 + index * 14,
+          longestWinStreak: 6 + index,
+          longestLossStreak: 3 - index,
           score,
-          rank: 0, // Assigned below
+          rank: 0,
         };
       });
       fallback.sort((a, b) => b.score - a.score);
@@ -166,7 +232,7 @@ export default function StrategiesList() {
             Workspace Strategies
           </h1>
           <p className="text-xs text-gray-500">
-            Configure, manage, and audit mathematical trading algorithms.
+            Configure, manage, and audit mathematical trading algorithms. Click any strategy to launch console.
           </p>
         </div>
 
@@ -175,7 +241,7 @@ export default function StrategiesList() {
             <button
               onClick={handleCompare}
               disabled={comparing}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-650 hover:bg-indigo-600 border border-indigo-500 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#22d3ee]/10 border border-[#22d3ee]/40 text-[#22d3ee] font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50"
             >
               <BarChart2 className="w-4 h-4" />
               Compare ({selectedIds.length})
@@ -184,7 +250,7 @@ export default function StrategiesList() {
           
           <Link
             href="/dashboard/strategies/builder"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-black font-bold text-xs uppercase tracking-wider transition-all"
           >
             <Plus className="w-4 h-4" />
             Build Strategy
@@ -204,7 +270,7 @@ export default function StrategiesList() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-gray-800 bg-[#060a16]/65 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                <tr className="border-b border-[#1a1a1a] bg-[#060a16]/65 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
                   <th className="p-4 w-12 text-center">Select</th>
                   <th className="p-4">Strategy Details</th>
                   <th className="p-4">Category</th>
@@ -212,65 +278,85 @@ export default function StrategiesList() {
                   <th className="p-4">Timeframe</th>
                   <th className="p-4">Metrics (Target/SL)</th>
                   <th className="p-4">Status</th>
-                  <th className="p-4 text-center">Actions</th>
+                  <th className="p-4 text-center">Pushable Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-900/60">
-                {strategies.map((strat) => (
-                  <tr 
-                    key={strat.id} 
-                    className="hover:bg-gray-900/30 transition-colors text-xs text-gray-300 font-semibold"
-                  >
-                    <td className="p-4 text-center">
-                      <input
-                        type="checkbox"
-                        className="rounded bg-gray-950 border-gray-800 accent-brand cursor-pointer"
-                        checked={selectedIds.includes(strat.id)}
-                        onChange={() => handleCheckboxChange(strat.id)}
-                      />
-                    </td>
-                    <td className="p-4 max-w-sm">
-                      <Link 
-                        href={`/dashboard/strategies/${strat.id}`}
-                        className="text-white font-bold text-sm tracking-wide hover:text-[#22d3ee] hover:underline transition-colors"
-                      >
-                        {strat.name}
-                      </Link>
-                      <p className="text-gray-500 font-medium text-[11px] mt-0.5 line-clamp-1">
-                        {strat.description || 'No description provided.'}
-                      </p>
-                    </td>
-                    <td className="p-4">
-                      <span className="px-2 py-0.5 rounded text-[10px] bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] font-bold">
-                        {strat.category}
-                      </span>
-                    </td>
-                    <td className="p-4 font-mono text-[11px] text-gray-400">{strat.instrument}</td>
-                    <td className="p-4 font-mono text-[11px] text-gray-400">{strat.timeframe}</td>
-                    <td className="p-4 font-mono text-[11px] text-gray-400">
-                      TGT: {strat.target} | SL: {strat.stopLoss}
-                    </td>
-                    <td className="p-4">
-                      <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase ${
-                        strat.status === 'ACTIVE' ? 'text-[#22c55e]' : 'text-amber-500'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${
-                          strat.status === 'ACTIVE' ? 'bg-[#22c55e]' : 'bg-amber-500'
-                        }`} />
-                        {strat.status}
-                      </span>
-                    </td>
-                    <td className="p-4 text-center">
-                      <Link
-                        href={`/dashboard/backtesting?strategyId=${strat.id}`}
-                        className="inline-flex items-center gap-1.5 text-[10px] font-bold text-[#22d3ee] hover:underline uppercase tracking-wider"
-                      >
-                        Backtest
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
+              <tbody className="divide-y divide-[#1a1a1a]">
+                {strategies.map((strat) => {
+                  const targetUrl = strat.id === 'nifty-martingale' 
+                    ? '/dashboard/strategies/nifty-martingale' 
+                    : `/dashboard/strategies/${strat.id}`;
+
+                  return (
+                    <tr 
+                      key={strat.id} 
+                      className="hover:bg-gray-900/30 transition-colors text-xs text-gray-300 font-semibold"
+                    >
+                      <td className="p-4 text-center">
+                        <input
+                          type="checkbox"
+                          className="rounded bg-[#0a0a0a] border-[#1a1a1a] accent-[#22d3ee] cursor-pointer"
+                          checked={selectedIds.includes(strat.id)}
+                          onChange={() => handleCheckboxChange(strat.id)}
+                        />
+                      </td>
+                      <td className="p-4 max-w-sm">
+                        <Link 
+                          href={targetUrl}
+                          className="text-white font-bold text-sm tracking-wide hover:text-[#22d3ee] hover:underline transition-colors flex items-center gap-1.5"
+                        >
+                          {strat.name}
+                          {strat.id === 'nifty-martingale' && (
+                            <span className="px-1.5 py-0.5 rounded bg-[#22d3ee]/10 text-[#22d3ee] text-[9px] font-mono border border-[#22d3ee]/20">
+                              25 INDICATORS
+                            </span>
+                          )}
+                        </Link>
+                        <p className="text-gray-500 font-medium text-[11px] mt-0.5 line-clamp-1">
+                          {strat.description || 'No description provided.'}
+                        </p>
+                      </td>
+                      <td className="p-4">
+                        <span className="px-2 py-0.5 rounded text-[10px] bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] font-bold">
+                          {strat.category}
+                        </span>
+                      </td>
+                      <td className="p-4 font-mono text-[11px] text-gray-400">{strat.instrument}</td>
+                      <td className="p-4 font-mono text-[11px] text-gray-400">{strat.timeframe}</td>
+                      <td className="p-4 font-mono text-[11px] text-gray-400">
+                        TGT: ₹{strat.target} | SL: ₹{strat.stopLoss}
+                      </td>
+                      <td className="p-4">
+                        <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase ${
+                          strat.status === 'ACTIVE' ? 'text-[#22c55e]' : 'text-amber-500'
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            strat.status === 'ACTIVE' ? 'bg-[#22c55e]' : 'bg-amber-500'
+                          }`} />
+                          {strat.status}
+                        </span>
+                      </td>
+                      <td className="p-4 text-center">
+                        <div className="flex items-center justify-center gap-3">
+                          <Link
+                            href={targetUrl}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#22d3ee]/10 border border-[#22d3ee]/30 text-[#22d3ee] hover:bg-[#22d3ee] hover:text-black font-bold uppercase tracking-wider text-[10px] transition-all"
+                          >
+                            <Zap className="w-3 h-3" /> Open Strategy
+                          </Link>
+                          
+                          <Link
+                            href={`/dashboard/backtesting?strategyId=${strat.id}`}
+                            className="inline-flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-white hover:underline uppercase tracking-wider"
+                          >
+                            Backtest
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -280,7 +366,7 @@ export default function StrategiesList() {
 
       {/* Comparison Modal */}
       {compareModal && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="w-full max-w-5xl card p-6 rounded-lg relative max-h-[90vh] overflow-y-auto">
             {/* Close */}
             <button 
@@ -293,7 +379,7 @@ export default function StrategiesList() {
             {/* Header */}
             <div className="mb-6">
               <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <Award className="w-4 h-4 text-[#22d3ee]" /> Strategy Leaderboard Comparison
+                <Award className="w-4 h-4 text-[#22d3ee]" /> Strategy Leaderboard Comparison (INR)
               </h2>
               <p className="text-[11px] text-gray-500">
                 Performance rank based on combined win rates, Sharpe ratio, and profit factors.
@@ -335,12 +421,14 @@ export default function StrategiesList() {
                         <span className="text-[10px] text-gray-500 uppercase">{r.category}</span>
                       </td>
                       <td className="p-3 text-right font-mono text-white">{r.winRate}%</td>
-                      <td className="p-3 text-right font-mono text-[#22c55e]">+${r.netProfit.toLocaleString()}</td>
+                      <td className="p-3 text-right font-mono text-[#22c55e]">
+                        +₹{r.netProfit.toLocaleString('en-IN')}
+                      </td>
                       <td className="p-3 text-right font-mono text-[#ef4444]">-{r.drawdown}%</td>
                       <td className="p-3 text-right font-mono text-white">{r.profitFactor}</td>
                       <td className="p-3 text-right font-mono text-white">{r.sharpe}</td>
                       <td className="p-3 text-right font-mono text-white">{r.sortino}</td>
-                      <td className="p-3 text-right font-mono text-white">+${r.expectancy}</td>
+                      <td className="p-3 text-right font-mono text-white">+₹{r.expectancy}</td>
                       <td className="p-3 text-right font-mono text-white">{r.avgRR}:1</td>
                       <td className="p-3 text-right font-mono text-gray-400">{r.tradeCount}</td>
                       <td className="p-3 text-right font-mono text-gray-400">{r.longestWinStreak} / {r.longestLossStreak}</td>
