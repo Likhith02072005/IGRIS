@@ -7,17 +7,18 @@ import { useAuthStore } from '../../store/auth';
 import {
   LayoutDashboard, LineChart, Cpu, FlaskConical, Bot, PieChart, Briefcase,
   CandlestickChart, PlayCircle, Satellite, ShieldAlert, Eye, BarChart3,
-  BookOpenText, Store, Hammer, LogOut, Zap, X
+  BookOpenText, Store, Hammer, LogOut, Zap, X, Flame
 } from 'lucide-react';
 
 const navItems = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { label: 'Mission Control', href: '/dashboard/mission-control', icon: Satellite },
   { divider: true, label: 'Trading' },
+  { label: 'Nifty 1m Scalper (DMA)', href: '/dashboard/strategies/nifty-scalper', icon: Flame },
+  { label: 'Nifty Martingale AI (25)', href: '/dashboard/strategies/nifty-martingale', icon: Zap },
   { label: 'Portfolio', href: '/dashboard/portfolio', icon: Briefcase },
   { label: 'Portfolio Optimizer', href: '/dashboard/portfolio/optimizer', icon: PieChart },
   { label: 'Strategies', href: '/dashboard/strategies', icon: LineChart },
-  { label: 'Nifty Martingale AI (25)', href: '/dashboard/strategies/nifty-martingale', icon: Zap },
   { label: 'Strategy Builder', href: '/dashboard/strategies/builder', icon: Hammer },
   { divider: true, label: 'Analysis' },
   { label: 'Backtesting', href: '/dashboard/backtesting', icon: FlaskConical },
@@ -78,7 +79,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             </div>
             <div>
               <h1 className="text-lg font-bold text-[#1a1a2e] tracking-tight font-heading">IGRIS</h1>
-              <span className="text-[10px] text-slate-500 font-semibold">v1.1.0 · Mobile Ready</span>
+              <span className="text-[10px] text-slate-500 font-semibold">v1.1.0 · Scalping Ready</span>
             </div>
           </div>
 
@@ -123,8 +124,15 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                     : 'text-slate-600 hover:text-[#1a1a2e] hover:bg-slate-100/60'
                 }`}
               >
-                <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-[#7c3aed]' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 flex-shrink-0 ${
+                  item.label === 'Nifty 1m Scalper (DMA)' ? 'text-amber-500' : isActive ? 'text-[#7c3aed]' : 'text-slate-400'
+                }`} />
                 <span className="truncate">{item.label}</span>
+                {item.label === 'Nifty 1m Scalper (DMA)' && (
+                  <span className="ml-auto px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-600 text-[9px] font-bold">
+                    1M
+                  </span>
+                )}
                 {item.label === 'Nifty Martingale AI (25)' && (
                   <span className="ml-auto px-1.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] text-[9px] font-bold">
                     LIVE
