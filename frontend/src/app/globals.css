@@ -6,7 +6,7 @@
 
 /* ═══════════════════════════════════════════════
    IGRIS — White Glassmorphism Design System
-   Premium frosted-glass light theme
+   Premium frosted-glass light theme with Mobile Tuning
    ═══════════════════════════════════════════════ */
 
 :root {
@@ -14,13 +14,13 @@
   --bg-mesh-1: #e0e7ff;
   --bg-mesh-2: #dbeafe;
   --bg-mesh-3: #ede9fe;
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.6);
   --glass-blur: 20px;
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
   --text-primary: #1a1a2e;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
   --accent: #7c3aed;
   --accent-light: #a78bfa;
   --profit: #10b981;
@@ -37,17 +37,37 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+}
+
+/* Mobile typography & viewport scaling boost */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+  h1 {
+    font-size: 1.35rem !important;
+    line-height: 1.3 !important;
+  }
+  h2 {
+    font-size: 1.15rem !important;
+    line-height: 1.35 !important;
+  }
+  .card {
+    border-radius: 16px !important;
+    padding: 1rem !important;
+  }
 }
 
 /* Mesh gradient background */
@@ -78,11 +98,11 @@ body::before {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
+  background: rgba(148, 163, 184, 0.4);
   border-radius: 100px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: rgba(148, 163, 184, 0.6);
 }
 
 /* ═══════════════════════════════════════════════
@@ -99,11 +119,10 @@ body::before {
 }
 
 .card:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   transform: translateY(-1px);
 }
 
-/* Glass card - no hover lift (for static containers) */
 .card-static {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur)) saturate(180%);
@@ -113,29 +132,28 @@ body::before {
   box-shadow: var(--glass-shadow);
 }
 
-/* Stronger glass (more opaque) */
 .card-solid {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 /* ═══════════════════════════════════════════════
    Glass Input
    ═══════════════════════════════════════════════ */
 .input-field {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(203, 213, 225, 0.8);
   border-radius: 12px;
   color: var(--text-primary);
-  padding: 10px 14px;
+  padding: 12px 16px;
   font-family: 'DM Sans', 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   outline: none;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -144,8 +162,8 @@ body::before {
 }
 .input-field:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  background: #ffffff;
 }
 
 /* ═══════════════════════════════════════════════
@@ -156,10 +174,10 @@ body::before {
   color: white;
   border: none;
   border-radius: 12px;
-  padding: 10px 20px;
+  padding: 12px 22px;
   font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
@@ -167,93 +185,6 @@ body::before {
 .btn-primary:hover {
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
-}
-
-.btn-glass {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
-  padding: 10px 20px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-glass:hover {
-  background: rgba(255, 255, 255, 0.7);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-/* ═══════════════════════════════════════════════
-   Table Styles
-   ═══════════════════════════════════════════════ */
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-}
-thead tr {
-  background: rgba(248, 250, 252, 0.6);
-}
-thead th {
-  color: var(--text-muted);
-  font-weight: 600;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-tbody tr {
-  transition: background 0.15s ease;
-}
-tbody tr:hover {
-  background: rgba(124, 58, 237, 0.03);
-}
-
-/* ═══════════════════════════════════════════════
-   Badge / Tag
-   ═══════════════════════════════════════════════ */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 10px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  background: rgba(124, 58, 237, 0.08);
-  color: var(--accent);
-  border: 1px solid rgba(124, 58, 237, 0.15);
-}
-
-.badge-profit {
-  background: rgba(16, 185, 129, 0.08);
-  color: var(--profit);
-  border-color: rgba(16, 185, 129, 0.15);
-}
-
-.badge-loss {
-  background: rgba(239, 68, 68, 0.08);
-  color: var(--loss);
-  border-color: rgba(239, 68, 68, 0.15);
-}
-
-/* ═══════════════════════════════════════════════
-   Progress bars
-   ═══════════════════════════════════════════════ */
-.progress-track {
-  height: 6px;
-  background: rgba(0, 0, 0, 0.06);
-  border-radius: 100px;
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  border-radius: 100px;
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ═══════════════════════════════════════════════
@@ -270,52 +201,6 @@ tbody tr:hover {
   }
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse-soft {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
 .animate-fade-in {
-  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Staggered children */
-.stagger > * {
-  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.stagger > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger > *:nth-child(2) { animation-delay: 0.1s; }
-.stagger > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger > *:nth-child(6) { animation-delay: 0.3s; }
-
-/* ═══════════════════════════════════════════════
-   Utility
-   ═══════════════════════════════════════════════ */
-.text-gradient {
-  background: linear-gradient(135deg, var(--accent), var(--data));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glass-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(0,0,0,0.06), transparent);
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

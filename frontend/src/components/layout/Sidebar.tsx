@@ -51,35 +51,35 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Mobile Backdrop Overlay */}
+      {/* Mobile Backdrop Overlay - Dark dimming */}
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 lg:hidden transition-opacity"
+          className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 lg:hidden transition-opacity"
         />
       )}
 
       <aside
-        className={`fixed left-0 top-0 bottom-0 w-64 z-50 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed left-0 top-0 bottom-0 z-50 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 w-[82vw] max-w-[320px] sm:w-72 lg:w-64 ${
           isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
         style={{
-          background: 'rgba(255, 255, 255, 0.92)',
+          background: 'rgba(255, 255, 255, 0.98)',
           backdropFilter: 'blur(24px) saturate(200%)',
           WebkitBackdropFilter: 'blur(24px) saturate(200%)',
-          borderRight: '1px solid rgba(255, 255, 255, 0.6)',
+          borderRight: '1px solid rgba(226, 232, 240, 0.8)',
         }}
       >
         
         {/* Logo & Mobile Close */}
         <div className="px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#0ea5e9] flex items-center justify-center shadow-md shadow-[#7c3aed]/20">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#0ea5e9] flex items-center justify-center shadow-md shadow-[#7c3aed]/20">
               <Zap className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-[#1a1a2e] tracking-tight font-heading">IGRIS</h1>
-              <span className="text-[10px] text-slate-500 font-semibold">v1.1.0 · Scalping Ready</span>
+              <h1 className="text-xl font-bold text-[#1a1a2e] tracking-tight font-heading">IGRIS</h1>
+              <span className="text-xs text-slate-500 font-semibold">v1.1.0 · Trading Platform</span>
             </div>
           </div>
 
@@ -87,23 +87,23 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           {onClose && (
             <button
               onClick={onClose}
-              className="lg:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             </button>
           )}
         </div>
 
         {/* Divider */}
-        <div className="mx-4 h-px bg-slate-200/60" />
+        <div className="mx-4 h-px bg-slate-200" />
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-0.5 scrollbar-thin">
+        <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-1 scrollbar-thin">
           {navItems.map((item, i) => {
             if ('divider' in item && item.divider) {
               return (
                 <div key={i} className="pt-4 pb-1.5 px-3">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                     {item.label}
                   </span>
                 </div>
@@ -118,23 +118,23 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                 key={item.href}
                 href={item.href!}
                 onClick={() => onClose?.()}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm sm:text-xs font-bold transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-[#7c3aed]/10 text-[#7c3aed] shadow-xs border border-[#7c3aed]/15 font-bold'
-                    : 'text-slate-600 hover:text-[#1a1a2e] hover:bg-slate-100/60'
+                    ? 'bg-[#7c3aed]/10 text-[#7c3aed] shadow-xs border border-[#7c3aed]/20'
+                    : 'text-slate-700 hover:text-[#1a1a2e] hover:bg-slate-100'
                 }`}
               >
-                <Icon className={`w-4 h-4 flex-shrink-0 ${
+                <Icon className={`w-5 h-5 sm:w-4 sm:h-4 flex-shrink-0 ${
                   item.label === 'Nifty 1m Scalper (DMA)' ? 'text-amber-500' : isActive ? 'text-[#7c3aed]' : 'text-slate-400'
                 }`} />
                 <span className="truncate">{item.label}</span>
                 {item.label === 'Nifty 1m Scalper (DMA)' && (
-                  <span className="ml-auto px-1.5 py-0.5 rounded-full bg-amber-500/15 text-amber-600 text-[9px] font-bold">
+                  <span className="ml-auto px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 text-[10px] font-bold">
                     1M
                   </span>
                 )}
                 {item.label === 'Nifty Martingale AI (25)' && (
-                  <span className="ml-auto px-1.5 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] text-[9px] font-bold">
+                  <span className="ml-auto px-2 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981] text-[10px] font-bold">
                     LIVE
                   </span>
                 )}
@@ -144,24 +144,24 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         </nav>
 
         {/* Divider */}
-        <div className="mx-4 h-px bg-slate-200/60" />
+        <div className="mx-4 h-px bg-slate-200" />
 
         {/* User section */}
-        <div className="px-4 py-3 space-y-2.5">
+        <div className="px-4 py-4 space-y-3">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#0ea5e9] flex items-center justify-center text-white text-xs font-bold shadow-xs">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#0ea5e9] flex items-center justify-center text-white text-sm font-bold shadow-xs">
               {user?.name?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-[#1a1a2e] truncate">{user?.name || 'Operator'}</p>
-              <p className="text-[10px] text-slate-500 font-medium truncate">{user?.email || 'operator@igris.lab'}</p>
+              <p className="text-sm font-bold text-[#1a1a2e] truncate">{user?.name || 'Operator'}</p>
+              <p className="text-xs text-slate-500 font-medium truncate">{user?.email || 'operator@igris.lab'}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold text-[#ef4444] hover:bg-[#ef4444]/10 transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-[#ef4444] hover:bg-[#ef4444]/10 transition-all cursor-pointer border border-[#ef4444]/20"
           >
-            <LogOut className="w-3.5 h-3.5" />
+            <LogOut className="w-4 h-4" />
             Sign Out
           </button>
         </div>
