@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Zap, TrendingUp, TrendingDown, RefreshCw, AlertOctagon, ArrowLeft, CheckCircle2, Play, Pause,
-  ShieldCheck, Activity, BarChart2, DollarSign, Clock, Layers, Flame, Shield, Lock, Sliders
+  ShieldCheck, Activity, BarChart2, DollarSign, Clock, Layers, Flame, Shield, Lock, Sliders,
+  ChevronDown, CreditCard, Percent, Sparkles
 } from 'lucide-react';
 
 import { useCapitalStore } from '../../../../store/capital';
@@ -27,6 +28,17 @@ interface ScalpTrade {
   status: 'CLOSED_WIN' | 'CLOSED_LOSS' | 'ACTIVE';
 }
 
+const LOT_OPTIONS = [
+  { lots: 1, qty: 65, label: '1 Lot (65 Nifty Qty)' },
+  { lots: 2, qty: 130, label: '2 Lots (130 Nifty Qty)' },
+  { lots: 3, qty: 195, label: '3 Lots (195 Nifty Qty)' },
+  { lots: 4, qty: 260, label: '4 Lots (260 Nifty Qty)' },
+  { lots: 5, qty: 325, label: '5 Lots (325 Nifty Qty)' },
+  { lots: 8, qty: 520, label: '8 Lots (520 Nifty Qty)' },
+  { lots: 10, qty: 650, label: '10 Lots (650 Nifty Qty)' },
+  { lots: 20, qty: 1300, label: '20 Lots (1,300 Nifty Qty)' },
+];
+
 export default function NiftyScalperConsole() {
   const { capital } = useCapitalStore();
   
@@ -38,10 +50,23 @@ export default function NiftyScalperConsole() {
   // Scalper state
   const [isEngineActive, setIsEngineActive] = useState(true);
   const [isHedgedMode, setIsHedgedMode] = useState(true); // Default Delta-Hedged mode ENABLED
-  const [currentLots, setCurrentLots] = useState(2); // Default 2 Lots for scalping
+  const [currentLots, setCurrentLots] = useState(2); // Selected lots from dropdown
   const [sessionPnL, setSessionPnL] = useState(6250);
   const [tradesCount, setTradesCount] = useState(10);
   const [winCount, setWinCount] = useState(8);
+
+  // Margin math
+  const qty = currentLots * 65;
+  const atmPremium = 115.00;
+  const otmHedgePremium = 12.50;
+  
+  const nakedOutflow = Math.round(qty * atmPremium);
+  const hedgedOutflow = Math.round(qty * (atmPremium + otmHedgePremium));
+  const activeOutflow = isHedgedMode ? hedgedOutflow : nakedOutflow;
+  
+  const nakedSpanMargin = Math.round(qty * atmPremium);
+  const hedgedSpanMargin = Math.round(qty * (atmPremium + otmHedgePremium));
+  const spanMarginBenefit = Math.round(qty * 125); // ₹125/qty margin credit benefit on spread
 
   const [trades, setTrades] = useState<ScalpTrade[]>([
     {
@@ -254,66 +279,72 @@ export default function NiftyScalperConsole() {
           <span className="text-[10px] text-slate-500 font-semibold block mt-1">OTM Protection Leg Paired</span>
         </div>
 
+        {/* Dynamic Dropdown Lot Size Selector */}
         <div className="card p-4 rounded-2xl border-l-4 border-l-amber-500">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Position Lot Size</span>
-          <div className="flex items-center gap-2 mt-1">
-            <button
-              onClick={() => setCurrentLots(prev => Math.max(1, prev - 1))}
-              className="w-6 h-6 rounded-lg bg-slate-100 font-bold text-slate-700 text-xs flex items-center justify-center hover:bg-slate-200 cursor-pointer"
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Position Lot Quantity</span>
+          <div className="relative mt-1">
+            <select
+              value={currentLots}
+              onChange={(e) => setCurrentLots(Number(e.target.value))}
+              className="w-full bg-white/90 border border-slate-300 font-bold text-[#1a1a2e] text-xs py-1.5 px-2.5 rounded-xl appearance-none cursor-pointer focus:outline-none focus:border-[#7c3aed]"
             >
-              -
-            </button>
-            <span className="text-xl font-bold font-mono text-[#1a1a2e]">{currentLots} Lots</span>
-            <button
-              onClick={() => setCurrentLots(prev => Math.min(10, prev + 1))}
-              className="w-6 h-6 rounded-lg bg-slate-100 font-bold text-slate-700 text-xs flex items-center justify-center hover:bg-slate-200 cursor-pointer"
-            >
-              +
-            </button>
+              {LOT_OPTIONS.map(opt => (
+                <option key={opt.lots} value={opt.lots}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-slate-500 absolute right-2.5 top-2 pointer-events-none" />
           </div>
-          <span className="text-[10px] text-slate-500 font-semibold block mt-1">{currentLots * 65} Nifty Qty</span>
+          <span className="text-[10px] text-amber-600 font-bold block mt-1.5">{qty} Nifty Quantity</span>
         </div>
 
+        {/* Live Margin Required Calculator */}
         <div className="card p-4 rounded-2xl border-l-4 border-l-teal-500 col-span-2 lg:col-span-1">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Target / Max Loss Risk Cap</span>
-          <span className="text-sm font-bold font-mono text-[#10b981] block mt-1">
-            TP: +₹{((isHedgedMode ? 1200 : 1500) * currentLots).toLocaleString()}
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Margin Required (SPAN)</span>
+          <span className="text-base font-bold font-mono text-[#7c3aed] block mt-0.5">
+            ₹{activeOutflow.toLocaleString('en-IN')}
           </span>
-          <span className="text-xs font-bold font-mono text-[#ef4444] block">
-            Max Risk: -₹{((isHedgedMode ? 450 : 750) * currentLots).toLocaleString()} {isHedgedMode ? '(Capped)' : ''}
+          <span className="text-[10px] text-emerald-600 font-bold block mt-1 flex items-center gap-1">
+            <Sparkles className="w-3 h-3 text-emerald-500" /> ₹{spanMarginBenefit.toLocaleString()} Margin Offset
           </span>
         </div>
       </div>
 
-      {/* Hedging Mode Breakdown Banner */}
-      <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all ${
-        isHedgedMode 
-          ? 'bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200 text-indigo-900' 
-          : 'bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200 text-amber-900'
-      }`}>
+      {/* Margin Required & Hedging Breakdown Bar */}
+      <div className="card p-4 sm:p-5 rounded-2xl border border-white/60 bg-gradient-to-r from-purple-50/60 to-indigo-50/60 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-xs ${
-            isHedgedMode ? 'bg-[#7c3aed]' : 'bg-amber-500'
-          }`}>
-            {isHedgedMode ? <Shield className="w-5 h-5" /> : <Flame className="w-5 h-5" />}
+          <div className="w-9 h-9 rounded-xl bg-[#7c3aed]/10 text-[#7c3aed] flex items-center justify-center font-bold">
+            <CreditCard className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-sm font-bold font-heading">
-              {isHedgedMode ? '🛡️ Delta-Hedged Option Scalping Active' : '⚡ Naked Option Scalping Active'}
-            </h3>
-            <p className="text-xs text-slate-600 mt-0.5">
-              {isHedgedMode 
-                ? `ATM Option Scalp + OTM Wing Protection Leg. Reduces maximum loss by 40% (Max loss capped at ₹450/lot).`
-                : `Pure directional naked option buying. Higher reward (+₹1,500/lot) with standard -₹750 SL.`
-              }
-            </p>
+            <span className="text-[11px] font-bold text-slate-400 uppercase block">Required Capital / Outflow</span>
+            <span className="text-sm font-bold font-mono text-[#1a1a2e]">₹{activeOutflow.toLocaleString('en-IN')}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3 text-xs font-mono font-bold">
-          <span className="px-3 py-1.5 rounded-xl bg-white/80 border border-slate-200">
-            {isHedgedMode ? 'Max Loss: -₹450 / Lot' : 'Max Loss: -₹750 / Lot'}
-          </span>
+        <div className="flex items-center gap-3 border-t sm:border-t-0 sm:border-l border-slate-200 pt-3 sm:pt-0 sm:pl-4">
+          <div className="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center font-bold">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[11px] font-bold text-slate-400 uppercase block">Hedge Protection Leg</span>
+            <span className="text-xs font-bold text-indigo-700">
+              {isHedgedMode ? `+ ${currentLots} Lots OTM Wing Leg` : 'Naked Directional (No Hedge)'}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 border-t sm:border-t-0 sm:border-l border-slate-200 pt-3 sm:pt-0 sm:pl-4">
+          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold">
+            <Percent className="w-5 h-5" />
+          </div>
+          <div>
+            <span className="text-[11px] font-bold text-slate-400 uppercase block">Exchange Margin Offset</span>
+            <span className="text-xs font-bold text-emerald-600">
+              {isHedgedMode ? `Save ₹${spanMarginBenefit.toLocaleString()} Span Credit` : 'Standard Premium Outflow'}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -329,7 +360,7 @@ export default function NiftyScalperConsole() {
             </p>
           </div>
           <span className="px-3 py-1 rounded-full bg-[#7c3aed]/10 text-[#7c3aed] font-mono text-xs font-bold">
-            Latency: 4ms
+            Selected: {currentLots} Lots ({qty} Qty)
           </span>
         </div>
 
@@ -352,7 +383,7 @@ export default function NiftyScalperConsole() {
               Target: +₹{((isHedgedMode ? 1200 : 1500) * currentLots).toLocaleString()} | Max Risk: -₹{((isHedgedMode ? 450 : 750) * currentLots).toLocaleString()}
             </p>
             <div className="mt-4 pt-3 border-t border-white/20 flex justify-between items-center text-xs font-mono font-bold">
-              <span>{currentLots} Lots ({currentLots * 65} Qty)</span>
+              <span>{currentLots} Lots ({qty} Qty) · Margin: ₹{activeOutflow.toLocaleString()}</span>
               <span className="underline">Trigger {isHedgedMode ? 'Hedged Order' : 'Instant Order'} →</span>
             </div>
           </button>
@@ -375,7 +406,7 @@ export default function NiftyScalperConsole() {
               Target: +₹{((isHedgedMode ? 1200 : 1500) * currentLots).toLocaleString()} | Max Risk: -₹{((isHedgedMode ? 450 : 750) * currentLots).toLocaleString()}
             </p>
             <div className="mt-4 pt-3 border-t border-white/20 flex justify-between items-center text-xs font-mono font-bold">
-              <span>{currentLots} Lots ({currentLots * 65} Qty)</span>
+              <span>{currentLots} Lots ({qty} Qty) · Margin: ₹{activeOutflow.toLocaleString()}</span>
               <span className="underline">Trigger {isHedgedMode ? 'Hedged Order' : 'Instant Order'} →</span>
             </div>
           </button>
