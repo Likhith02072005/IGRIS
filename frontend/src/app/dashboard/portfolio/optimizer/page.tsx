@@ -5,7 +5,7 @@ import { useCapitalStore } from '../../../../store/capital';
 import CapitalEditModal from '../../../../components/layout/CapitalEditModal';
 import { 
   TrendingUp, TrendingDown, RefreshCw, CircleDollarSign, PieChart,
-  GitPullRequest, ArrowUpRight, Award, HelpCircle, Edit2
+  GitPullRequest, ArrowUpRight, Award, HelpCircle, Edit2, Info
 } from 'lucide-react';
 
 interface OptimizerStats {
@@ -69,8 +69,8 @@ export default function PortfolioOptimizerUI() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => handleModelChange('MAX_SHARPE')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-colors ${
-              modelType === 'MAX_SHARPE' ? 'bg-[#22d3ee]/10 border-[#22d3ee]/35 text-[#22d3ee]' : 'bg-gray-900 border-gray-800 text-gray-400'
+            className={`px-4 py-2 rounded-lg text-xs font-semibold border transition-all ${
+              modelType === 'MAX_SHARPE' ? 'bg-[#22d3ee]/10 border-[#22d3ee]/40 text-[#22d3ee]' : 'bg-[#111] border-[#1a1a1a] text-[#666] hover:text-white'
             }`}
           >
             Max Sharpe Ratio
@@ -78,8 +78,8 @@ export default function PortfolioOptimizerUI() {
           
           <button 
             onClick={() => handleModelChange('MIN_VARIANCE')}
-            className={`px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider border transition-colors ${
-              modelType === 'MIN_VARIANCE' ? 'bg-[#22d3ee]/10 border-[#22d3ee]/35 text-[#22d3ee]' : 'bg-gray-900 border-gray-800 text-gray-400'
+            className={`px-4 py-2 rounded-lg text-xs font-semibold border transition-all ${
+              modelType === 'MIN_VARIANCE' ? 'bg-[#22d3ee]/10 border-[#22d3ee]/40 text-[#22d3ee]' : 'bg-[#111] border-[#1a1a1a] text-[#666] hover:text-white'
             }`}
           >
             Minimum Variance
@@ -95,14 +95,14 @@ export default function PortfolioOptimizerUI() {
           
           <div className="card p-6 rounded-lg space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
-                Optimized Strategy Weights (Base: ₹{capital.toLocaleString('en-IN')})
+              <h2 className="text-sm font-semibold text-white">
+                Optimized Strategy Weights (Capital Base: ₹{capital.toLocaleString('en-IN')})
               </h2>
               <button 
                 onClick={() => setIsCapitalModalOpen(true)}
-                className="text-xs text-[#22d3ee] flex items-center gap-1 hover:underline"
+                className="text-xs text-[#22d3ee] flex items-center gap-1 hover:underline font-mono"
               >
-                <Edit2 className="w-3 h-3" /> Change Capital
+                <Edit2 className="w-3 h-3" /> Customize Capital
               </button>
             </div>
 
@@ -117,7 +117,7 @@ export default function PortfolioOptimizerUI() {
                         {s.weight}% (₹{currentAlloc.toLocaleString('en-IN', { maximumFractionDigits: 0 })})
                       </span>
                     </div>
-                    <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-[#0a0a0a] rounded-full overflow-hidden border border-[#1a1a1a]">
                       <div className="h-full bg-[#22d3ee]" style={{ width: `${s.weight}%` }} />
                     </div>
                     <div className="flex justify-between text-[10px] text-gray-500 font-mono">
@@ -132,23 +132,23 @@ export default function PortfolioOptimizerUI() {
 
           {/* Correlation Matrix Table */}
           <div className="card p-6 rounded-lg space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h2 className="text-sm font-semibold text-white">
               Strategy Returns Correlation Matrix
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-center text-xs font-mono">
                 <thead>
-                  <tr className="border-b border-gray-900 bg-gray-950/20 text-[9px] text-gray-500 uppercase font-bold">
+                  <tr className="border-b border-[#1a1a1a] text-[10px] text-gray-500 uppercase font-bold">
                     <th className="p-3 text-left">Asset / Strategy</th>
                     {Object.keys(correlationMatrix).map(k => (
                       <th key={k} className="p-3">{k.split(' ')[0]}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-900/60 font-semibold text-gray-300">
+                <tbody className="divide-y divide-[#1a1a1a] font-semibold text-gray-300">
                   {Object.entries(correlationMatrix).map(([rowName, cols]) => (
                     <tr key={rowName}>
-                      <td className="p-3 text-left text-white">{rowName}</td>
+                      <td className="p-3 text-left text-white font-sans">{rowName}</td>
                       {Object.values(cols).map((val, idx) => {
                         const isPos = val > 0 && val < 1;
                         const isNeg = val < 0;
@@ -176,52 +176,130 @@ export default function PortfolioOptimizerUI() {
         <div className="space-y-6">
           
           <div className="card p-6 rounded-lg space-y-6">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h2 className="text-sm font-semibold text-white">
               Optimization Profile
             </h2>
             <div className="space-y-4 text-xs font-semibold text-gray-300">
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Diversification Ratio</span>
+              <div className="border-b border-[#1a1a1a] pb-3">
+                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Diversification Ratio</span>
                 <span className="text-white font-mono text-base">2.14</span>
               </div>
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Expected Annual Return</span>
+              <div className="border-b border-[#1a1a1a] pb-3">
+                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Expected Annual Return</span>
                 <span className="text-[#22c55e] font-mono text-base">+24.5%</span>
               </div>
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Portfolio Volatility</span>
+              <div className="border-b border-[#1a1a1a] pb-3">
+                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Portfolio Volatility</span>
                 <span className="text-white font-mono text-base">9.2%</span>
               </div>
-              <div className="pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Sharpe Coordinate</span>
+              <div className="pb-1">
+                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Sharpe Coordinate</span>
                 <span className="text-[#22d3ee] font-mono text-base">2.12</span>
               </div>
             </div>
           </div>
 
-          {/* Efficient Frontier Plot SVG */}
+          {/* Institutional Clean Efficient Frontier Plot */}
           <div className="card p-6 rounded-lg space-y-4">
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
-              Efficient Frontier Plot
-            </span>
-            <div className="bg-gray-950/60 border border-gray-900 rounded-xl p-4 flex items-center justify-center h-44 relative">
-              <svg className="w-full h-full overflow-visible" viewBox="0 0 200 100">
-                {/* Axes */}
-                <line x1="20" y1="85" x2="190" y2="85" stroke="#1a1a1a" strokeWidth="1" />
-                <line x1="20" y1="10" x2="20" y2="85" stroke="#1a1a1a" strokeWidth="1" />
-                {/* Curve plotting */}
-                <path
-                  d="M 20 80 Q 80 20 180 15"
-                  fill="none"
-                  stroke="#22d3ee"
-                  strokeWidth="2.5"
-                />
-                {/* Max Sharpe dot */}
-                <circle cx={modelType === 'MAX_SHARPE' ? 120 : 60} cy={modelType === 'MAX_SHARPE' ? 32 : 55} r="5" fill="#22c55e" className="animate-ping" />
-                <circle cx={modelType === 'MAX_SHARPE' ? 120 : 60} cy={modelType === 'MAX_SHARPE' ? 32 : 55} r="4.5" fill="#22c55e" />
-              </svg>
-              <span className="absolute bottom-2 right-4 text-[8px] font-mono text-gray-500">Volatility (Risk) →</span>
-              <span className="absolute left-2 top-2 text-[8px] font-mono text-gray-500 rotate-90 origin-left">Returns →</span>
+            <div className="flex justify-between items-center">
+              <h2 className="text-sm font-semibold text-white">
+                Efficient Frontier Curve
+              </h2>
+              <span className="text-[10px] text-gray-500 font-mono">Markowitz Portfolio Theory</span>
+            </div>
+
+            <div className="bg-[#080c14] border border-[#1a1a1a] rounded-lg p-4 space-y-3">
+              {/* SVG Curve Container */}
+              <div className="relative h-44 w-full">
+                <svg className="w-full h-full" viewBox="0 0 240 130">
+                  <defs>
+                    <linearGradient id="frontier-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.2" />
+                      <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Grid Lines */}
+                  <line x1="30" y1="20" x2="230" y2="20" stroke="#1a1a1a" strokeDasharray="3 3" />
+                  <line x1="30" y1="50" x2="230" y2="50" stroke="#1a1a1a" strokeDasharray="3 3" />
+                  <line x1="30" y1="80" x2="230" y2="80" stroke="#1a1a1a" strokeDasharray="3 3" />
+                  <line x1="30" y1="110" x2="230" y2="110" stroke="#1a1a1a" />
+
+                  <line x1="30" y1="20" x2="30" y2="110" stroke="#1a1a1a" />
+                  <line x1="90" y1="20" x2="90" y2="110" stroke="#1a1a1a" strokeDasharray="3 3" />
+                  <line x1="150" y1="20" x2="150" y2="110" stroke="#1a1a1a" strokeDasharray="3 3" />
+                  <line x1="210" y1="20" x2="210" y2="110" stroke="#1a1a1a" strokeDasharray="3 3" />
+
+                  {/* Y-Axis Ticks (Returns %) */}
+                  <text x="24" y="24" textAnchor="end" fill="#666" fontSize="7" fontFamily="monospace">30%</text>
+                  <text x="24" y="54" textAnchor="end" fill="#666" fontSize="7" fontFamily="monospace">20%</text>
+                  <text x="24" y="84" textAnchor="end" fill="#666" fontSize="7" fontFamily="monospace">10%</text>
+                  <text x="24" y="113" textAnchor="end" fill="#666" fontSize="7" fontFamily="monospace">0%</text>
+
+                  {/* X-Axis Ticks (Volatility %) */}
+                  <text x="30" y="122" textAnchor="middle" fill="#666" fontSize="7" fontFamily="monospace">0%</text>
+                  <text x="90" y="122" textAnchor="middle" fill="#666" fontSize="7" fontFamily="monospace">5%</text>
+                  <text x="150" y="122" textAnchor="middle" fill="#666" fontSize="7" fontFamily="monospace">10%</text>
+                  <text x="210" y="122" textAnchor="middle" fill="#666" fontSize="7" fontFamily="monospace">15%</text>
+
+                  {/* Efficient Frontier Parabolic Path */}
+                  <path
+                    d="M 30 110 C 50 70, 90 35, 230 25"
+                    fill="none"
+                    stroke="#22d3ee"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M 30 110 C 50 70, 90 35, 230 25 L 230 110 Z"
+                    fill="url(#frontier-fill)"
+                  />
+
+                  {/* Portfolio Points */}
+                  {/* Min Variance Point */}
+                  <circle 
+                    cx="70" 
+                    cy="62" 
+                    r={modelType === 'MIN_VARIANCE' ? "6" : "4"} 
+                    fill={modelType === 'MIN_VARIANCE' ? "#22d3ee" : "#333"} 
+                    stroke="#22d3ee" 
+                    strokeWidth="1.5"
+                  />
+                  
+                  {/* Max Sharpe Point */}
+                  <circle 
+                    cx="140" 
+                    cy="35" 
+                    r={modelType === 'MAX_SHARPE' ? "6" : "4"} 
+                    fill={modelType === 'MAX_SHARPE' ? "#22c55e" : "#333"} 
+                    stroke="#22c55e" 
+                    strokeWidth="1.5"
+                  />
+
+                  {/* Annotations */}
+                  <text x="145" y="28" fill="#22c55e" fontSize="7" fontWeight="bold" fontFamily="monospace">
+                    Max Sharpe (2.84)
+                  </text>
+                  <text x="75" y="58" fill="#22d3ee" fontSize="7" fontWeight="bold" fontFamily="monospace">
+                    Min Var (8.5%)
+                  </text>
+                </svg>
+              </div>
+
+              {/* Legend & Current Mode Banner */}
+              <div className="flex items-center justify-between text-[10px] font-mono border-t border-[#1a1a1a] pt-2 text-[#666]">
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#22c55e]" /> Max Sharpe
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="w-2 h-2 rounded-full bg-[#22d3ee]" /> Min Variance
+                  </span>
+                </div>
+                <span className="text-white">
+                  Active: {modelType === 'MAX_SHARPE' ? 'Max Sharpe (2.84)' : 'Min Variance'}
+                </span>
+              </div>
+
             </div>
           </div>
 
