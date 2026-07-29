@@ -1,51 +1,53 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useCapitalStore } from '../../../../store/capital';
+import CapitalEditModal from '../../../../components/layout/CapitalEditModal';
 import { 
   TrendingUp, TrendingDown, RefreshCw, CircleDollarSign, PieChart,
-  GitPullRequest, ArrowUpRight, Award, HelpCircle
+  GitPullRequest, ArrowUpRight, Award, HelpCircle, Edit2
 } from 'lucide-react';
 
 interface OptimizerStats {
   strategy: string;
   weight: number;
-  capital: number;
+  capitalAllocated: number;
   sharpe: number;
   volatility: number;
   riskContribution: number;
 }
 
 export default function PortfolioOptimizerUI() {
-  const [capital, setCapital] = useState(100000);
+  const { capital } = useCapitalStore();
+  const [isCapitalModalOpen, setIsCapitalModalOpen] = useState(false);
   const [modelType, setModelType] = useState<'MAX_SHARPE' | 'MIN_VARIANCE'>('MAX_SHARPE');
 
-  // Seeded optimization outputs
+  // Seeded optimization outputs in INR
   const [strategies, setStrategies] = useState<OptimizerStats[]>([
-    { strategy: 'IGRIS Options Straddle', weight: 45.0, capital: 45000, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
-    { strategy: 'Momentum Catcher Buying', weight: 35.0, capital: 35000, sharpe: 2.15, volatility: 14.2, riskContribution: 45.4 },
-    { strategy: 'VWAP Reversal Fade', weight: 20.0, capital: 20000, sharpe: 1.95, volatility: 6.8, riskContribution: 16.4 },
+    { strategy: 'Nifty Martingale AI', weight: 45.0, capitalAllocated: capital * 0.45, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
+    { strategy: 'Momentum Catcher Buying', weight: 35.0, capitalAllocated: capital * 0.35, sharpe: 2.15, volatility: 14.2, riskContribution: 45.4 },
+    { strategy: 'VWAP Reversal Fade', weight: 20.0, capitalAllocated: capital * 0.20, sharpe: 1.95, volatility: 6.8, riskContribution: 16.4 },
   ]);
 
   const correlationMatrix = {
-    'IGRIS Options Straddle': { 'IGRIS Options Straddle': 1.0, 'Momentum Catcher Buying': 0.12, 'VWAP Reversal Fade': -0.15 },
-    'Momentum Catcher Buying': { 'IGRIS Options Straddle': 0.12, 'Momentum Catcher Buying': 1.0, 'VWAP Reversal Fade': 0.05 },
-    'VWAP Reversal Fade': { 'IGRIS Options Straddle': -0.15, 'Momentum Catcher Buying': 0.05, 'VWAP Reversal Fade': 1.0 },
+    'Nifty Martingale AI': { 'Nifty Martingale AI': 1.0, 'Momentum Catcher Buying': 0.12, 'VWAP Reversal Fade': -0.15 },
+    'Momentum Catcher Buying': { 'Nifty Martingale AI': 0.12, 'Momentum Catcher Buying': 1.0, 'VWAP Reversal Fade': 0.05 },
+    'VWAP Reversal Fade': { 'Nifty Martingale AI': -0.15, 'Momentum Catcher Buying': 0.05, 'VWAP Reversal Fade': 1.0 },
   };
 
   const handleModelChange = (model: 'MAX_SHARPE' | 'MIN_VARIANCE') => {
     setModelType(model);
     if (model === 'MAX_SHARPE') {
       setStrategies([
-        { strategy: 'IGRIS Options Straddle', weight: 45.0, capital: capital * 0.45, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
-        { strategy: 'Momentum Catcher Buying', weight: 35.0, capital: capital * 0.35, sharpe: 2.15, volatility: 14.2, riskContribution: 45.4 },
-        { strategy: 'VWAP Reversal Fade', weight: 20.0, capital: capital * 0.20, sharpe: 1.95, volatility: 6.8, riskContribution: 16.4 },
+        { strategy: 'Nifty Martingale AI', weight: 45.0, capitalAllocated: capital * 0.45, sharpe: 2.84, volatility: 8.5, riskContribution: 38.2 },
+        { strategy: 'Momentum Catcher Buying', weight: 35.0, capitalAllocated: capital * 0.35, sharpe: 2.15, volatility: 14.2, riskContribution: 45.4 },
+        { strategy: 'VWAP Reversal Fade', weight: 20.0, capitalAllocated: capital * 0.20, sharpe: 1.95, volatility: 6.8, riskContribution: 16.4 },
       ]);
     } else {
-      // Minimum Variance allocates more to low vol asset (VWAP Reversal Fade)
       setStrategies([
-        { strategy: 'IGRIS Options Straddle', weight: 30.0, capital: capital * 0.30, sharpe: 2.84, volatility: 8.5, riskContribution: 28.5 },
-        { strategy: 'Momentum Catcher Buying', weight: 15.0, capital: capital * 0.15, sharpe: 2.15, volatility: 14.2, riskContribution: 18.2 },
-        { strategy: 'VWAP Reversal Fade', weight: 55.0, capital: capital * 0.55, sharpe: 1.95, volatility: 6.8, riskContribution: 53.3 },
+        { strategy: 'Nifty Martingale AI', weight: 30.0, capitalAllocated: capital * 0.30, sharpe: 2.84, volatility: 8.5, riskContribution: 28.5 },
+        { strategy: 'Momentum Catcher Buying', weight: 15.0, capitalAllocated: capital * 0.15, sharpe: 2.15, volatility: 14.2, riskContribution: 18.2 },
+        { strategy: 'VWAP Reversal Fade', weight: 55.0, capitalAllocated: capital * 0.55, sharpe: 1.95, volatility: 6.8, riskContribution: 53.3 },
       ]);
     }
   };
@@ -60,7 +62,7 @@ export default function PortfolioOptimizerUI() {
             Portfolio Allocation Optimizer
           </h1>
           <p className="text-xs text-gray-500">
-            Execute covariance matrices and solve allocation curves along the Efficient Frontier boundary.
+            Execute covariance matrices and solve allocation curves along the Efficient Frontier boundary for ₹{capital.toLocaleString('en-IN')}.
           </p>
         </div>
 
@@ -92,28 +94,39 @@ export default function PortfolioOptimizerUI() {
         <div className="lg:col-span-2 space-y-6">
           
           <div className="card p-6 rounded-lg space-y-6">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
-              Optimized Strategy Weights
-            </h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                Optimized Strategy Weights (Base: ₹{capital.toLocaleString('en-IN')})
+              </h2>
+              <button 
+                onClick={() => setIsCapitalModalOpen(true)}
+                className="text-xs text-[#22d3ee] flex items-center gap-1 hover:underline"
+              >
+                <Edit2 className="w-3 h-3" /> Change Capital
+              </button>
+            </div>
 
             <div className="space-y-6">
-              {strategies.map(s => (
-                <div key={s.strategy} className="space-y-2">
-                  <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-white">{s.strategy}</span>
-                    <span className="text-gray-400 font-mono">
-                      {s.weight}% (${s.capital.toLocaleString()})
-                    </span>
+              {strategies.map(s => {
+                const currentAlloc = capital * (s.weight / 100);
+                return (
+                  <div key={s.strategy} className="space-y-2">
+                    <div className="flex justify-between text-xs font-semibold">
+                      <span className="text-white">{s.strategy}</span>
+                      <span className="text-gray-400 font-mono">
+                        {s.weight}% (₹{currentAlloc.toLocaleString('en-IN', { maximumFractionDigits: 0 })})
+                      </span>
+                    </div>
+                    <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#22d3ee]" style={{ width: `${s.weight}%` }} />
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+                      <span>Volatility: {s.volatility}%</span>
+                      <span>Risk Contribution: {s.riskContribution}%</span>
+                    </div>
                   </div>
-                  <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#22d3ee]" style={{ width: `${s.weight}%` }} />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-gray-500 font-mono">
-                    <span>Volatility: {s.volatility}%</span>
-                    <span>Risk Contribution: {s.riskContribution}%</span>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -192,17 +205,20 @@ export default function PortfolioOptimizerUI() {
               Efficient Frontier Plot
             </span>
             <div className="bg-gray-950/60 border border-gray-900 rounded-xl p-4 flex items-center justify-center h-44 relative">
-              <svg className="w-full h-full" viewBox="0 0 200 100">
+              <svg className="w-full h-full overflow-visible" viewBox="0 0 200 100">
+                {/* Axes */}
+                <line x1="20" y1="85" x2="190" y2="85" stroke="#1a1a1a" strokeWidth="1" />
+                <line x1="20" y1="10" x2="20" y2="85" stroke="#1a1a1a" strokeWidth="1" />
                 {/* Curve plotting */}
                 <path
                   d="M 20 80 Q 80 20 180 15"
                   fill="none"
-                  stroke="#3b82f6"
+                  stroke="#22d3ee"
                   strokeWidth="2.5"
                 />
                 {/* Max Sharpe dot */}
-                <circle cx={modelType === 'MAX_SHARPE' ? 120 : 60} cy={modelType === 'MAX_SHARPE' ? 32 : 55} r="5" fill="#10b981" className="animate-ping" />
-                <circle cx={modelType === 'MAX_SHARPE' ? 120 : 60} cy={modelType === 'MAX_SHARPE' ? 32 : 55} r="4.5" fill="#10b981" />
+                <circle cx={modelType === 'MAX_SHARPE' ? 120 : 60} cy={modelType === 'MAX_SHARPE' ? 32 : 55} r="5" fill="#22c55e" className="animate-ping" />
+                <circle cx={modelType === 'MAX_SHARPE' ? 120 : 60} cy={modelType === 'MAX_SHARPE' ? 32 : 55} r="4.5" fill="#22c55e" />
               </svg>
               <span className="absolute bottom-2 right-4 text-[8px] font-mono text-gray-500">Volatility (Risk) →</span>
               <span className="absolute left-2 top-2 text-[8px] font-mono text-gray-500 rotate-90 origin-left">Returns →</span>
@@ -212,6 +228,11 @@ export default function PortfolioOptimizerUI() {
         </div>
 
       </div>
+
+      <CapitalEditModal
+        isOpen={isCapitalModalOpen}
+        onClose={() => setIsCapitalModalOpen(false)}
+      />
 
     </div>
   );

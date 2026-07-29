@@ -331,7 +331,7 @@ export default function Backtesting() {
 
                 <div>
                   <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
-                    Brokerage ($)
+                    Brokerage (₹)
                   </label>
                   <input
                     type="number"
@@ -395,7 +395,7 @@ export default function Backtesting() {
                 <div className="card p-5 rounded-xl">
                   <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Net profit</span>
                   <h3 className="text-xl font-bold text-[#22c55e] font-mono">
-                    +${results.metrics.net_profit.toLocaleString()}
+                    +₹{results.metrics.net_profit.toLocaleString()}
                   </h3>
                   <span className="text-[9px] text-[#22c55e] font-mono">
                     +{((results.metrics.net_profit / parseFloat(capital)) * 100).toFixed(2)}% ROI
@@ -439,12 +439,12 @@ export default function Backtesting() {
                   </div>
                   <div className="border-b border-gray-900 pb-2">
                     <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Expectancy Value</span>
-                    <span className="text-[#22c55e] font-mono">+${results.metrics.expectancy}</span>
+                    <span className="text-[#22c55e] font-mono">+₹{results.metrics.expectancy}</span>
                   </div>
                   <div className="border-b border-gray-900 pb-2">
                     <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Average Win / Loss</span>
                     <span className="text-white font-mono">
-                      +${results.metrics.avg_win} / -${Math.abs(results.metrics.avg_loss)}
+                      +₹{results.metrics.avg_win} / -₹{Math.abs(results.metrics.avg_loss)}
                     </span>
                   </div>
                   <div className="border-b border-gray-900 pb-2">
@@ -475,7 +475,7 @@ export default function Backtesting() {
                       <span className="mt-2 text-[8px] text-gray-600">
                         {curve.time.split('T')[0].split('-').slice(1).join('/')}
                       </span>
-                      <span className="text-white font-bold">${Math.round(curve.equity).toLocaleString()}</span>
+                      <span className="text-white font-bold">₹{Math.round(curve.equity).toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
@@ -509,10 +509,10 @@ export default function Backtesting() {
                               {t.direction}
                             </span>
                           </td>
-                          <td className="py-2.5 text-right">${t.entry_price}</td>
-                          <td className="py-2.5 text-right">${t.exit_price}</td>
+                          <td className="py-2.5 text-right">₹{t.entry_price}</td>
+                          <td className="py-2.5 text-right">₹{t.exit_price}</td>
                           <td className={`py-2.5 text-right ${t.pnl >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
-                            {t.pnl >= 0 ? '+' : ''}${t.pnl.toLocaleString()}
+                            {t.pnl >= 0 ? '+' : ''}₹{t.pnl.toLocaleString()}
                           </td>
                           <td className="py-2.5 text-gray-400 font-sans">{t.exit_reason}</td>
                         </tr>

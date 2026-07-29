@@ -458,7 +458,7 @@ export default function IgrisStrategyWorkspace() {
     const step = simSymbol === 'BANKNIFTY' ? 100 : 50;
 
     pushLog('--:--:--', 'SYS', `Starting 10-day backtest simulation on ${simSymbol}...`);
-    pushLog('--:--:--', 'SYS', `Parameters: IV:${simIv}% DTE:${simDte} TGT:${simTgt}pts SL:${simSl}pts Cap:$${simCap.toLocaleString()}`);
+    pushLog('--:--:--', 'SYS', `Parameters: IV:${simIv}% DTE:${simDte} TGT:${simTgt}pts SL:${simSl}pts Cap:₹${simCap.toLocaleString()}`);
 
     // Generate 10-day synthetic candlestick time-series
     const seededRng = (s: number) => {
@@ -733,7 +733,7 @@ export default function IgrisStrategyWorkspace() {
     for (let i = 0; i <= 3; i++) {
       const v = vMin + (vR * i / 3);
       const y = yOf(v);
-      ctx.fillText('$' + Math.round(v).toLocaleString(), 2, y + 3);
+      ctx.fillText('₹' + Math.round(v).toLocaleString(), 2, y + 3);
     }
   };
 
@@ -1143,7 +1143,7 @@ export default function IgrisStrategyWorkspace() {
                 </select>
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Capital ($)</label>
+                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Capital (₹)</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono" 
@@ -1198,7 +1198,7 @@ export default function IgrisStrategyWorkspace() {
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Brokerage ($/order)</label>
+                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Brokerage (₹/order)</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono" 
@@ -1216,10 +1216,10 @@ export default function IgrisStrategyWorkspace() {
                   {[
                     { label: 'Total Trades', val: simMetrics.trades, color: 'text-white' },
                     { label: 'Win Rate %', val: simMetrics.winRate, color: 'text-[#22c55e]' },
-                    { label: 'Net Profit ($)', val: `$${simMetrics.netProfit.toLocaleString()}`, color: simMetrics.netProfit >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
-                    { label: 'Avg Trade PnL', val: `$${simMetrics.avgPnL.toLocaleString()}`, color: simMetrics.avgPnL >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
-                    { label: 'Best PnL', val: `+$${simMetrics.best.toLocaleString()}`, color: 'text-[#22c55e]' },
-                    { label: 'Worst PnL', val: `$${simMetrics.worst.toLocaleString()}`, color: 'text-[#ef4444]' }
+                    { label: 'Net Profit (₹)', val: `₹${simMetrics.netProfit.toLocaleString()}`, color: simMetrics.netProfit >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
+                    { label: 'Avg Trade PnL', val: `₹${simMetrics.avgPnL.toLocaleString()}`, color: simMetrics.avgPnL >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
+                    { label: 'Best PnL', val: `+₹${simMetrics.best.toLocaleString()}`, color: 'text-[#22c55e]' },
+                    { label: 'Worst PnL', val: `₹${simMetrics.worst.toLocaleString()}`, color: 'text-[#ef4444]' }
                   ].map(stat => (
                     <div key={stat.label} className="bg-gray-950/60 border border-gray-900 p-3 rounded-xl">
                       <span className="text-[8px] text-gray-500 font-bold uppercase tracking-wider block mb-1">{stat.label}</span>
@@ -1231,7 +1231,7 @@ export default function IgrisStrategyWorkspace() {
                 {/* Equity Curve Canvas drawing */}
                 <div className="space-y-2">
                   <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
-                    Equity Growth Curve ($)
+                    Equity Growth Curve (₹)
                   </span>
                   <div className="bg-gray-950/65 border border-gray-900 rounded-xl p-3">
                     <canvas ref={equityCanvasRef} className="w-full h-[180px]" />
@@ -1401,7 +1401,7 @@ export default function IgrisStrategyWorkspace() {
                   <th className="p-3 text-right">Exit Prem</th>
                   <th className="p-3 text-right">Lots/Qty</th>
                   <th className="p-3 text-right">Exit Reason</th>
-                  <th className="p-3 text-right">Net PnL ($)</th>
+                  <th className="p-3 text-right">Net PnL (₹)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-900/60 font-semibold text-gray-300">

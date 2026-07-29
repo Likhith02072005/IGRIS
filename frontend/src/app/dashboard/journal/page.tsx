@@ -216,7 +216,7 @@ export default function TradeJournal() {
 
             <div>
               <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
-                Net PnL ($)
+                Net PnL (₹)
               </label>
               <input
                 type="number"
@@ -376,7 +376,7 @@ export default function TradeJournal() {
                   <div className="text-right">
                     <span className="text-[9px] text-gray-500 font-mono block uppercase">Net Profit</span>
                     <span className={`font-mono text-sm font-bold ${isWin ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
-                      {isWin ? '+' : ''}${entry.pnl.toLocaleString()}
+                      {isWin ? '+' : ''}₹{entry.pnl.toLocaleString()}
                     </span>
                   </div>
 
