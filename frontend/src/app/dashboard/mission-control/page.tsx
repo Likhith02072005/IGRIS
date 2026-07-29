@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ShieldAlert, ShieldCheck, Power, RefreshCw, Layers, TrendingUp, TrendingDown,
-  Play, Pause, AlertOctagon, Activity, Network, CircleDollarSign, Zap
+  Play, Pause, AlertOctagon, Activity, Network, CircleDollarSign, Zap, RotateCcw
 } from 'lucide-react';
 
 import { useCapitalStore } from '../../../store/capital';
@@ -13,8 +13,7 @@ interface RunningStrategy {
   name: string;
   status: 'RUNNING' | 'PAUSED' | 'SUSPENDED';
   position: string;
-  capital: number;
-  pnl: number;
+  allocPct: number;
   todayReturn: number;
   overallReturn: number;
   drawdown: number;
@@ -25,68 +24,63 @@ interface RunningStrategy {
   connection: 'CONNECTED' | 'DISCONNECTED';
   health: number;
   aiScore: number;
-  equityCurve: number[];
 }
 
 export default function MissionControl() {
   const { capital } = useCapitalStore();
+  const [isFreshMode, setIsFreshMode] = useState(true); // Default to Fresh 0 Baseline
+
   const [strategies, setStrategies] = useState<RunningStrategy[]>([
     {
       id: 'strat_1',
-      name: 'IGRIS Options Straddle',
+      name: 'Nifty Martingale AI (25 Indicators)',
       status: 'RUNNING',
-      position: '+2 Lots BANKNIFTY 52400CE',
-      capital: 4500000,
-      pnl: 110250.00,
-      todayReturn: 2.45,
-      overallReturn: 12.8,
-      drawdown: -2.15,
-      exposure: 35,
+      position: 'FLAT (Ready)',
+      allocPct: 0.45,
+      todayReturn: 0.00,
+      overallReturn: 0.00,
+      drawdown: 0.00,
+      exposure: 0,
       risk: 'Low',
       latency: 8,
       broker: 'AngelOne',
       connection: 'CONNECTED',
-      health: 96,
-      aiScore: 92,
-      equityCurve: [4000000, 4120000, 4080000, 4290000, 4380000, 4500000, 4610250]
+      health: 98,
+      aiScore: 95,
     },
     {
       id: 'strat_2',
-      name: 'Momentum Catcher Buying',
+      name: 'BankNifty Momentum Catcher',
       status: 'RUNNING',
       position: 'FLAT',
-      capital: 3000000,
-      pnl: -45000.00,
-      todayReturn: -1.50,
-      overallReturn: 8.4,
-      drawdown: -4.80,
+      allocPct: 0.30,
+      todayReturn: 0.00,
+      overallReturn: 0.00,
+      drawdown: 0.00,
       exposure: 0,
       risk: 'Medium',
       latency: 12,
       broker: 'Zerodha',
       connection: 'CONNECTED',
-      health: 88,
-      aiScore: 85,
-      equityCurve: [2800000, 2900000, 3100000, 3050000, 3010000, 2955000]
+      health: 90,
+      aiScore: 88,
     },
     {
       id: 'strat_3',
       name: 'Mean Reversion VWAP',
       status: 'PAUSED',
       position: 'FLAT',
-      capital: 2500000,
-      pnl: 0.00,
+      allocPct: 0.25,
       todayReturn: 0.00,
-      overallReturn: 4.2,
-      drawdown: -1.80,
+      overallReturn: 0.00,
+      drawdown: 0.00,
       exposure: 0,
       risk: 'Minimal',
       latency: 15,
       broker: 'Dhan',
       connection: 'CONNECTED',
       health: 98,
-      aiScore: 90,
-      equityCurve: [2400000, 2450000, 2500000, 2500000, 2500000]
+      aiScore: 92,
     }
   ]);
 
@@ -94,21 +88,6 @@ export default function MissionControl() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setStrategies(prev => 
-        prev.map(s => {
-          if (s.status !== 'RUNNING') return s;
-          const delta = (Math.random() - 0.45) * 50;
-          const newPnl = Number((s.pnl + delta).toFixed(2));
-          const newCurve = [...s.equityCurve.slice(-6), s.capital + newPnl];
-          return {
-            ...s,
-            pnl: newPnl,
-            todayReturn: Number(((newPnl / s.capital) * 100).toFixed(2)),
-            latency: Math.max(5, s.latency + Math.floor((Math.random() - 0.5) * 3)),
-            equityCurve: newCurve
-          };
-        })
-      );
       setLastUpdated(new Date());
     }, 4000);
     return () => clearInterval(interval);
@@ -132,37 +111,54 @@ export default function MissionControl() {
     }
   };
 
+  const totalTodayPnL = isFreshMode ? 0 : 4500;
+  const maxDrawdownPct = isFreshMode ? '0.00%' : '-2.15%';
+
   return (
     <div className="space-y-8 relative z-10">
       
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-wider text-white">
-            Platform Mission Control
-          </h1>
-          <p className="text-xs text-gray-500">
-            Real-time algorithmic execution supervisor deck. Enforces operational oversight.
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+              Platform Mission Control
+            </h1>
+            <span className="px-2 py-0.5 rounded bg-[#22d3ee]/10 text-[#22d3ee] font-mono text-xs border border-[#22d3ee]/20">
+              {isFreshMode ? 'FRESH 0 BASELINE' : 'DEMO MODE'}
+            </span>
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Real-time algorithmic execution supervisor deck. Enforces operational oversight for ₹{capital.toLocaleString('en-IN')} capital base.
           </p>
         </div>
 
-        <div className="flex items-center gap-4 text-xs font-semibold">
-          <span className="text-gray-500 font-mono">Last Update: {lastUpdated.toLocaleTimeString()}</span>
+        <div className="flex items-center gap-3 text-xs font-semibold">
+          <button
+            onClick={() => setIsFreshMode(!isFreshMode)}
+            className="px-3 py-2 rounded bg-[#111111] border border-[#1a1a1a] hover:border-[#22d3ee] text-xs text-white hover:text-[#22d3ee] font-mono flex items-center gap-1.5 transition-all"
+          >
+            <RotateCcw className="w-3.5 h-3.5 text-[#22d3ee]" />
+            {isFreshMode ? 'Switch to Demo Mode' : 'Reset All to Fresh ₹0'}
+          </button>
+
+          <span className="text-gray-500 font-mono hidden sm:inline">Last Update: {lastUpdated.toLocaleTimeString()}</span>
+          
           <button 
             onClick={handleMasterHalt}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-[#ef4444] hover:bg-[#ef4444]/90 text-white font-bold uppercase tracking-wider rounded-xl transition-all"
+            className="flex items-center gap-1.5 px-4 py-2 bg-[#ef4444] hover:bg-[#ef4444]/90 text-white font-bold uppercase tracking-wider rounded-xl transition-all"
           >
-            <AlertOctagon className="w-4 h-4" /> Master Emergency Halt
+            <AlertOctagon className="w-4 h-4" /> Master Halt
           </button>
         </div>
       </div>
 
-      {/* Overview stats answering the core questions */}
+      {/* Overview stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[
           { label: 'Total Algorithmic Capital', val: `₹${capital.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, color: 'text-white' },
-          { label: "Today's Net ROI PnL", val: `+₹${strategies.reduce((a, b) => a + b.pnl, 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: 'text-[#22c55e]' },
-          { label: 'Max Peak Drawdown', val: '-4.80%', color: 'text-[#ef4444]' },
+          { label: "Today's Net ROI PnL", val: `${totalTodayPnL >= 0 ? '+' : ''}₹${totalTodayPnL.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`, color: totalTodayPnL >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
+          { label: 'Max Peak Drawdown', val: maxDrawdownPct, color: isFreshMode ? 'text-white' : 'text-[#ef4444]' },
           { label: 'Active Execution Sockets', val: '3 Nodes Online', color: 'text-[#22d3ee]' },
         ].map(card => (
           <div key={card.label} className="card p-5 rounded-lg">
@@ -176,7 +172,7 @@ export default function MissionControl() {
       <div className="card rounded-lg border border-gray-800/80 overflow-hidden">
         <div className="p-5 border-b border-gray-900 bg-[#060a16]/65 flex justify-between items-center text-xs font-bold text-gray-400">
           <span>Active Strategy Grid</span>
-          <span>Sorting: Total Capital</span>
+          <span className="font-mono">Capital Base: ₹{capital.toLocaleString('en-IN')}</span>
         </div>
 
         <div className="overflow-x-auto">
@@ -199,7 +195,10 @@ export default function MissionControl() {
               {strategies.map(s => {
                 const isRunning = s.status === 'RUNNING';
                 const isSuspended = s.status === 'SUSPENDED';
-                const isPnlPositive = s.pnl >= 0;
+                const allocatedCap = capital * s.allocPct;
+                const stratPnL = isFreshMode ? 0 : (s.id === 'strat_1' ? 4500 : 0);
+                const stratReturnPct = isFreshMode ? 0 : (s.id === 'strat_1' ? 2.0 : 0);
+                const isPnlPositive = stratPnL >= 0;
 
                 return (
                   <tr key={s.id} className="hover:bg-gray-900/10">
@@ -218,11 +217,11 @@ export default function MissionControl() {
                       <span className="text-white block font-mono">{s.position}</span>
                       <span className="text-[9px] text-gray-500 block">Exposure: {s.exposure}%</span>
                     </td>
-                    <td className="p-4 text-right font-mono text-white">₹{s.capital.toLocaleString()}</td>
+                    <td className="p-4 text-right font-mono text-white">₹{allocatedCap.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
                     <td className={`p-4 text-right font-mono ${isPnlPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
-                      {isPnlPositive ? '+' : ''}₹{s.pnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ({s.todayReturn}%)
+                      {isPnlPositive ? '+' : ''}₹{stratPnL.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ({stratReturnPct}%)
                     </td>
-                    <td className="p-4 text-right font-mono text-[#ef4444]">{s.drawdown}%</td>
+                    <td className="p-4 text-right font-mono text-gray-400">{isFreshMode ? '0.00%' : `${s.drawdown}%`}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-1">
                         <Network className="w-3.5 h-3.5 text-[#22d3ee]" />
@@ -235,12 +234,12 @@ export default function MissionControl() {
                       <span className="text-[#22d3ee]">AI:{s.aiScore}%</span>
                     </td>
                     <td className="p-4 text-center">
-                      {/* Mini SVG curve path */}
-                      <svg className="w-20 h-8 mx-auto" viewBox="0 0 100 30">
+                      {/* Clean SVG curve path */}
+                      <svg className="w-20 h-6 mx-auto overflow-visible" viewBox="0 0 80 20">
                         <path
-                          d={`M ${s.equityCurve.map((val, idx) => `${(idx / (s.equityCurve.length - 1)) * 100} ${30 - ((val - s.capital * 0.9) / (s.capital * 0.2)) * 30}`).join(' L ')}`}
+                          d={isFreshMode ? "M 0 15 L 80 15" : "M 0 18 L 25 15 L 50 16 L 80 5"}
                           fill="none"
-                          stroke={isPnlPositive ? '#10b981' : '#ef4444'}
+                          stroke={isPnlPositive ? '#22c55e' : '#ef4444'}
                           strokeWidth="2"
                         />
                       </svg>
