@@ -130,8 +130,8 @@ export default function StrategiesList() {
  const fetchStrategies = async () => {
  if (!accessToken) return;
  try {
- const res = await fetch(`₹{process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies`, {
- headers: { 'Authorization': `Bearer ₹{accessToken}` },
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies`, {
+ headers: { 'Authorization': `Bearer ${accessToken}` },
  });
  const data = await res.json();
  if (res.ok && Array.isArray(data) && data.length > 0) {
@@ -170,11 +170,11 @@ export default function StrategiesList() {
  setComparing(true);
  setError(null);
  try {
- const res = await fetch(`₹{process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies/compare`, {
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'}/api/strategies/compare`, {
  method: 'POST',
  headers: {
  'Content-Type': 'application/json',
- 'Authorization': `Bearer ₹{accessToken}`,
+ 'Authorization': `Bearer ${accessToken}`,
  },
  body: JSON.stringify({ strategyIds: selectedIds }),
  });
@@ -195,7 +195,7 @@ export default function StrategiesList() {
  const score = winRate * 0.2 + sharpe * 20 - drawdown * 2;
  return {
  id,
- name: s?.name || `Strategy ₹{id}`,
+ name: s?.name || `Strategy ${id}`,
  category: s?.category || 'OPTIONS',
  winRate,
  netProfit,
@@ -285,7 +285,7 @@ export default function StrategiesList() {
  {strategies.map((strat) => {
  const targetUrl = strat.id === 'nifty-martingale' 
  ? '/dashboard/strategies/nifty-martingale' 
- : `/dashboard/strategies/₹{strat.id}`;
+ : `/dashboard/strategies/${strat.id}`;
 
  return (
  <tr 
@@ -327,10 +327,10 @@ export default function StrategiesList() {
  TGT: ₹{strat.target} | SL: ₹{strat.stopLoss}
  </td>
  <td className="p-4">
- <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase ₹{
+ <span className={`inline-flex items-center gap-1.5 text-[10px] font-bold uppercase ${
  strat.status === 'ACTIVE' ? 'text-[#10b981]' : 'text-amber-500'
  }`}>
- <span className={`w-1.5 h-1.5 rounded-full ₹{
+ <span className={`w-1.5 h-1.5 rounded-full ${
  strat.status === 'ACTIVE' ? 'bg-[#10b981]' : 'bg-amber-500'
  }`} />
  {strat.status}
@@ -346,7 +346,7 @@ export default function StrategiesList() {
  </Link>
  
  <Link
- href={`/dashboard/backtesting?strategyId=₹{strat.id}`}
+ href={`/dashboard/backtesting?strategyId=${strat.id}`}
  className="inline-flex items-center gap-1 text-[10px] font-bold text-[#94a3b8] hover:text-[#1a1a2e] hover:underline uppercase tracking-wider"
  >
  Backtest
@@ -410,7 +410,7 @@ export default function StrategiesList() {
  {comparisonResults.map((r) => (
  <tr key={r.id} className="hover:bg-[#7c3aed]/5">
  <td className="p-3 text-center">
- <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ₹{
+ <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-[10px] font-bold ${
  r.rank === 1 ? 'bg-amber-500/20 border border-amber-500 text-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' : ' border border-white/30'
  }`}>
  {r.rank}

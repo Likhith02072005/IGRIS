@@ -249,13 +249,13 @@ export default function PluginMarketplace() {
  <button 
  key={cat.key} 
  onClick={() => setSelectedCategory(cat.key as any)}
- className={`card p-5 rounded-lg flex items-center gap-4 text-left transition-all group border ₹{
+ className={`card p-5 rounded-lg flex items-center gap-4 text-left transition-all group border ${
  isSelected 
  ? 'border-[#22d3ee] bg-[#7c3aed]/5 shadow-[0_0_15px_rgba(34,211,238,0.15)]' 
  : 'hover:border-gray-700/80 cursor-pointer'
  }`}
  >
- <div className={`p-3 rounded-xl border transition-colors ₹{
+ <div className={`p-3 rounded-xl border transition-colors ${
  isSelected 
  ? 'bg-[#7c3aed] text-black border-[#22d3ee]' 
  : 'bg-[#7c3aed]/10 border-[#22d3ee]/20 text-[#7c3aed] group-hover:bg-[#7c3aed]/20'
@@ -263,7 +263,7 @@ export default function PluginMarketplace() {
  <Icon className="w-5 h-5" />
  </div>
  <div>
- <span className={`text-xs font-bold block ₹{isSelected ? 'text-[#7c3aed]' : 'text-[#1a1a2e]'}`}>
+ <span className={`text-xs font-bold block ${isSelected ? 'text-[#7c3aed]' : 'text-[#1a1a2e]'}`}>
  {cat.label}
  </span>
  <span className="text-[10px] text-[#64748b] font-mono block mt-0.5">
@@ -288,7 +288,7 @@ export default function PluginMarketplace() {
  <button
  key={tab.key}
  onClick={() => setSelectedCategory(tab.key as any)}
- className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all border ₹{
+ className={`px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all border ${
  selectedCategory === tab.key
  ? 'bg-[#7c3aed] text-black border-[#22d3ee]'
  : 'bg-[#111] border-white/30 text-[#94a3b8] hover:text-[#1a1a2e] hover:border-gray-700'
@@ -309,7 +309,7 @@ export default function PluginMarketplace() {
  <div 
  key={plugin.id} 
  onClick={() => setActiveModalPlugin(plugin)}
- className={`card p-6 rounded-lg border flex flex-col justify-between gap-6 transition-all cursor-pointer group hover:border-[#22d3ee]/60 ₹{
+ className={`card p-6 rounded-lg border flex flex-col justify-between gap-6 transition-all cursor-pointer group hover:border-[#22d3ee]/60 ${
  isInstalled ? 'border-white/30' : 'border-white/30 '
  }`}
  >
@@ -358,7 +358,7 @@ export default function PluginMarketplace() {
  <button
  onClick={(e) => handleInstall(plugin.id, e)}
  disabled={isInstalling}
- className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-wider transition-all border ₹{
+ className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-wider transition-all border ${
  isInstalled
  ? 'bg-[#10b981]/10 border-[#22c55e]/30 text-[#10b981] hover:bg-[#ef4444]/10 hover:border-[#ef4444]/30 hover:text-[#ef4444]'
  : 'bg-[#7c3aed] text-black border-[#22d3ee] hover:bg-[#7c3aed]/90'
@@ -370,7 +370,7 @@ export default function PluginMarketplace() {
  </>
  ) : (
  <>
- <DownloadCloud className={`w-3.5 h-3.5 ₹{isInstalling ? 'animate-bounce' : ''}`} />
+ <DownloadCloud className={`w-3.5 h-3.5 ${isInstalling ? 'animate-bounce' : ''}`} />
  {isInstalling ? 'Activating...' : 'Enable Module'}
  </>
  )}
