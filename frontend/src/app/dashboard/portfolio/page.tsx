@@ -112,14 +112,14 @@ export default function PortfolioPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+            <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
               Active Portfolio Terminal
             </h1>
-            <span className="px-2 py-0.5 rounded bg-[#22d3ee]/10 text-[#22d3ee] font-mono text-xs border border-[#22d3ee]/20">
+            <span className="px-2 py-0.5 rounded bg-[#7c3aed]/10 text-[#7c3aed] font-mono text-xs border border-[#22d3ee]/20">
               {isFreshMode ? 'FRESH 0 BASELINE' : 'DEMO MODE'}
             </span>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-[#64748b] mt-1">
             Monitor subscribed algorithms, live allocation models, risk profiles, and execution health metrics in Indian Rupees (₹).
           </p>
         </div>
@@ -127,9 +127,9 @@ export default function PortfolioPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsFreshMode(!isFreshMode)}
-            className="px-3 py-2 rounded bg-[#111111] border border-[#1a1a1a] hover:border-[#22d3ee] text-xs text-white hover:text-[#22d3ee] font-mono flex items-center gap-1.5 transition-all"
+            className="px-3 py-2 rounded  border border-white/30 hover:border-[#22d3ee] text-xs text-[#1a1a2e] hover:text-[#7c3aed] font-mono flex items-center gap-1.5 transition-all"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-[#22d3ee]" />
+            <RotateCcw className="w-3.5 h-3.5 text-[#7c3aed]" />
             {isFreshMode ? 'Switch to Demo Mode' : 'Reset All to Fresh ₹0'}
           </button>
         </div>
@@ -144,42 +144,42 @@ export default function PortfolioPage() {
           className="card p-5 rounded-lg border-l-4 border-[#22c55e] cursor-pointer hover:border-r hover:border-r-[#22d3ee] transition-all group"
         >
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">Net Portfolio Value</span>
-            <Edit2 className="w-3 h-3 text-gray-500 group-hover:text-[#22d3ee]" />
+            <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">Net Portfolio Value</span>
+            <Edit2 className="w-3 h-3 text-[#64748b] group-hover:text-[#7c3aed]" />
           </div>
           <div className="flex items-baseline gap-3">
-            <h3 className="text-2xl font-bold text-white font-mono group-hover:text-[#22d3ee] transition-colors">
+            <h3 className="text-2xl font-bold text-[#1a1a2e] font-mono group-hover:text-[#7c3aed] transition-colors">
               ₹{netPortfolioValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </h3>
-            <span className={`text-xs font-bold font-mono flex items-center gap-0.5 ${todayReturnPct >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+            <span className={`text-xs font-bold font-mono flex items-center gap-0.5 ${todayReturnPct >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
               <TrendingUp className="w-3.5 h-3.5" /> {isFreshMode ? '0.00%' : '+3.69% overall'}
             </span>
           </div>
-          <span className="text-[10px] text-gray-400 font-mono mt-1 block">
+          <span className="text-[10px] text-[#94a3b8] font-mono mt-1 block">
             Today: {todayReturnAmount >= 0 ? '+' : ''}₹{todayReturnAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ({todayReturnPct}%)
           </span>
         </div>
 
         {/* Portfolio Exposure Limit */}
         <div className="card p-5 rounded-lg border-l-4 border-indigo-500">
-          <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Portfolio Exposure Limit</span>
+          <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block mb-2">Portfolio Exposure Limit</span>
           <div className="flex items-baseline gap-3">
-            <h3 className="text-2xl font-bold text-white font-mono">75.00%</h3>
+            <h3 className="text-2xl font-bold text-[#1a1a2e] font-mono">75.00%</h3>
             <span className="text-xs font-bold text-indigo-400">Active exposure</span>
           </div>
-          <span className="text-[10px] text-gray-400 font-mono mt-1 block">
+          <span className="text-[10px] text-[#94a3b8] font-mono mt-1 block">
             Value at Risk (VaR): ₹{varAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })} (95% CI)
           </span>
         </div>
 
         {/* Top Performer */}
         <div className="card p-5 rounded-lg border-l-4 border-[#22d3ee]">
-          <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-2">Top Performing Algorithm</span>
+          <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block mb-2">Top Performing Algorithm</span>
           <div className="flex items-baseline gap-3">
-            <h3 className="text-2xl font-bold text-white font-mono">Nifty Martingale AI</h3>
-            <span className="text-xs font-bold text-[#22d3ee] font-mono">Sharpe: 2.84</span>
+            <h3 className="text-2xl font-bold text-[#1a1a2e] font-mono">Nifty Martingale AI</h3>
+            <span className="text-xs font-bold text-[#7c3aed] font-mono">Sharpe: 2.84</span>
           </div>
-          <span className="text-[10px] text-gray-400 font-mono mt-1 block">
+          <span className="text-[10px] text-[#94a3b8] font-mono mt-1 block">
             {isFreshMode ? 'Today return: ₹0.00 (Ready)' : 'Today return: +2.45% ROI'}
           </span>
         </div>
@@ -200,7 +200,7 @@ export default function PortfolioPage() {
             <div 
               key={strat.id} 
               className={`card rounded-lg overflow-hidden border transition-all duration-300 ${
-                isExpanded ? 'border-[#22d3ee]/40' : 'border-gray-800/80 hover:border-gray-700/80'
+                isExpanded ? 'border-[#22d3ee]/40' : 'border-white/30/80 hover:border-gray-700/80'
               }`}
             >
               
@@ -213,10 +213,10 @@ export default function PortfolioPage() {
                 {/* Name, Status, and Controls */}
                 <div className="flex items-center gap-4 min-w-[240px]">
                   <div>
-                    <h3 className="text-sm font-extrabold text-white tracking-wide">{strat.name}</h3>
+                    <h3 className="text-sm font-extrabold text-[#1a1a2e] tracking-wide">{strat.name}</h3>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-[#22c55e]' : 'bg-gray-600'}`} />
-                      <span className="text-[9px] font-mono text-gray-500 uppercase tracking-wider">
+                      <span className={`w-1.5 h-1.5 rounded-full ${isLive ? 'bg-[#10b981]' : 'bg-gray-600'}`} />
+                      <span className="text-[9px] font-mono text-[#64748b] uppercase tracking-wider">
                         {isLive ? 'Live Deployment' : 'System Paused'}
                       </span>
                     </div>
@@ -226,35 +226,35 @@ export default function PortfolioPage() {
                 {/* KPI block inside header */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 flex-1 text-xs">
                   <div>
-                    <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Capital Allocated</span>
-                    <span className="text-white font-mono font-bold">₹{allocatedAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
+                    <span className="text-[9px] text-[#64748b] uppercase block tracking-wider font-bold">Capital Allocated</span>
+                    <span className="text-[#1a1a2e] font-mono font-bold">₹{allocatedAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
                   </div>
 
                   <div>
-                    <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Today Return</span>
-                    <span className={`font-mono font-bold ${todayPnL >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                    <span className="text-[9px] text-[#64748b] uppercase block tracking-wider font-bold">Today Return</span>
+                    <span className={`font-mono font-bold ${todayPnL >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                       {todayPnL >= 0 ? '+' : ''}{todayReturn}% (₹{todayPnL.toLocaleString('en-IN', { minimumFractionDigits: 2 })})
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Overall Return</span>
-                    <span className="text-white font-mono font-bold">+{overallReturn}%</span>
+                    <span className="text-[9px] text-[#64748b] uppercase block tracking-wider font-bold">Overall Return</span>
+                    <span className="text-[#1a1a2e] font-mono font-bold">+{overallReturn}%</span>
                   </div>
 
                   {/* Dynamic scores */}
                   <div className="flex gap-4">
                     <div>
-                      <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Risk</span>
+                      <span className="text-[9px] text-[#64748b] uppercase block tracking-wider font-bold">Risk</span>
                       <span className="text-[#ef4444] font-mono font-bold">{strat.riskScore}/10</span>
                     </div>
                     <div>
-                      <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">Health</span>
-                      <span className="text-[#22c55e] font-mono font-bold">{strat.healthScore}%</span>
+                      <span className="text-[9px] text-[#64748b] uppercase block tracking-wider font-bold">Health</span>
+                      <span className="text-[#10b981] font-mono font-bold">{strat.healthScore}%</span>
                     </div>
                     <div>
-                      <span className="text-[9px] text-gray-500 uppercase block tracking-wider font-bold">AI Score</span>
-                      <span className="text-[#22d3ee] font-mono font-bold">{strat.aiScore}%</span>
+                      <span className="text-[9px] text-[#64748b] uppercase block tracking-wider font-bold">AI Score</span>
+                      <span className="text-[#7c3aed] font-mono font-bold">{strat.aiScore}%</span>
                     </div>
                   </div>
                 </div>
@@ -266,32 +266,32 @@ export default function PortfolioPage() {
                     className={`px-3 py-1.5 rounded-lg text-[9px] font-extrabold uppercase tracking-wider transition-colors border ${
                       isLive 
                         ? 'bg-[#ef4444]/10 border-[#ef4444]/35 text-[#ef4444] hover:bg-[#ef4444]/20' 
-                        : 'bg-[#22c55e]/10 border-[#22c55e]/35 text-[#22c55e] hover:bg-[#22c55e]/20'
+                        : 'bg-[#10b981]/10 border-[#22c55e]/35 text-[#10b981] hover:bg-[#10b981]/20'
                     }`}
                   >
                     {isLive ? 'Pause' : 'Activate'}
                   </button>
-                  {isExpanded ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
+                  {isExpanded ? <ChevronUp className="w-5 h-5 text-[#94a3b8]" /> : <ChevronDown className="w-5 h-5 text-[#94a3b8]" />}
                 </div>
 
               </div>
 
               {/* Card Expanded Content */}
               {isExpanded && (
-                <div className="p-6 border-t border-gray-900 bg-[#03060c] space-y-6">
+                <div className="p-6 border-t border-white/30 bg-[#03060c] space-y-6">
                   
                   {/* Visual Sub-Grids */}
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     
                     {/* Real SVG Equity Progression Line Chart */}
                     <div className="card p-5 rounded-xl space-y-3">
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
+                      <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">
                         Capital Curve Progression
                       </span>
-                      <div className="h-28 bg-[#070b14] rounded-lg p-3 border border-gray-900 flex flex-col justify-between">
-                        <div className="flex justify-between text-[10px] font-mono text-gray-400">
+                      <div className="h-28 bg-[#070b14] rounded-lg p-3 border border-white/30 flex flex-col justify-between">
+                        <div className="flex justify-between text-[10px] font-mono text-[#94a3b8]">
                           <span>Base: ₹{allocatedAmount.toLocaleString()}</span>
-                          <span className="text-[#22c55e]">{isFreshMode ? '₹0.00 PnL' : '+₹2,450.00'}</span>
+                          <span className="text-[#10b981]">{isFreshMode ? '₹0.00 PnL' : '+₹2,450.00'}</span>
                         </div>
                         
                         {/* Dynamic SVG Line */}
@@ -318,7 +318,7 @@ export default function PortfolioPage() {
                           </svg>
                         </div>
 
-                        <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                        <div className="flex justify-between text-[9px] font-mono text-[#64748b]">
                           <span>Week 1</span>
                           <span>Week 2</span>
                           <span>Week 3</span>
@@ -329,42 +329,42 @@ export default function PortfolioPage() {
 
                     {/* Monthly Performance Heatmap */}
                     <div className="card p-5 rounded-xl space-y-3">
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
+                      <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">
                         Returns Profile Heatmap
                       </span>
                       <div className="grid grid-cols-6 gap-2 text-[10px] font-mono text-center font-bold">
-                        <div className="p-2 bg-[#22c55e]/20 border border-[#22c55e]/30 text-[#22c55e] rounded">Jan<br/>{isFreshMode ? '0.0%' : '+1.8%'}</div>
-                        <div className="p-2 bg-[#22c55e]/15 border border-[#22c55e]/25 text-[#22c55e] rounded">Feb<br/>{isFreshMode ? '0.0%' : '+0.6%'}</div>
+                        <div className="p-2 bg-[#10b981]/20 border border-[#22c55e]/30 text-[#10b981] rounded">Jan<br/>{isFreshMode ? '0.0%' : '+1.8%'}</div>
+                        <div className="p-2 bg-[#10b981]/15 border border-[#22c55e]/25 text-[#10b981] rounded">Feb<br/>{isFreshMode ? '0.0%' : '+0.6%'}</div>
                         <div className="p-2 bg-[#ef4444]/20 border border-[#ef4444]/30 text-[#ef4444] rounded">Mar<br/>{isFreshMode ? '0.0%' : '-1.2%'}</div>
-                        <div className="p-2 bg-[#22c55e]/25 border border-[#22c55e]/35 text-[#22c55e] rounded">Apr<br/>{isFreshMode ? '0.0%' : '+2.4%'}</div>
-                        <div className="p-2 bg-gray-900 border border-gray-800 text-gray-500 rounded">May<br/>0.0%</div>
-                        <div className="p-2 bg-[#22c55e]/20 border border-[#22c55e]/30 text-[#22c55e] rounded">Jun<br/>{isFreshMode ? '0.0%' : '+1.5%'}</div>
+                        <div className="p-2 bg-[#10b981]/25 border border-[#22c55e]/35 text-[#10b981] rounded">Apr<br/>{isFreshMode ? '0.0%' : '+2.4%'}</div>
+                        <div className="p-2  border border-white/30 text-[#64748b] rounded">May<br/>0.0%</div>
+                        <div className="p-2 bg-[#10b981]/20 border border-[#22c55e]/30 text-[#10b981] rounded">Jun<br/>{isFreshMode ? '0.0%' : '+1.5%'}</div>
                       </div>
                     </div>
 
                     {/* Win / Loss Distribution */}
                     <div className="card p-5 rounded-xl space-y-3">
-                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
+                      <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">
                         Win / Loss Distribution
                       </span>
                       <div className="space-y-2 text-xs">
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Winning Trades</span>
-                          <span className="text-[#22c55e] font-bold font-mono">
+                          <span className="text-[#94a3b8]">Winning Trades</span>
+                          <span className="text-[#10b981] font-bold font-mono">
                             {isFreshMode ? '0 trades (0.0%)' : '18 trades (60.0%)'}
                           </span>
                         </div>
-                        <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
-                          <div className="h-full bg-[#22c55e]" style={{ width: isFreshMode ? '0%' : '60%' }} />
+                        <div className="h-2 w-full  rounded-full overflow-hidden">
+                          <div className="h-full bg-[#10b981]" style={{ width: isFreshMode ? '0%' : '60%' }} />
                         </div>
 
                         <div className="flex justify-between mt-2">
-                          <span className="text-gray-400">Losing Trades</span>
+                          <span className="text-[#94a3b8]">Losing Trades</span>
                           <span className="text-[#ef4444] font-bold font-mono">
                             {isFreshMode ? '0 trades (0.0%)' : '12 trades (40.0%)'}
                           </span>
                         </div>
-                        <div className="h-2 w-full bg-gray-900 rounded-full overflow-hidden">
+                        <div className="h-2 w-full  rounded-full overflow-hidden">
                           <div className="h-full bg-[#ef4444]" style={{ width: isFreshMode ? '0%' : '40%' }} />
                         </div>
                       </div>
@@ -374,15 +374,15 @@ export default function PortfolioPage() {
 
                   {/* Strategy Notes & AI Analysis Block */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs leading-relaxed">
-                    <div className="bg-gray-950/65 border border-gray-900 p-5 rounded-xl">
-                      <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block mb-2 flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5 text-[#22d3ee]" /> Strategy Deployment Notes
+                    <div className="/65 border border-white/30 p-5 rounded-xl">
+                      <span className="text-[9px] font-bold text-[#64748b] uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+                        <FileText className="w-3.5 h-3.5 text-[#7c3aed]" /> Strategy Deployment Notes
                       </span>
                       <p className="text-gray-300 font-medium">{strat.notes}</p>
                     </div>
 
-                    <div className="bg-[#22d3ee]/5 border border-[#22d3ee]/20 p-5 rounded-xl">
-                      <span className="text-[9px] font-bold text-[#22d3ee] uppercase tracking-wider block mb-2 flex items-center gap-1.5">
+                    <div className="bg-[#7c3aed]/5 border border-[#22d3ee]/20 p-5 rounded-xl">
+                      <span className="text-[9px] font-bold text-[#7c3aed] uppercase tracking-wider block mb-2 flex items-center gap-1.5">
                         <Bot className="w-4 h-4" /> AI Research Analysis
                       </span>
                       <p className="text-gray-300 font-medium">{strat.aiAnalysis}</p>
@@ -390,9 +390,9 @@ export default function PortfolioPage() {
                   </div>
 
                   {/* Option chain charges summary */}
-                  <div className="flex justify-between items-center text-[10px] font-mono text-gray-500 border-t border-gray-900/60 pt-4">
+                  <div className="flex justify-between items-center text-[10px] font-mono text-[#64748b] border-t border-white/30/60 pt-4">
                     <span>Broker Charges Year-to-Date: {isFreshMode ? '₹0.00' : '₹1,240.00'}</span>
-                    <span className="text-[#22d3ee] hover:underline cursor-pointer flex items-center">
+                    <span className="text-[#7c3aed] hover:underline cursor-pointer flex items-center">
                       View Full Strategy Metrics Sheet <ChevronRight className="w-3 h-3" />
                     </span>
                   </div>

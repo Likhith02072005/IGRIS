@@ -194,10 +194,10 @@ export default function Backtesting() {
       
       {/* Title */}
       <div>
-        <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+        <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
           Historical Backtesting Engine
         </h1>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-[#64748b]">
           Run candle-by-candle simulations on indices and stocks with custom slippage and commission settings.
         </p>
       </div>
@@ -207,13 +207,13 @@ export default function Backtesting() {
         {/* Left Side: Parameters Form */}
         <div className="lg:col-span-1">
           <div className="card p-6 rounded-lg space-y-5">
-            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-              <Layers className="w-4 h-4 text-[#22d3ee]" /> Simulation Inputs
+            <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2 mb-2">
+              <Layers className="w-4 h-4 text-[#7c3aed]" /> Simulation Inputs
             </h2>
 
             <form onSubmit={handleRunBacktest} className="space-y-4">
               <div>
-                <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                   Strategy
                 </label>
                 <select
@@ -227,7 +227,7 @@ export default function Backtesting() {
               </div>
 
               <div>
-                <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                   Instrument
                 </label>
                 <select
@@ -245,7 +245,7 @@ export default function Backtesting() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                     Timeframe
                   </label>
                   <select
@@ -263,7 +263,7 @@ export default function Backtesting() {
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                     Expiry Type
                   </label>
                   <select className="w-full input-field p-3 rounded-xl text-xs">
@@ -275,7 +275,7 @@ export default function Backtesting() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                     Start Date
                   </label>
                   <input
@@ -288,7 +288,7 @@ export default function Backtesting() {
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                     End Date
                   </label>
                   <input
@@ -302,7 +302,7 @@ export default function Backtesting() {
               </div>
 
               <div>
-                <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                   Initial Capital
                 </label>
                 <input
@@ -316,7 +316,7 @@ export default function Backtesting() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                     Slippage (pts)
                   </label>
                   <input
@@ -330,7 +330,7 @@ export default function Backtesting() {
                 </div>
 
                 <div>
-                  <label className="block text-[9px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                  <label className="block text-[9px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                     Brokerage (₹)
                   </label>
                   <input
@@ -347,7 +347,7 @@ export default function Backtesting() {
               <button
                 type="submit"
                 disabled={running}
-                className="w-full py-3.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+                className="w-full py-3.5 rounded-xl bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
               >
                 {running ? (
                   <>
@@ -369,20 +369,20 @@ export default function Backtesting() {
         <div className="lg:col-span-3 space-y-6">
           
           {!results && !running && (
-            <div className="card p-12 text-center text-gray-500 rounded-lg h-full flex flex-col justify-center items-center min-h-[500px]">
+            <div className="card p-12 text-center text-[#64748b] rounded-lg h-full flex flex-col justify-center items-center min-h-[500px]">
               <Play className="w-12 h-12 text-gray-700 mb-4 animate-pulse" />
-              <p className="text-sm font-bold uppercase tracking-wider text-white">Simulation Engine Ready</p>
-              <p className="text-xs text-gray-500 mt-2 max-w-sm">
+              <p className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e]">Simulation Engine Ready</p>
+              <p className="text-xs text-[#64748b] mt-2 max-w-sm">
                 Select your strategies and configure parameters. Click &quot;Run Backtest&quot; to begin candle-by-candle checks.
               </p>
             </div>
           )}
 
           {running && (
-            <div className="card p-12 text-center text-gray-500 rounded-lg h-full flex flex-col justify-center items-center min-h-[500px]">
-              <RefreshCw className="w-12 h-12 text-[#22d3ee] mb-4 animate-spin" />
-              <p className="text-sm font-bold uppercase tracking-wider text-white">Backtester Dispatch Active</p>
-              <p className="text-xs text-gray-500 mt-2">
+            <div className="card p-12 text-center text-[#64748b] rounded-lg h-full flex flex-col justify-center items-center min-h-[500px]">
+              <RefreshCw className="w-12 h-12 text-[#7c3aed] mb-4 animate-spin" />
+              <p className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e]">Backtester Dispatch Active</p>
+              <p className="text-xs text-[#64748b] mt-2">
                 Running strategies on historical candles... Checking entries, exits, targets, and stop losses.
               </p>
             </div>
@@ -393,81 +393,81 @@ export default function Backtesting() {
               {/* Summary KPIs Row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="card p-5 rounded-xl">
-                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Net profit</span>
-                  <h3 className="text-xl font-bold text-[#22c55e] font-mono">
+                  <span className="text-[9px] font-bold text-[#64748b] uppercase tracking-widest block mb-1">Net profit</span>
+                  <h3 className="text-xl font-bold text-[#10b981] font-mono">
                     +₹{results.metrics.net_profit.toLocaleString()}
                   </h3>
-                  <span className="text-[9px] text-[#22c55e] font-mono">
+                  <span className="text-[9px] text-[#10b981] font-mono">
                     +{((results.metrics.net_profit / parseFloat(capital)) * 100).toFixed(2)}% ROI
                   </span>
                 </div>
 
                 <div className="card p-5 rounded-xl">
-                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Win Rate %</span>
-                  <h3 className="text-xl font-bold text-white font-mono">{results.metrics.win_rate}%</h3>
-                  <span className="text-[9px] text-gray-500 font-mono">
+                  <span className="text-[9px] font-bold text-[#64748b] uppercase tracking-widest block mb-1">Win Rate %</span>
+                  <h3 className="text-xl font-bold text-[#1a1a2e] font-mono">{results.metrics.win_rate}%</h3>
+                  <span className="text-[9px] text-[#64748b] font-mono">
                     {results.metrics.trade_count} Total Trades
                   </span>
                 </div>
 
                 <div className="card p-5 rounded-xl">
-                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Max Drawdown</span>
+                  <span className="text-[9px] font-bold text-[#64748b] uppercase tracking-widest block mb-1">Max Drawdown</span>
                   <h3 className="text-xl font-bold text-[#ef4444] font-mono">-{results.metrics.drawdown}%</h3>
-                  <span className="text-[9px] text-gray-500 font-mono">Low Risk Profile</span>
+                  <span className="text-[9px] text-[#64748b] font-mono">Low Risk Profile</span>
                 </div>
 
                 <div className="card p-5 rounded-xl">
-                  <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-1">Sharpe Ratio</span>
-                  <h3 className="text-xl font-bold text-[#22d3ee] font-mono">{results.metrics.sharpe}</h3>
-                  <span className="text-[9px] text-gray-500 font-mono">Sortino: {results.metrics.sortino}</span>
+                  <span className="text-[9px] font-bold text-[#64748b] uppercase tracking-widest block mb-1">Sharpe Ratio</span>
+                  <h3 className="text-xl font-bold text-[#7c3aed] font-mono">{results.metrics.sharpe}</h3>
+                  <span className="text-[9px] text-[#64748b] font-mono">Sortino: {results.metrics.sortino}</span>
                 </div>
               </div>
 
               {/* Ratios & Drawdowns Detailed Grid */}
               <div className="card p-5 rounded-lg">
-                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-4">
-                  <BarChart2 className="w-4 h-4 text-[#22d3ee]" /> Detailed Performance Ratios
+                <h3 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2 mb-4">
+                  <BarChart2 className="w-4 h-4 text-[#7c3aed]" /> Detailed Performance Ratios
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-semibold text-gray-300">
-                  <div className="border-b border-gray-900 pb-2">
-                    <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Profit Factor</span>
-                    <span className="text-white font-mono">{results.metrics.profit_factor}</span>
+                  <div className="border-b border-white/30 pb-2">
+                    <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Profit Factor</span>
+                    <span className="text-[#1a1a2e] font-mono">{results.metrics.profit_factor}</span>
                   </div>
-                  <div className="border-b border-gray-900 pb-2">
-                    <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Calmar Ratio</span>
-                    <span className="text-white font-mono">{results.metrics.calmar}</span>
+                  <div className="border-b border-white/30 pb-2">
+                    <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Calmar Ratio</span>
+                    <span className="text-[#1a1a2e] font-mono">{results.metrics.calmar}</span>
                   </div>
-                  <div className="border-b border-gray-900 pb-2">
-                    <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Expectancy Value</span>
-                    <span className="text-[#22c55e] font-mono">+₹{results.metrics.expectancy}</span>
+                  <div className="border-b border-white/30 pb-2">
+                    <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Expectancy Value</span>
+                    <span className="text-[#10b981] font-mono">+₹{results.metrics.expectancy}</span>
                   </div>
-                  <div className="border-b border-gray-900 pb-2">
-                    <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Average Win / Loss</span>
-                    <span className="text-white font-mono">
+                  <div className="border-b border-white/30 pb-2">
+                    <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Average Win / Loss</span>
+                    <span className="text-[#1a1a2e] font-mono">
                       +₹{results.metrics.avg_win} / -₹{Math.abs(results.metrics.avg_loss)}
                     </span>
                   </div>
-                  <div className="border-b border-gray-900 pb-2">
-                    <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Longest Win Streak</span>
-                    <span className="text-white font-mono">{results.metrics.longest_win_streak} wins</span>
+                  <div className="border-b border-white/30 pb-2">
+                    <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Longest Win Streak</span>
+                    <span className="text-[#1a1a2e] font-mono">{results.metrics.longest_win_streak} wins</span>
                   </div>
-                  <div className="border-b border-gray-900 pb-2">
-                    <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Longest Loss Streak</span>
-                    <span className="text-white font-mono">{results.metrics.longest_loss_streak} losses</span>
+                  <div className="border-b border-white/30 pb-2">
+                    <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Longest Loss Streak</span>
+                    <span className="text-[#1a1a2e] font-mono">{results.metrics.longest_loss_streak} losses</span>
                   </div>
                 </div>
               </div>
 
               {/* Equity Curve Visual Table Alternative */}
               <div className="card p-5 rounded-lg space-y-4">
-                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                <h3 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest">
                   Equity Curve Value Progression
                 </h3>
-                <div className="flex items-end justify-between h-36 bg-gray-950/60 border border-gray-900 rounded-xl p-4 font-mono text-[10px] text-gray-400">
+                <div className="flex items-end justify-between h-36 /60 border border-white/30 rounded-xl p-4 font-mono text-[10px] text-[#94a3b8]">
                   {results.equity_curve.map((curve, idx) => (
                     <div key={idx} className="flex flex-col items-center flex-1">
                       <div 
-                        className="w-4 bg-[#22d3ee]/40 rounded-t"
+                        className="w-4 bg-[#7c3aed]/40 rounded-t"
                         style={{ 
                           height: `${Math.max(10, ((curve.equity - parseFloat(capital)) / results.metrics.net_profit) * 80)}px` 
                         }}
@@ -475,7 +475,7 @@ export default function Backtesting() {
                       <span className="mt-2 text-[8px] text-gray-600">
                         {curve.time.split('T')[0].split('-').slice(1).join('/')}
                       </span>
-                      <span className="text-white font-bold">₹{Math.round(curve.equity).toLocaleString()}</span>
+                      <span className="text-[#1a1a2e] font-bold">₹{Math.round(curve.equity).toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
@@ -483,13 +483,13 @@ export default function Backtesting() {
 
               {/* Individual Trade Logs */}
               <div className="card p-6 rounded-lg">
-                <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-4">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e] mb-4">
                   Simulation Trade Book Logs
                 </h2>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse text-xs">
                     <thead>
-                      <tr className="border-b border-gray-800 text-[10px] text-gray-500 uppercase tracking-wider font-bold">
+                      <tr className="border-b border-white/30 text-[10px] text-[#64748b] uppercase tracking-wider font-bold">
                         <th className="pb-3">Trade ID</th>
                         <th className="pb-3">Symbol</th>
                         <th className="pb-3">Direction</th>
@@ -501,20 +501,20 @@ export default function Backtesting() {
                     </thead>
                     <tbody className="divide-y divide-gray-900/60 font-mono text-gray-300 font-semibold">
                       {results.trades.map(t => (
-                        <tr key={t.id} className="hover:bg-gray-900/10">
-                          <td className="py-2.5 text-gray-500">{t.id}</td>
-                          <td className="py-2.5 text-white font-bold font-sans">{t.symbol}</td>
+                        <tr key={t.id} className="hover:/10">
+                          <td className="py-2.5 text-[#64748b]">{t.id}</td>
+                          <td className="py-2.5 text-[#1a1a2e] font-bold font-sans">{t.symbol}</td>
                           <td className="py-2.5">
-                            <span className={t.direction === 'BUY' ? 'text-[#22c55e]' : 'text-[#ef4444]'}>
+                            <span className={t.direction === 'BUY' ? 'text-[#10b981]' : 'text-[#ef4444]'}>
                               {t.direction}
                             </span>
                           </td>
                           <td className="py-2.5 text-right">₹{t.entry_price}</td>
                           <td className="py-2.5 text-right">₹{t.exit_price}</td>
-                          <td className={`py-2.5 text-right ${t.pnl >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                          <td className={`py-2.5 text-right ${t.pnl >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                             {t.pnl >= 0 ? '+' : ''}₹{t.pnl.toLocaleString()}
                           </td>
-                          <td className="py-2.5 text-gray-400 font-sans">{t.exit_reason}</td>
+                          <td className="py-2.5 text-[#94a3b8] font-sans">{t.exit_reason}</td>
                         </tr>
                       ))}
                     </tbody>

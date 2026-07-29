@@ -68,16 +68,16 @@ export default function AIAssistant() {
       {/* Title */}
       <div className="flex justify-between items-center flex-shrink-0">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+          <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
             AI Quant Assistant
           </h1>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-[#64748b]">
             Consult the AI Strategy Generator, Market Regime Detector, and Portfolio Advisor.
           </p>
         </div>
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#22d3ee]/10 border border-[#22d3ee]/20">
-          <Sparkles className="w-3.5 h-3.5 text-[#22d3ee]" />
-          <span className="text-[10px] font-mono text-[#22d3ee] font-bold uppercase tracking-wider">Igris LLM Active</span>
+        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#7c3aed]/10 border border-[#22d3ee]/20">
+          <Sparkles className="w-3.5 h-3.5 text-[#7c3aed]" />
+          <span className="text-[10px] font-mono text-[#7c3aed] font-bold uppercase tracking-wider">Igris LLM Active</span>
         </div>
       </div>
 
@@ -95,14 +95,14 @@ export default function AIAssistant() {
               >
                 {/* Avatar */}
                 <div className={`w-8 h-8 rounded-xl border flex-shrink-0 flex items-center justify-center ${
-                  isAI ? 'bg-[#22d3ee]/10 border-[#22d3ee]/25 text-[#22d3ee]' : 'bg-gray-900 border-gray-800 text-gray-400'
+                  isAI ? 'bg-[#7c3aed]/10 border-[#22d3ee]/25 text-[#7c3aed]' : ' border-white/30 text-[#94a3b8]'
                 }`}>
                   {isAI ? <Bot className="w-4.5 h-4.5" /> : <User className="w-4.5 h-4.5" />}
                 </div>
 
                 {/* Message body */}
                 <div className={`p-4 rounded-lg text-xs leading-relaxed ${
-                  isAI ? 'bg-gray-950/65 border border-gray-900 text-gray-250 ' : 'bg-[#22d3ee] text-white font-semibold'
+                  isAI ? '/65 border border-white/30 text-gray-250 ' : 'bg-[#7c3aed] text-[#1a1a2e] font-semibold'
                 }`}>
                   <p className="whitespace-pre-line">{m.text}</p>
                   
@@ -119,10 +119,10 @@ export default function AIAssistant() {
 
           {loading && (
             <div className="flex gap-4 max-w-[80%] self-start">
-              <div className="w-8 h-8 rounded-xl bg-[#22d3ee]/10 border border-[#22d3ee]/25 text-[#22d3ee] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-[#7c3aed]/10 border border-[#22d3ee]/25 text-[#7c3aed] flex items-center justify-center">
                 <RefreshCw className="w-4 h-4 animate-spin" />
               </div>
-              <div className="p-4 rounded-lg bg-gray-950/65 border border-gray-900 text-gray-500 font-mono text-[10px] uppercase tracking-wider">
+              <div className="p-4 rounded-lg /65 border border-white/30 text-[#64748b] font-mono text-[10px] uppercase tracking-wider">
                 Igris AI reasoning...
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function AIAssistant() {
         </div>
 
         {/* Suggestion prompt templates at the bottom of panel */}
-        <div className="border-t border-gray-900 pt-4 flex flex-wrap gap-2.5 flex-shrink-0">
+        <div className="border-t border-white/30 pt-4 flex flex-wrap gap-2.5 flex-shrink-0">
           {[
             { label: 'Generate VWAP Strategy', prompt: 'Generate Python code for a VWAP Reversal strategy' },
             { label: 'Analyze Market Regime', prompt: 'Detect the current market regime trend' },
@@ -139,7 +139,7 @@ export default function AIAssistant() {
             <button
               key={tpl.label}
               onClick={() => handleTemplateClick(tpl.prompt)}
-              className="px-3 py-1.5 rounded-lg bg-gray-950 border border-gray-900 text-[10px] text-gray-400 hover:text-white transition-colors uppercase tracking-wider font-bold "
+              className="px-3 py-1.5 rounded-lg  border border-white/30 text-[10px] text-[#94a3b8] hover:text-[#1a1a2e] transition-colors uppercase tracking-wider font-bold "
             >
               {tpl.label}
             </button>
@@ -161,7 +161,7 @@ export default function AIAssistant() {
         <button
           type="submit"
           disabled={loading}
-          className="px-6 rounded-lg bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+          className="px-6 rounded-lg bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 flex items-center justify-center gap-2 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
         >
           <Send className="w-4 h-4" />
           Send

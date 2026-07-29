@@ -58,10 +58,10 @@ export default function PortfolioOptimizerUI() {
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+          <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
             Portfolio Allocation Optimizer
           </h1>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-[#64748b]">
             Execute covariance matrices and solve allocation curves along the Efficient Frontier boundary for ₹{capital.toLocaleString('en-IN')}.
           </p>
         </div>
@@ -70,7 +70,7 @@ export default function PortfolioOptimizerUI() {
           <button 
             onClick={() => handleModelChange('MAX_SHARPE')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold border transition-all ${
-              modelType === 'MAX_SHARPE' ? 'bg-[#22d3ee]/10 border-[#22d3ee]/40 text-[#22d3ee]' : 'bg-[#111] border-[#1a1a1a] text-[#666] hover:text-white'
+              modelType === 'MAX_SHARPE' ? 'bg-[#7c3aed]/10 border-[#22d3ee]/40 text-[#7c3aed]' : 'bg-white/30 border-white/30 text-[#666] hover:text-[#1a1a2e]'
             }`}
           >
             Max Sharpe Ratio
@@ -79,7 +79,7 @@ export default function PortfolioOptimizerUI() {
           <button 
             onClick={() => handleModelChange('MIN_VARIANCE')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold border transition-all ${
-              modelType === 'MIN_VARIANCE' ? 'bg-[#22d3ee]/10 border-[#22d3ee]/40 text-[#22d3ee]' : 'bg-[#111] border-[#1a1a1a] text-[#666] hover:text-white'
+              modelType === 'MIN_VARIANCE' ? 'bg-[#7c3aed]/10 border-[#22d3ee]/40 text-[#7c3aed]' : 'bg-white/30 border-white/30 text-[#666] hover:text-[#1a1a2e]'
             }`}
           >
             Minimum Variance
@@ -95,12 +95,12 @@ export default function PortfolioOptimizerUI() {
           
           <div className="card p-6 rounded-lg space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[#1a1a2e]">
                 Optimized Strategy Weights (Capital Base: ₹{capital.toLocaleString('en-IN')})
               </h2>
               <button 
                 onClick={() => setIsCapitalModalOpen(true)}
-                className="text-xs text-[#22d3ee] flex items-center gap-1 hover:underline font-mono"
+                className="text-xs text-[#7c3aed] flex items-center gap-1 hover:underline font-mono"
               >
                 <Edit2 className="w-3 h-3" /> Customize Capital
               </button>
@@ -112,15 +112,15 @@ export default function PortfolioOptimizerUI() {
                 return (
                   <div key={s.strategy} className="space-y-2">
                     <div className="flex justify-between text-xs font-semibold">
-                      <span className="text-white">{s.strategy}</span>
-                      <span className="text-gray-400 font-mono">
+                      <span className="text-[#1a1a2e]">{s.strategy}</span>
+                      <span className="text-[#94a3b8] font-mono">
                         {s.weight}% (₹{currentAlloc.toLocaleString('en-IN', { maximumFractionDigits: 0 })})
                       </span>
                     </div>
-                    <div className="h-2 w-full bg-[#0a0a0a] rounded-full overflow-hidden border border-[#1a1a1a]">
-                      <div className="h-full bg-[#22d3ee]" style={{ width: `${s.weight}%` }} />
+                    <div className="h-2 w-full  rounded-full overflow-hidden border border-white/30">
+                      <div className="h-full bg-[#7c3aed]" style={{ width: `${s.weight}%` }} />
                     </div>
-                    <div className="flex justify-between text-[10px] text-gray-500 font-mono">
+                    <div className="flex justify-between text-[10px] text-[#64748b] font-mono">
                       <span>Volatility: {s.volatility}%</span>
                       <span>Risk Contribution: {s.riskContribution}%</span>
                     </div>
@@ -132,13 +132,13 @@ export default function PortfolioOptimizerUI() {
 
           {/* Correlation Matrix Table */}
           <div className="card p-6 rounded-lg space-y-4">
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[#1a1a2e]">
               Strategy Returns Correlation Matrix
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-center text-xs font-mono">
                 <thead>
-                  <tr className="border-b border-[#1a1a1a] text-[10px] text-gray-500 uppercase font-bold">
+                  <tr className="border-b border-white/30 text-[10px] text-[#64748b] uppercase font-bold">
                     <th className="p-3 text-left">Asset / Strategy</th>
                     {Object.keys(correlationMatrix).map(k => (
                       <th key={k} className="p-3">{k.split(' ')[0]}</th>
@@ -148,7 +148,7 @@ export default function PortfolioOptimizerUI() {
                 <tbody className="divide-y divide-[#1a1a1a] font-semibold text-gray-300">
                   {Object.entries(correlationMatrix).map(([rowName, cols]) => (
                     <tr key={rowName}>
-                      <td className="p-3 text-left text-white font-sans">{rowName}</td>
+                      <td className="p-3 text-left text-[#1a1a2e] font-sans">{rowName}</td>
                       {Object.values(cols).map((val, idx) => {
                         const isPos = val > 0 && val < 1;
                         const isNeg = val < 0;
@@ -156,7 +156,7 @@ export default function PortfolioOptimizerUI() {
                           <td 
                             key={idx} 
                             className={`p-3 font-bold ${
-                              val === 1.0 ? 'text-[#22d3ee]' : isPos ? 'text-[#22c55e]' : isNeg ? 'text-[#ef4444]' : 'text-gray-500'
+                              val === 1.0 ? 'text-[#7c3aed]' : isPos ? 'text-[#10b981]' : isNeg ? 'text-[#ef4444]' : 'text-[#64748b]'
                             }`}
                           >
                             {val}
@@ -176,25 +176,25 @@ export default function PortfolioOptimizerUI() {
         <div className="space-y-6">
           
           <div className="card p-6 rounded-lg space-y-6">
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[#1a1a2e]">
               Optimization Profile
             </h2>
             <div className="space-y-4 text-xs font-semibold text-gray-300">
-              <div className="border-b border-[#1a1a1a] pb-3">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Diversification Ratio</span>
-                <span className="text-white font-mono text-base">2.14</span>
+              <div className="border-b border-white/30 pb-3">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block mb-0.5">Diversification Ratio</span>
+                <span className="text-[#1a1a2e] font-mono text-base">2.14</span>
               </div>
-              <div className="border-b border-[#1a1a1a] pb-3">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Expected Annual Return</span>
-                <span className="text-[#22c55e] font-mono text-base">+24.5%</span>
+              <div className="border-b border-white/30 pb-3">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block mb-0.5">Expected Annual Return</span>
+                <span className="text-[#10b981] font-mono text-base">+24.5%</span>
               </div>
-              <div className="border-b border-[#1a1a1a] pb-3">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Portfolio Volatility</span>
-                <span className="text-white font-mono text-base">9.2%</span>
+              <div className="border-b border-white/30 pb-3">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block mb-0.5">Portfolio Volatility</span>
+                <span className="text-[#1a1a2e] font-mono text-base">9.2%</span>
               </div>
               <div className="pb-1">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block mb-0.5">Sharpe Coordinate</span>
-                <span className="text-[#22d3ee] font-mono text-base">2.12</span>
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block mb-0.5">Sharpe Coordinate</span>
+                <span className="text-[#7c3aed] font-mono text-base">2.12</span>
               </div>
             </div>
           </div>
@@ -202,13 +202,13 @@ export default function PortfolioOptimizerUI() {
           {/* Institutional Clean Efficient Frontier Plot */}
           <div className="card p-6 rounded-lg space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[#1a1a2e]">
                 Efficient Frontier Curve
               </h2>
-              <span className="text-[10px] text-gray-500 font-mono">Markowitz Portfolio Theory</span>
+              <span className="text-[10px] text-[#64748b] font-mono">Markowitz Portfolio Theory</span>
             </div>
 
-            <div className="bg-[#080c14] border border-[#1a1a1a] rounded-lg p-4 space-y-3">
+            <div className="bg-[#080c14] border border-white/30 rounded-lg p-4 space-y-3">
               {/* SVG Curve Container */}
               <div className="relative h-44 w-full">
                 <svg className="w-full h-full" viewBox="0 0 240 130">
@@ -286,16 +286,16 @@ export default function PortfolioOptimizerUI() {
               </div>
 
               {/* Legend & Current Mode Banner */}
-              <div className="flex items-center justify-between text-[10px] font-mono border-t border-[#1a1a1a] pt-2 text-[#666]">
+              <div className="flex items-center justify-between text-[10px] font-mono border-t border-white/30 pt-2 text-[#666]">
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#22c55e]" /> Max Sharpe
+                    <span className="w-2 h-2 rounded-full bg-[#10b981]" /> Max Sharpe
                   </span>
                   <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#22d3ee]" /> Min Variance
+                    <span className="w-2 h-2 rounded-full bg-[#7c3aed]" /> Min Variance
                   </span>
                 </div>
-                <span className="text-white">
+                <span className="text-[#1a1a2e]">
                   Active: {modelType === 'MAX_SHARPE' ? 'Max Sharpe (2.84)' : 'Min Variance'}
                 </span>
               </div>

@@ -66,15 +66,15 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-      <div className="bg-[#111111] border border-[#1a1a1a] rounded-lg p-6 w-full max-w-md shadow-2xl relative">
-        <div className="flex items-center justify-between pb-4 border-b border-[#1a1a1a] mb-4">
+      <div className=" border border-white/30 rounded-lg p-6 w-full max-w-md shadow-2xl relative">
+        <div className="flex items-center justify-between pb-4 border-b border-white/30 mb-4">
           <div className="flex items-center gap-2">
-            <Edit2 className="w-4 h-4 text-[#22d3ee]" />
-            <h3 className="text-base font-semibold text-white">Adjust Platform Capital</h3>
+            <Edit2 className="w-4 h-4 text-[#7c3aed]" />
+            <h3 className="text-base font-semibold text-[#1a1a2e]">Adjust Platform Capital</h3>
           </div>
           <button
             onClick={onClose}
-            className="text-[#666] hover:text-white transition-colors"
+            className="text-[#666] hover:text-[#1a1a2e] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -96,7 +96,7 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
               Capital Amount (INR ₹)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-mono text-sm">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#1a1a2e] font-mono text-sm">
                 ₹
               </span>
               <input
@@ -108,11 +108,11 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
                   setInputValue(e.target.value);
                   setError(null);
                 }}
-                className="w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-md py-2.5 pl-8 pr-4 text-white text-sm font-mono focus:outline-none focus:border-[#22d3ee]"
+                className="w-full  border border-white/30 rounded-md py-2.5 pl-8 pr-4 text-[#1a1a2e] text-sm font-mono focus:outline-none focus:border-[#22d3ee]"
                 placeholder="500000"
               />
             </div>
-            <span className="text-[11px] text-[#22d3ee] mt-1 block font-mono">
+            <span className="text-[11px] text-[#7c3aed] mt-1 block font-mono">
               Formatted: ₹{parseFloat(inputValue || '0').toLocaleString('en-IN')} {formatLakhsCrores(inputValue)}
             </span>
           </div>
@@ -129,8 +129,8 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
                   onClick={() => handlePresetSelect(preset.value)}
                   className={`py-1.5 px-2 rounded text-xs font-mono transition-colors border ${
                     parseFloat(inputValue) === preset.value
-                      ? 'bg-[#22d3ee]/10 text-[#22d3ee] border-[#22d3ee]'
-                      : 'bg-[#0a0a0a] text-[#888] border-[#1a1a1a] hover:text-white hover:border-[#333]'
+                      ? 'bg-[#7c3aed]/10 text-[#7c3aed] border-[#22d3ee]'
+                      : ' text-[#888] border-white/30 hover:text-[#1a1a2e] hover:border-[#333]'
                   }`}
                 >
                   {preset.label}
@@ -139,11 +139,11 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-4 border-t border-[#1a1a1a] gap-2">
+          <div className="flex items-center justify-between pt-4 border-t border-white/30 gap-2">
             <button
               type="button"
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-2 rounded text-xs text-[#888] hover:text-white hover:bg-[#1a1a1a] transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded text-xs text-[#888] hover:text-[#1a1a2e] hover:bg-[#1a1a1a] transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Reset Base (₹5L)
@@ -153,13 +153,13 @@ export default function CapitalEditModal({ isOpen, onClose }: CapitalEditModalPr
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-2 rounded text-xs text-[#666] hover:text-white transition-colors"
+                className="px-3 py-2 rounded text-xs text-[#666] hover:text-[#1a1a2e] transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="flex items-center gap-1.5 px-4 py-2 rounded bg-[#22d3ee] text-black font-medium text-xs hover:bg-[#22d3ee]/90 transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 rounded bg-[#7c3aed] text-black font-medium text-xs hover:bg-[#7c3aed]/90 transition-colors"
               >
                 <Check className="w-3.5 h-3.5" />
                 Update Capital

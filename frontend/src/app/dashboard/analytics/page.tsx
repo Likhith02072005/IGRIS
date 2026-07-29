@@ -38,10 +38,10 @@ export default function AnalyticsDashboard() {
       
       {/* Title */}
       <div>
-        <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+        <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
           Platform Portfolio Analytics
         </h1>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-[#64748b]">
           Compute advanced risk metrics, Monte Carlo simulations, walk-forward stats, and heatmaps.
         </p>
       </div>
@@ -55,9 +55,9 @@ export default function AnalyticsDashboard() {
           { label: 'Rolling 30D Sharpe', val: '2.95', desc: 'Institutional profile' },
         ].map(item => (
           <div key={item.label} className="card p-5 rounded-xl">
-            <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block mb-1">{item.label}</span>
-            <h3 className="text-xl font-bold text-white font-mono">{item.val}</h3>
-            <span className="text-[10px] text-gray-400 font-medium block mt-0.5">{item.desc}</span>
+            <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block mb-1">{item.label}</span>
+            <h3 className="text-xl font-bold text-[#1a1a2e] font-mono">{item.val}</h3>
+            <span className="text-[10px] text-[#94a3b8] font-medium block mt-0.5">{item.desc}</span>
           </div>
         ))}
       </div>
@@ -70,13 +70,13 @@ export default function AnalyticsDashboard() {
           
           {/* Monthly returns heatmap */}
           <div className="card p-6 rounded-lg">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-6 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-[#22d3ee]" /> Monthly Return Heatmap (%)
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e] mb-6 flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-[#7c3aed]" /> Monthly Return Heatmap (%)
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-center text-xs font-mono font-bold border-collapse">
                 <thead>
-                  <tr className="border-b border-gray-800 text-[10px] text-gray-500 uppercase">
+                  <tr className="border-b border-white/30 text-[10px] text-[#64748b] uppercase">
                     <th className="pb-3">Year</th>
                     <th className="pb-3">Jan</th>
                     <th className="pb-3">Feb</th>
@@ -93,23 +93,23 @@ export default function AnalyticsDashboard() {
                     <th className="pb-3">YTD</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-900/60 text-white">
+                <tbody className="divide-y divide-gray-900/60 text-[#1a1a2e]">
                   {monthlyHeatmap.map(row => (
-                    <tr key={row.year} className="hover:bg-gray-900/10">
-                      <td className="py-4 text-gray-400">{row.year}</td>
-                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/10 border border-[#030712]">+2.4%</td>
+                    <tr key={row.year} className="hover:/10">
+                      <td className="py-4 text-[#94a3b8]">{row.year}</td>
+                      <td className="py-4 text-[#10b981] bg-[#10b981]/10 border border-[#030712]">+2.4%</td>
                       <td className="py-4 text-[#ef4444] bg-[#ef4444]/10 border border-[#030712]">-1.2%</td>
-                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/20 border border-[#030712]">+4.8%</td>
-                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/15 border border-[#030712]">+3.2%</td>
-                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/25 border border-[#030712]">+5.6%</td>
+                      <td className="py-4 text-[#10b981] bg-[#10b981]/20 border border-[#030712]">+4.8%</td>
+                      <td className="py-4 text-[#10b981] bg-[#10b981]/15 border border-[#030712]">+3.2%</td>
+                      <td className="py-4 text-[#10b981] bg-[#10b981]/25 border border-[#030712]">+5.6%</td>
                       <td className="py-4 text-[#ef4444] bg-[#ef4444]/5 border border-[#030712]">-0.8%</td>
-                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/30 border border-[#030712]">+9.4%</td>
-                      <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
-                      <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
-                      <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
-                      <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
-                      <td className="py-4 text-gray-600 bg-gray-950/40 border border-[#030712]">-</td>
-                      <td className="py-4 text-[#22c55e] bg-[#22c55e]/30 font-extrabold">+23.4%</td>
+                      <td className="py-4 text-[#10b981] bg-[#10b981]/30 border border-[#030712]">+9.4%</td>
+                      <td className="py-4 text-gray-600 /40 border border-[#030712]">-</td>
+                      <td className="py-4 text-gray-600 /40 border border-[#030712]">-</td>
+                      <td className="py-4 text-gray-600 /40 border border-[#030712]">-</td>
+                      <td className="py-4 text-gray-600 /40 border border-[#030712]">-</td>
+                      <td className="py-4 text-gray-600 /40 border border-[#030712]">-</td>
+                      <td className="py-4 text-[#10b981] bg-[#10b981]/30 font-extrabold">+23.4%</td>
                     </tr>
                   ))}
                 </tbody>
@@ -119,13 +119,13 @@ export default function AnalyticsDashboard() {
 
           {/* Daily & Hourly statistics table */}
           <div className="card p-6 rounded-lg">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white mb-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e] mb-6">
               Daily trading edge profiles
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse font-semibold">
                 <thead>
-                  <tr className="border-b border-gray-800 text-[10px] text-gray-500 uppercase tracking-wider font-bold">
+                  <tr className="border-b border-white/30 text-[10px] text-[#64748b] uppercase tracking-wider font-bold">
                     <th className="pb-3">Trading Session Day</th>
                     <th className="pb-3 text-right">Net Return PnL</th>
                     <th className="pb-3 text-right">Trades Count</th>
@@ -137,19 +137,19 @@ export default function AnalyticsDashboard() {
                   {dailyPerformance.map(d => {
                     const isPositive = d.pnl >= 0;
                     return (
-                      <tr key={d.day} className="hover:bg-gray-900/10">
-                        <td className="py-3.5 text-white font-bold">{d.day}</td>
-                        <td className={`py-3.5 text-right font-mono ${isPositive ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                      <tr key={d.day} className="hover:/10">
+                        <td className="py-3.5 text-[#1a1a2e] font-bold">{d.day}</td>
+                        <td className={`py-3.5 text-right font-mono ${isPositive ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                           {isPositive ? '+' : ''}₹{d.pnl.toLocaleString()}
                         </td>
-                        <td className="py-3.5 text-right font-mono text-gray-400">{d.trades}</td>
-                        <td className="py-3.5 text-right font-mono text-white">{d.winRate}%</td>
+                        <td className="py-3.5 text-right font-mono text-[#94a3b8]">{d.trades}</td>
+                        <td className="py-3.5 text-right font-mono text-[#1a1a2e]">{d.winRate}%</td>
                         <td className="py-3.5">
                           <div className="flex items-center gap-2">
-                            <div className="h-1.5 w-24 bg-gray-900 rounded-full overflow-hidden">
-                              <div className={`h-full bg-[#22d3ee]`} style={{ width: `${d.winRate}%` }} />
+                            <div className="h-1.5 w-24  rounded-full overflow-hidden">
+                              <div className={`h-full bg-[#7c3aed]`} style={{ width: `${d.winRate}%` }} />
                             </div>
-                            <span className="text-[10px] font-mono text-gray-500">{d.winRate >= 60 ? 'Optimal' : 'Standard'}</span>
+                            <span className="text-[10px] font-mono text-[#64748b]">{d.winRate >= 60 ? 'Optimal' : 'Standard'}</span>
                           </div>
                         </td>
                       </tr>
@@ -167,8 +167,8 @@ export default function AnalyticsDashboard() {
           
           <div className="card p-6 rounded-lg space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
-                <LineChart className="w-4 h-4 text-[#22d3ee]" /> Monte Carlo Engine
+              <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e] flex items-center gap-2">
+                <LineChart className="w-4 h-4 text-[#7c3aed]" /> Monte Carlo Engine
               </h2>
               <button
                 onClick={() => {
@@ -176,27 +176,27 @@ export default function AnalyticsDashboard() {
                   setTimeout(() => setRunningSim(false), 1500);
                 }}
                 disabled={runningSim}
-                className="p-1 rounded hover:bg-gray-900 text-gray-400 hover:text-white"
+                className="p-1 rounded hover: text-[#94a3b8] hover:text-[#1a1a2e]"
                 title="Re-run Simulation"
               >
                 <RefreshCw className={`w-4 h-4 ${runningSim ? 'animate-spin' : ''}`} />
               </button>
             </div>
 
-            <div className="text-xs text-gray-400 leading-relaxed font-semibold">
+            <div className="text-xs text-[#94a3b8] leading-relaxed font-semibold">
               Monte Carlo shuffles historical trades to project possible capital paths and evaluate insolvency risks.
             </div>
 
             {/* Simulations table */}
             <div className="space-y-4">
-              <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
+              <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">
                 Probability Band Projection (30 Days Out)
               </span>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs font-mono font-semibold">
                   <thead>
-                    <tr className="border-b border-gray-900 text-[9px] text-gray-500 uppercase">
+                    <tr className="border-b border-white/30 text-[9px] text-[#64748b] uppercase">
                       <th>Interval</th>
                       <th className="text-right">10% Lower</th>
                       <th className="text-right">Median Path</th>
@@ -206,10 +206,10 @@ export default function AnalyticsDashboard() {
                   <tbody className="divide-y divide-gray-900/60 text-gray-300">
                     {monteCarloSteps.map(step => (
                       <tr key={step.step}>
-                        <td className="py-2.5 text-white font-sans">{step.step}</td>
+                        <td className="py-2.5 text-[#1a1a2e] font-sans">{step.step}</td>
                         <td className="py-2.5 text-right text-[#ef4444]">₹{step.p10.toLocaleString()}</td>
-                        <td className="py-2.5 text-right text-white">₹{step.p50.toLocaleString()}</td>
-                        <td className="py-2.5 text-right text-[#22c55e]">₹{step.p90.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-[#1a1a2e]">₹{step.p50.toLocaleString()}</td>
+                        <td className="py-2.5 text-right text-[#10b981]">₹{step.p90.toLocaleString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -218,11 +218,11 @@ export default function AnalyticsDashboard() {
             </div>
 
             {/* Insolvency risk score */}
-            <div className="bg-[#22c55e]/10 border border-[#22c55e]/30 p-4 rounded-xl flex items-center gap-3">
-              <ShieldAlert className="w-5 h-5 text-[#22c55e] flex-shrink-0" />
+            <div className="bg-[#10b981]/10 border border-[#22c55e]/30 p-4 rounded-xl flex items-center gap-3">
+              <ShieldAlert className="w-5 h-5 text-[#10b981] flex-shrink-0" />
               <div>
-                <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider block">Risk of Ruin Score</span>
-                <span className="text-xs font-bold text-white font-mono">0.00% (Insolvency proof)</span>
+                <span className="text-[9px] font-bold text-[#64748b] uppercase tracking-wider block">Risk of Ruin Score</span>
+                <span className="text-xs font-bold text-[#1a1a2e] font-mono">0.00% (Insolvency proof)</span>
               </div>
             </div>
 

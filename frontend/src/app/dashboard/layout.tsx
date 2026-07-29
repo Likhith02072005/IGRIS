@@ -6,7 +6,7 @@ import Sidebar from '../../components/layout/Sidebar';
 import CapitalEditModal from '../../components/layout/CapitalEditModal';
 import { useAuthStore, hydrateAuth } from '../../store/auth';
 import { useCapitalStore, hydrateCapital } from '../../store/capital';
-import { Bell, Power, Edit3 } from 'lucide-react';
+import { Bell, Power, Edit3, TrendingUp, TrendingDown } from 'lucide-react';
 
 export default function DashboardLayout({
   children,
@@ -61,82 +61,105 @@ export default function DashboardLayout({
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[#0a0a0a] text-[#666]">
-        <div className="text-center text-sm">
-          Loading...
+      <div className="min-h-screen w-full flex items-center justify-center" style={{ background: '#f0f2f5' }}>
+        <div className="text-center text-sm text-[#94a3b8]">
+          <div className="w-8 h-8 border-2 border-[#7c3aed] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          Loading IGRIS...
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex bg-[#0a0a0a] min-h-screen w-full text-[#fafafa] overflow-hidden">
+    <div className="flex min-h-screen w-full overflow-hidden" style={{ background: '#f0f2f5' }}>
       {/* Sidebar navigation */}
       <Sidebar />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+      {/* Main Content Area - offset by sidebar width */}
+      <div className="flex-1 flex flex-col min-h-screen overflow-hidden ml-64">
         
-        {/* HEADER */}
-        <header className="h-14 bg-[#0a0a0a] border-b border-[#1a1a1a] flex items-center justify-between px-6 sticky top-0 z-50">
+        {/* HEADER — Frosted Glass */}
+        <header className="h-14 sticky top-0 z-50 flex items-center justify-between px-6" style={{
+          background: 'rgba(255, 255, 255, 0.55)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.45)',
+        }}>
           {/* Left Block - Live Indices */}
-          <div className="flex items-center gap-6 overflow-x-auto scrollbar-none text-sm">
+          <div className="flex items-center gap-6 overflow-x-auto scrollbar-none text-sm font-medium">
+            {/* NIFTY */}
             <div className="flex items-center gap-2">
-              <span className="text-[#666]">NIFTY</span>
-              <span>{nifty.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              <span className={nifty.pct >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}>
+              <span className="text-[#94a3b8] text-xs font-semibold">NIFTY</span>
+              <span className="text-[#1a1a2e] font-mono font-semibold text-sm">
+                {nifty.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+              <span className={`text-xs font-semibold font-mono flex items-center gap-0.5 ${nifty.pct >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
+                {nifty.pct >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                 {nifty.pct >= 0 ? '+' : ''}{nifty.pct}%
               </span>
             </div>
 
+            <div className="h-4 w-px bg-[rgba(0,0,0,0.08)]" />
+
+            {/* BANKNIFTY */}
             <div className="flex items-center gap-2">
-              <span className="text-[#666]">BANKNIFTY</span>
-              <span>{banknifty.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              <span className={banknifty.pct >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]'}>
+              <span className="text-[#94a3b8] text-xs font-semibold">BANKNIFTY</span>
+              <span className="text-[#1a1a2e] font-mono font-semibold text-sm">
+                {banknifty.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+              <span className={`text-xs font-semibold font-mono flex items-center gap-0.5 ${banknifty.pct >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
+                {banknifty.pct >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                 {banknifty.pct >= 0 ? '+' : ''}{banknifty.pct}%
               </span>
             </div>
 
+            <div className="h-4 w-px bg-[rgba(0,0,0,0.08)]" />
+
+            {/* VIX */}
             <div className="flex items-center gap-2">
-              <span className="text-[#666]">VIX</span>
-              <span>{vix.price.toFixed(2)}</span>
-              <span className={vix.pct >= 0 ? 'text-[#ef4444]' : 'text-[#22c55e]'}>
+              <span className="text-[#94a3b8] text-xs font-semibold">VIX</span>
+              <span className="text-[#1a1a2e] font-mono font-semibold text-sm">{vix.price.toFixed(2)}</span>
+              <span className={`text-xs font-semibold font-mono ${vix.pct >= 0 ? 'text-[#ef4444]' : 'text-[#10b981]'}`}>
                 {vix.pct >= 0 ? '+' : ''}{vix.pct}%
               </span>
             </div>
           </div>
 
-          {/* Right Block - Portfolio Value (Clickable to edit!), Today PnL and Controls */}
-          <div className="flex items-center gap-6 flex-shrink-0 text-sm">
+          {/* Right Block - Capital, Today PnL, Controls */}
+          <div className="flex items-center gap-5 flex-shrink-0 text-sm">
             
-            {/* Clickable Portfolio Capital Badge */}
+            {/* Clickable Capital Badge */}
             <button
               onClick={() => setIsCapitalModalOpen(true)}
-              className="flex items-center gap-2 px-2.5 py-1 rounded bg-[#111111] border border-[#1a1a1a] hover:border-[#22d3ee] transition-all group cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-xl transition-all group cursor-pointer"
+              style={{
+                background: 'rgba(255, 255, 255, 0.5)',
+                border: '1px solid rgba(255, 255, 255, 0.5)',
+              }}
               title="Click to adjust your capital"
             >
-              <span className="text-[#666] group-hover:text-white transition-colors">Capital:</span>
-              <span className="font-mono text-white font-semibold group-hover:text-[#22d3ee]">
+              <span className="text-[#94a3b8] text-xs font-medium group-hover:text-[#7c3aed] transition-colors">Capital:</span>
+              <span className="font-mono text-[#1a1a2e] font-semibold group-hover:text-[#7c3aed] transition-colors">
                 ₹{capital.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
-              <Edit3 className="w-3 h-3 text-[#666] group-hover:text-[#22d3ee] ml-0.5" />
+              <Edit3 className="w-3 h-3 text-[#94a3b8] group-hover:text-[#7c3aed] transition-colors" />
             </button>
 
             <div className="flex items-center gap-2">
-              <span className="text-[#666]">Today</span>
-              <span className="text-white font-mono">₹0.00</span>
+              <span className="text-[#94a3b8] text-xs font-medium">Today</span>
+              <span className="text-[#1a1a2e] font-mono font-semibold">₹0.00</span>
             </div>
 
-            <div className="h-4 w-[1px] bg-[#1a1a1a]" />
+            <div className="h-4 w-px bg-[rgba(0,0,0,0.08)]" />
 
             <div className="flex items-center gap-3">
-              <button className="text-[#666] hover:text-[#fafafa] transition-colors">
+              <button className="text-[#94a3b8] hover:text-[#7c3aed] transition-colors cursor-pointer p-1 rounded-lg hover:bg-white/50">
                 <Bell className="w-4 h-4" />
               </button>
               
               <button
                 onClick={handleLogout}
-                className="text-[#666] hover:text-[#ef4444] transition-colors"
+                className="text-[#94a3b8] hover:text-[#ef4444] transition-colors cursor-pointer p-1 rounded-lg hover:bg-white/50"
                 title="Sign out"
               >
                 <Power className="w-4 h-4" />
@@ -146,7 +169,7 @@ export default function DashboardLayout({
           </div>
         </header>
 
-        {/* Content body layout */}
+        {/* Content body */}
         <main className="flex-1 overflow-y-auto p-6">
           {children}
         </main>

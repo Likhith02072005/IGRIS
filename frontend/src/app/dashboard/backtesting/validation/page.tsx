@@ -44,10 +44,10 @@ export default function BacktestValidationUI() {
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+          <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
             Quantitative Backtest Validation Lab
           </h1>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-[#64748b]">
             Audit backtest reports using Walk-Forward out-of-sample data splits and random trade shuffles.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function BacktestValidationUI() {
         <button 
           onClick={handleRunSimulation}
           disabled={running}
-          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
+          className="flex items-center gap-1.5 px-4 py-2.5 bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
         >
           <RefreshCw className={`w-4 h-4 ${running ? 'animate-spin' : ''}`} />
           {running ? 'Simulating...' : 'Run Monte Carlo'}
@@ -69,14 +69,14 @@ export default function BacktestValidationUI() {
         <div className="lg:col-span-2 space-y-6">
           
           <div className="card p-6 rounded-lg space-y-6">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e]">
               Monte Carlo Confidence Intervals
             </h2>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-gray-900 bg-gray-950/20 text-[9px] text-gray-500 uppercase font-bold">
+                  <tr className="border-b border-white/30 /20 text-[9px] text-[#64748b] uppercase font-bold">
                     <th className="p-3">Simulation Percentile</th>
                     <th className="p-3">Confidence Type</th>
                     <th className="p-3 text-right">Expected Return</th>
@@ -86,15 +86,15 @@ export default function BacktestValidationUI() {
                 <tbody className="divide-y divide-gray-900/60 font-semibold text-gray-300">
                   {percentiles.map(row => (
                     <tr key={row.percentile}>
-                      <td className="p-3 text-white">{row.percentile}</td>
+                      <td className="p-3 text-[#1a1a2e]">{row.percentile}</td>
                       <td className="p-3">
                         <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                          row.type === 'Conservative' ? 'bg-[#ef4444]/10 text-[#ef4444]' : 'bg-[#22c55e]/10 text-[#22c55e]'
+                          row.type === 'Conservative' ? 'bg-[#ef4444]/10 text-[#ef4444]' : 'bg-[#10b981]/10 text-[#10b981]'
                         }`}>
                           {row.type}
                         </span>
                       </td>
-                      <td className="p-3 text-right font-mono text-[#22c55e]">+{row.profit}%</td>
+                      <td className="p-3 text-right font-mono text-[#10b981]">+{row.profit}%</td>
                       <td className="p-3 text-right font-mono text-[#ef4444]">-{row.drawdown}%</td>
                     </tr>
                   ))}
@@ -105,26 +105,26 @@ export default function BacktestValidationUI() {
 
           {/* Walk Forward Grid */}
           <div className="card p-6 rounded-lg space-y-6">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e]">
               Walk-Forward Out-of-Sample Performance Splits
             </h2>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-xs font-semibold text-gray-300">
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">In-Sample Annual Profit</span>
-                <span className="text-white font-mono">+{wfe.inSample}%</span>
+              <div className="border-b border-white/30 pb-2">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">In-Sample Annual Profit</span>
+                <span className="text-[#1a1a2e] font-mono">+{wfe.inSample}%</span>
               </div>
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Out-Sample Annual Profit</span>
-                <span className="text-white font-mono">+{wfe.outSample}%</span>
+              <div className="border-b border-white/30 pb-2">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Out-Sample Annual Profit</span>
+                <span className="text-[#1a1a2e] font-mono">+{wfe.outSample}%</span>
               </div>
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Walk-Forward Efficiency</span>
-                <span className="text-[#22c55e] font-mono">{wfe.efficiency}%</span>
+              <div className="border-b border-white/30 pb-2">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Walk-Forward Efficiency</span>
+                <span className="text-[#10b981] font-mono">{wfe.efficiency}%</span>
               </div>
-              <div className="border-b border-gray-900 pb-2">
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider block">Overfitting Check</span>
-                <span className="text-[#22c55e] font-bold">{wfe.status}</span>
+              <div className="border-b border-white/30 pb-2">
+                <span className="text-[10px] text-[#64748b] uppercase tracking-wider block">Overfitting Check</span>
+                <span className="text-[#10b981] font-bold">{wfe.status}</span>
               </div>
             </div>
           </div>
@@ -135,13 +135,13 @@ export default function BacktestValidationUI() {
         <div className="space-y-6">
           
           <div className="card p-6 rounded-lg space-y-6">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1a1a2e]">
               Simulator Configurations
             </h2>
 
             <div className="space-y-4 text-xs">
               <div className="space-y-1.5">
-                <label className="text-gray-400 font-bold uppercase text-[9px] tracking-wider">Number of Simulations</label>
+                <label className="text-[#94a3b8] font-bold uppercase text-[9px] tracking-wider">Number of Simulations</label>
                 <input 
                   type="number" 
                   className="input-field w-full p-2.5 rounded-xl font-mono" 
@@ -151,7 +151,7 @@ export default function BacktestValidationUI() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-gray-400 font-bold uppercase text-[9px] tracking-wider">Trade Skip Probability %</label>
+                <label className="text-[#94a3b8] font-bold uppercase text-[9px] tracking-wider">Trade Skip Probability %</label>
                 <input 
                   type="number" 
                   className="input-field w-full p-2.5 rounded-xl font-mono" 
@@ -160,7 +160,7 @@ export default function BacktestValidationUI() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-gray-400 font-bold uppercase text-[9px] tracking-wider">Slippage Standard Deviation</label>
+                <label className="text-[#94a3b8] font-bold uppercase text-[9px] tracking-wider">Slippage Standard Deviation</label>
                 <input 
                   type="number" 
                   className="input-field w-full p-2.5 rounded-xl font-mono" 

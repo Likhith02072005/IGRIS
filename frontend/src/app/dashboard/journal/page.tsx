@@ -115,17 +115,17 @@ export default function TradeJournal() {
       {/* Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+          <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
             Trade Journal
           </h1>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-[#64748b]">
             Document trade psychology, greeks statistics, confidence indexes, and notes.
           </p>
         </div>
 
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
         >
           <Plus className="w-4 h-4" />
           {showAddForm ? 'Close Journal Console' : 'Add Journal Entry'}
@@ -135,13 +135,13 @@ export default function TradeJournal() {
       {/* Form Section */}
       {showAddForm && (
         <form onSubmit={handleAddEntry} className="card p-6 rounded-lg space-y-6 max-w-3xl mx-auto">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-[#22d3ee]" /> Document Trade Metrics
+          <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2">
+            <Sliders className="w-4 h-4 text-[#7c3aed]" /> Document Trade Metrics
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Strategy Name
               </label>
               <select
@@ -156,7 +156,7 @@ export default function TradeJournal() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Direction
               </label>
               <select
@@ -170,7 +170,7 @@ export default function TradeJournal() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Confidence
               </label>
               <select
@@ -187,7 +187,7 @@ export default function TradeJournal() {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Entry Price
               </label>
               <input
@@ -201,7 +201,7 @@ export default function TradeJournal() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Exit Price
               </label>
               <input
@@ -215,7 +215,7 @@ export default function TradeJournal() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Net PnL (₹)
               </label>
               <input
@@ -230,8 +230,8 @@ export default function TradeJournal() {
           </div>
 
           {/* Option Greeks */}
-          <div className="border-t border-gray-900 pt-4 space-y-4">
-            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+          <div className="border-t border-white/30 pt-4 space-y-4">
+            <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider">
               Option Greeks Coordinates
             </label>
             <div className="grid grid-cols-3 gap-4">
@@ -271,7 +271,7 @@ export default function TradeJournal() {
           {/* Psychology & Notes */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Execution Emotion / Mindset
               </label>
               <select
@@ -288,7 +288,7 @@ export default function TradeJournal() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Meta Tags (comma separated)
               </label>
               <input
@@ -303,7 +303,7 @@ export default function TradeJournal() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Why was this trade entered? (Reasoning)
               </label>
               <textarea
@@ -317,7 +317,7 @@ export default function TradeJournal() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Post-execution Review & Notes
               </label>
               <textarea
@@ -334,13 +334,13 @@ export default function TradeJournal() {
             <button
               type="button"
               onClick={() => setShowAddForm(false)}
-              className="px-6 py-2.5 rounded-xl bg-gray-900 border border-gray-800 hover:border-gray-700 text-xs font-bold text-gray-300 uppercase transition-all"
+              className="px-6 py-2.5 rounded-xl  border border-white/30 hover:border-gray-700 text-xs font-bold text-gray-300 uppercase transition-all"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all"
             >
               <Save className="w-4 h-4" /> Save Journal Entry
             </button>
@@ -355,34 +355,34 @@ export default function TradeJournal() {
           return (
             <div key={entry.id} className="card p-6 rounded-lg space-y-4 relative overflow-hidden group hover:border-[#22d3ee]/35 transition-all">
               {/* Header metrics */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-900/60 pb-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/30/60 pb-4">
                 <div className="flex items-center gap-4">
                   <div>
-                    <h3 className="text-white font-extrabold text-sm">{entry.strategyName}</h3>
-                    <span className="text-[10px] text-gray-500 font-mono mt-0.5 block">{entry.date} {entry.time}</span>
+                    <h3 className="text-[#1a1a2e] font-extrabold text-sm">{entry.strategyName}</h3>
+                    <span className="text-[10px] text-[#64748b] font-mono mt-0.5 block">{entry.date} {entry.time}</span>
                   </div>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                    entry.direction === 'BUY' ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-[#ef4444]/10 text-[#ef4444]'
+                    entry.direction === 'BUY' ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-[#ef4444]/10 text-[#ef4444]'
                   }`}>
                     {entry.direction === 'BUY' ? 'LONG' : 'SHORT'}
                   </span>
                   
-                  <span className="px-2 py-0.5 rounded text-[10px] bg-gray-900 text-gray-400 font-mono">
+                  <span className="px-2 py-0.5 rounded text-[10px]  text-[#94a3b8] font-mono">
                     Delta: {entry.greeks.delta}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-6">
                   <div className="text-right">
-                    <span className="text-[9px] text-gray-500 font-mono block uppercase">Net Profit</span>
-                    <span className={`font-mono text-sm font-bold ${isWin ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                    <span className="text-[9px] text-[#64748b] font-mono block uppercase">Net Profit</span>
+                    <span className={`font-mono text-sm font-bold ${isWin ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                       {isWin ? '+' : ''}₹{entry.pnl.toLocaleString()}
                     </span>
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[9px] text-gray-500 font-mono block uppercase">Mindset</span>
-                    <span className="text-white text-xs font-bold uppercase">{entry.emotion}</span>
+                    <span className="text-[9px] text-[#64748b] font-mono block uppercase">Mindset</span>
+                    <span className="text-[#1a1a2e] text-xs font-bold uppercase">{entry.emotion}</span>
                   </div>
                 </div>
               </div>
@@ -390,23 +390,23 @@ export default function TradeJournal() {
               {/* Reasoning & Notes */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-gray-300">
                 <div>
-                  <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider block mb-1">
+                  <span className="text-[9px] text-[#64748b] font-bold uppercase tracking-wider block mb-1">
                     Entry Setup Reasoning
                   </span>
                   <p className="leading-relaxed font-medium">{entry.reason}</p>
                 </div>
                 <div>
-                  <span className="text-[9px] text-gray-500 font-bold uppercase tracking-wider block mb-1">
+                  <span className="text-[9px] text-[#64748b] font-bold uppercase tracking-wider block mb-1">
                     Post-Execution Notes
                   </span>
-                  <p className="leading-relaxed font-medium text-gray-400">{entry.notes}</p>
+                  <p className="leading-relaxed font-medium text-[#94a3b8]">{entry.notes}</p>
                 </div>
               </div>
 
               {/* Tags and labels */}
               <div className="flex flex-wrap gap-2 pt-2">
                 {entry.tags.map(t => (
-                  <span key={t} className="px-2.5 py-0.5 rounded-full text-[10px] bg-gray-900 border border-gray-850 text-gray-400 font-mono">
+                  <span key={t} className="px-2.5 py-0.5 rounded-full text-[10px]  border border-gray-850 text-[#94a3b8] font-mono">
                     #{t}
                   </span>
                 ))}

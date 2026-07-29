@@ -887,7 +887,7 @@ export default function IgrisStrategyWorkspace() {
       <div className="flex flex-col gap-4">
         <Link 
           href="/dashboard/strategies"
-          className="inline-flex items-center gap-1.5 text-xs text-gray-450 hover:text-white uppercase tracking-wider font-bold"
+          className="inline-flex items-center gap-1.5 text-xs text-gray-450 hover:text-[#1a1a2e] uppercase tracking-wider font-bold"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Strategies
         </Link>
@@ -895,14 +895,14 @@ export default function IgrisStrategyWorkspace() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+              <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
                 IGRIS Option Setup Algolithm
               </h1>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] font-bold">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] bg-[#7c3aed]/10 border border-[#22d3ee]/20 text-[#7c3aed] font-bold">
                 v1.1.0 Institutional
               </span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-[#64748b] mt-1">
               Active Strategy Model: <span className="text-gray-450 font-mono">igris_options_strategy</span> | Class Target: <span className="text-gray-450 font-mono">NIFTY / BANKNIFTY</span>
             </p>
           </div>
@@ -920,8 +920,8 @@ export default function IgrisStrategyWorkspace() {
               onClick={() => setIsLive(!isLive)}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border transition-all ${
                 isLive 
-                  ? 'bg-[#22c55e]/10 border-[#22c55e]/30 text-[#22c55e] shadow-[0_0_12px_rgba(16,185,129,0.2)]' 
-                  : 'bg-gray-900 border-gray-800 text-gray-400'
+                  ? 'bg-[#10b981]/10 border-[#22c55e]/30 text-[#10b981] shadow-[0_0_12px_rgba(16,185,129,0.2)]' 
+                  : ' border-white/30 text-[#94a3b8]'
               }`}
             >
               <Zap className="w-4 h-4" />
@@ -931,7 +931,7 @@ export default function IgrisStrategyWorkspace() {
             {/* Quick Audit Runner */}
             <button
               onClick={runDiagnostics}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-650 hover:bg-indigo-600 border border-indigo-500 text-white font-bold text-xs uppercase tracking-wider transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-650 hover:bg-indigo-600 border border-indigo-500 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all"
             >
               <Play className="w-4 h-4" />
               Run Diagnostics
@@ -973,8 +973,8 @@ export default function IgrisStrategyWorkspace() {
 
       {/* 1. SECTION: SETUP RULES */}
       <div className="space-y-4">
-        <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-[#22d3ee]" /> IGRIS Algorithmic Setup Rules
+        <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2">
+          <Sliders className="w-4 h-4 text-[#7c3aed]" /> IGRIS Algorithmic Setup Rules
         </h2>
         <div className="rule-engine">
           {/* BEARISH CARD */}
@@ -1054,10 +1054,10 @@ export default function IgrisStrategyWorkspace() {
       <div className="card p-6 rounded-lg space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
+            <h3 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest block">
               Candle Replay Visualiser
             </h3>
-            <p className="text-[11px] text-gray-500 mt-0.5">
+            <p className="text-[11px] text-[#64748b] mt-0.5">
               Select candle colors to preview level lines, revisit triggers, and entry directions on the canvas.
             </p>
           </div>
@@ -1075,8 +1075,8 @@ export default function IgrisStrategyWorkspace() {
                 onClick={() => setCurrentScenario(sc.key)}
                 className={`px-3 py-1.5 rounded-xl text-[10px] font-mono font-bold uppercase transition-all ${
                   currentScenario === sc.key 
-                    ? 'bg-[#22d3ee] text-white shadow-[0_0_8px_rgba(59,130,246,0.4)]' 
-                    : 'bg-gray-900 text-gray-400 hover:text-white border border-gray-800'
+                    ? 'bg-[#7c3aed] text-[#1a1a2e] shadow-[0_0_8px_rgba(59,130,246,0.4)]' 
+                    : ' text-[#94a3b8] hover:text-[#1a1a2e] border border-white/30'
                 }`}
               >
                 {sc.label}
@@ -1086,8 +1086,8 @@ export default function IgrisStrategyWorkspace() {
         </div>
 
         {/* Replay Canvas */}
-        <div className="bg-gray-950/60 border border-gray-900 rounded-xl overflow-hidden p-4">
-          <div className="text-[10px] font-mono text-gray-500 mb-2">
+        <div className="/60 border border-white/30 rounded-xl overflow-hidden p-4">
+          <div className="text-[10px] font-mono text-[#64748b] mb-2">
             {SCENARIOS[currentScenario].label}
           </div>
           <div className="relative w-full h-[300px]">
@@ -1102,26 +1102,26 @@ export default function IgrisStrategyWorkspace() {
         {/* Left 2 Cols: Backtest Simulator */}
         <div className="lg:col-span-2 space-y-6">
           <div className="card p-6 rounded-lg space-y-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-900/60 pb-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/30/60 pb-4">
               <div>
                 <h3 className="text-xs font-bold text-gray-450 uppercase tracking-widest block">
                   Backtest Simulation Lab
                 </h3>
-                <p className="text-[11px] text-gray-500 mt-0.5">
+                <p className="text-[11px] text-[#64748b] mt-0.5">
                   Execute high-fidelity 10-day index replay using Black-Scholes premium mapping.
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
                 {simulationRan && (
-                  <span className="text-[10px] font-bold text-[#22c55e] bg-[#22c55e]/10 border border-[#22c55e]/20 px-2.5 py-1 rounded-lg">
+                  <span className="text-[10px] font-bold text-[#10b981] bg-[#10b981]/10 border border-[#22c55e]/20 px-2.5 py-1 rounded-lg">
                     {simMetrics.trades} TRADES COMPLETED
                   </span>
                 )}
                 <button
                   onClick={runSimulation}
                   disabled={isSimulating}
-                  className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)]"
+                  className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 hover:shadow-[0_0_12px_rgba(59,130,246,0.4)]"
                 >
                   <Activity className="w-4 h-4 animate-pulse" />
                   {isSimulating ? 'SIMULATING...' : '▶ RUN BACKTEST'}
@@ -1132,7 +1132,7 @@ export default function IgrisStrategyWorkspace() {
             {/* Backtest Parameters Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-semibold">
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Default Index</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Default Index</label>
                 <select 
                   className="w-full input-field p-2.5 rounded-xl text-xs"
                   value={simSymbol}
@@ -1143,7 +1143,7 @@ export default function IgrisStrategyWorkspace() {
                 </select>
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Capital (₹)</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Capital (₹)</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono" 
@@ -1152,7 +1152,7 @@ export default function IgrisStrategyWorkspace() {
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Lot Multiplier</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Lot Multiplier</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono" 
@@ -1161,7 +1161,7 @@ export default function IgrisStrategyWorkspace() {
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">IV (Constant)</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">IV (Constant)</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono" 
@@ -1170,16 +1170,16 @@ export default function IgrisStrategyWorkspace() {
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Target Points</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Target Points</label>
                 <input 
                   type="number" 
-                  className="w-full input-field p-2.5 rounded-xl text-xs font-mono text-[#22c55e]" 
+                  className="w-full input-field p-2.5 rounded-xl text-xs font-mono text-[#10b981]" 
                   value={simTgt} 
                   onChange={(e) => setSimTgt(Number(e.target.value))}
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Stop Loss Points</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Stop Loss Points</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono text-[#ef4444]" 
@@ -1188,7 +1188,7 @@ export default function IgrisStrategyWorkspace() {
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Slippage Points</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Slippage Points</label>
                 <input 
                   type="number" 
                   step="0.1"
@@ -1198,7 +1198,7 @@ export default function IgrisStrategyWorkspace() {
                 />
               </div>
               <div>
-                <label className="block text-[9px] text-gray-500 uppercase tracking-wider mb-1.5">Brokerage (₹/order)</label>
+                <label className="block text-[9px] text-[#64748b] uppercase tracking-wider mb-1.5">Brokerage (₹/order)</label>
                 <input 
                   type="number" 
                   className="w-full input-field p-2.5 rounded-xl text-xs font-mono" 
@@ -1210,19 +1210,19 @@ export default function IgrisStrategyWorkspace() {
 
             {/* Backtest Results Outputs */}
             {simulationRan && (
-              <div className="space-y-6 pt-4 border-t border-gray-900">
+              <div className="space-y-6 pt-4 border-t border-white/30">
                 {/* Simulation KPI Stats */}
                 <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
                   {[
-                    { label: 'Total Trades', val: simMetrics.trades, color: 'text-white' },
-                    { label: 'Win Rate %', val: simMetrics.winRate, color: 'text-[#22c55e]' },
-                    { label: 'Net Profit (₹)', val: `₹${simMetrics.netProfit.toLocaleString()}`, color: simMetrics.netProfit >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
-                    { label: 'Avg Trade PnL', val: `₹${simMetrics.avgPnL.toLocaleString()}`, color: simMetrics.avgPnL >= 0 ? 'text-[#22c55e]' : 'text-[#ef4444]' },
-                    { label: 'Best PnL', val: `+₹${simMetrics.best.toLocaleString()}`, color: 'text-[#22c55e]' },
+                    { label: 'Total Trades', val: simMetrics.trades, color: 'text-[#1a1a2e]' },
+                    { label: 'Win Rate %', val: simMetrics.winRate, color: 'text-[#10b981]' },
+                    { label: 'Net Profit (₹)', val: `₹${simMetrics.netProfit.toLocaleString()}`, color: simMetrics.netProfit >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]' },
+                    { label: 'Avg Trade PnL', val: `₹${simMetrics.avgPnL.toLocaleString()}`, color: simMetrics.avgPnL >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]' },
+                    { label: 'Best PnL', val: `+₹${simMetrics.best.toLocaleString()}`, color: 'text-[#10b981]' },
                     { label: 'Worst PnL', val: `₹${simMetrics.worst.toLocaleString()}`, color: 'text-[#ef4444]' }
                   ].map(stat => (
-                    <div key={stat.label} className="bg-gray-950/60 border border-gray-900 p-3 rounded-xl">
-                      <span className="text-[8px] text-gray-500 font-bold uppercase tracking-wider block mb-1">{stat.label}</span>
+                    <div key={stat.label} className="/60 border border-white/30 p-3 rounded-xl">
+                      <span className="text-[8px] text-[#64748b] font-bold uppercase tracking-wider block mb-1">{stat.label}</span>
                       <span className={`text-xs font-bold font-mono ${stat.color}`}>{stat.val}</span>
                     </div>
                   ))}
@@ -1230,17 +1230,17 @@ export default function IgrisStrategyWorkspace() {
 
                 {/* Equity Curve Canvas drawing */}
                 <div className="space-y-2">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
+                  <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">
                     Equity Growth Curve (₹)
                   </span>
-                  <div className="bg-gray-950/65 border border-gray-900 rounded-xl p-3">
+                  <div className="/65 border border-white/30 rounded-xl p-3">
                     <canvas ref={equityCanvasRef} className="w-full h-[180px]" />
                   </div>
                 </div>
 
                 {/* Simulation Transaction Ledger Logs */}
                 <div className="space-y-2">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest block">
+                  <span className="text-[10px] font-bold text-[#64748b] uppercase tracking-widest block">
                     Simulation Event Engine Logs
                   </span>
                   <div className="log-panel">
@@ -1269,7 +1269,7 @@ export default function IgrisStrategyWorkspace() {
               <h3 className="text-xs font-bold text-gray-405 uppercase tracking-widest block">
                 Black-Scholes Options Pricer
               </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">
+              <p className="text-[11px] text-[#64748b] mt-0.5">
                 Real-time premium and Greeks parameter solver.
               </p>
             </div>
@@ -1277,7 +1277,7 @@ export default function IgrisStrategyWorkspace() {
             <div className="space-y-4">
               <div className="bs-input-grid text-xs font-semibold">
                 <div>
-                  <label className="block text-[8px] text-gray-500 uppercase tracking-wider mb-1">Spot Price</label>
+                  <label className="block text-[8px] text-[#64748b] uppercase tracking-wider mb-1">Spot Price</label>
                   <input 
                     type="number" 
                     className="w-full input-field p-2 rounded-lg font-mono text-[11px]" 
@@ -1286,7 +1286,7 @@ export default function IgrisStrategyWorkspace() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[8px] text-gray-500 uppercase tracking-wider mb-1">Strike Price</label>
+                  <label className="block text-[8px] text-[#64748b] uppercase tracking-wider mb-1">Strike Price</label>
                   <input 
                     type="number" 
                     className="w-full input-field p-2 rounded-lg font-mono text-[11px]" 
@@ -1295,7 +1295,7 @@ export default function IgrisStrategyWorkspace() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[8px] text-gray-500 uppercase tracking-wider mb-1">Option Type</label>
+                  <label className="block text-[8px] text-[#64748b] uppercase tracking-wider mb-1">Option Type</label>
                   <select 
                     className="w-full input-field p-2 rounded-lg text-[11px]" 
                     value={bsType} 
@@ -1306,7 +1306,7 @@ export default function IgrisStrategyWorkspace() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[8px] text-gray-500 uppercase tracking-wider mb-1">IV %</label>
+                  <label className="block text-[8px] text-[#64748b] uppercase tracking-wider mb-1">IV %</label>
                   <input 
                     type="number" 
                     className="w-full input-field p-2 rounded-lg font-mono text-[11px]" 
@@ -1315,7 +1315,7 @@ export default function IgrisStrategyWorkspace() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[8px] text-gray-500 uppercase tracking-wider mb-1">DTE (Days)</label>
+                  <label className="block text-[8px] text-[#64748b] uppercase tracking-wider mb-1">DTE (Days)</label>
                   <input 
                     type="number" 
                     className="w-full input-field p-2 rounded-lg font-mono text-[11px]" 
@@ -1324,7 +1324,7 @@ export default function IgrisStrategyWorkspace() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[8px] text-gray-500 uppercase tracking-wider mb-1">Interest Rate %</label>
+                  <label className="block text-[8px] text-[#64748b] uppercase tracking-wider mb-1">Interest Rate %</label>
                   <input 
                     type="number" 
                     className="w-full input-field p-2 rounded-lg font-mono text-[11px]" 
@@ -1335,36 +1335,36 @@ export default function IgrisStrategyWorkspace() {
               </div>
 
               {/* Calculated Outputs */}
-              <div className="bg-gray-950/70 border border-gray-900 rounded-xl p-4 space-y-4">
+              <div className="/70 border border-white/30 rounded-xl p-4 space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono text-gray-550 uppercase">Option Premium:</span>
-                  <span className="text-xl font-bold font-mono text-[#22c55e]">{bsResult.price ? '₹' + bsResult.price.toFixed(2) : '—'}</span>
+                  <span className="text-xl font-bold font-mono text-[#10b981]">{bsResult.price ? '₹' + bsResult.price.toFixed(2) : '—'}</span>
                 </div>
 
-                <div className="h-[1px] bg-gray-900" />
+                <div className="h-[1px] " />
 
                 <div className="grid grid-cols-2 gap-3 text-xs font-mono">
                   <div className="flex justify-between">
                     <span className="text-gray-550">Delta:</span>
-                    <span className="text-white font-bold">{bsResult.delta.toFixed(4)}</span>
+                    <span className="text-[#1a1a2e] font-bold">{bsResult.delta.toFixed(4)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-550">Gamma:</span>
-                    <span className="text-white font-bold">{bsResult.gamma.toFixed(6)}</span>
+                    <span className="text-[#1a1a2e] font-bold">{bsResult.gamma.toFixed(6)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-550">Theta:</span>
-                    <span className="text-white font-bold">{bsResult.theta.toFixed(4)}</span>
+                    <span className="text-[#1a1a2e] font-bold">{bsResult.theta.toFixed(4)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-550">Vega:</span>
-                    <span className="text-white font-bold">{bsResult.vega.toFixed(4)}</span>
+                    <span className="text-[#1a1a2e] font-bold">{bsResult.vega.toFixed(4)}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="text-[9px] text-gray-550 font-mono leading-relaxed mt-4 border-t border-gray-900 pt-3">
+            <div className="text-[9px] text-gray-550 font-mono leading-relaxed mt-4 border-t border-white/30 pt-3">
               * Calculations derived via cumulative normal distribution solver. Standard European style Black-Scholes pricing index model.
             </div>
           </div>
@@ -1377,14 +1377,14 @@ export default function IgrisStrategyWorkspace() {
         <div className="card p-6 rounded-lg space-y-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
+              <h3 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest block">
                 Simulation Transaction Ledger
               </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">
+              <p className="text-[11px] text-[#64748b] mt-0.5">
                 Detailed transaction records mapped directly from backtest ticks.
               </p>
             </div>
-            <button className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gray-900 border border-gray-800 hover:border-gray-700 text-xs font-bold text-gray-300 uppercase tracking-wider transition-colors">
+            <button className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl  border border-white/30 hover:border-gray-700 text-xs font-bold text-gray-300 uppercase tracking-wider transition-colors">
               <Download className="w-4 h-4" /> Export CSV
             </button>
           </div>
@@ -1392,7 +1392,7 @@ export default function IgrisStrategyWorkspace() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-gray-800 bg-[#060a16]/65 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
+                <tr className="border-b border-white/30 /65 text-[10px] font-bold text-[#64748b] uppercase tracking-wider">
                   <th className="p-3 w-10 text-center">No</th>
                   <th className="p-3">Date</th>
                   <th className="p-3">Option Symbol</th>
@@ -1408,13 +1408,13 @@ export default function IgrisStrategyWorkspace() {
                 {simTrades.map((t, idx) => {
                   const isWin = t.pnl >= 0;
                   return (
-                    <tr key={idx} className="hover:bg-gray-900/10 font-mono">
-                      <td className="p-3 text-center text-gray-500">{idx + 1}</td>
-                      <td className="p-3 text-gray-400">{t.date}</td>
-                      <td className="p-3 text-white font-bold">{simSymbol}{t.strike}{t.option_type}</td>
+                    <tr key={idx} className="hover:/10 font-mono">
+                      <td className="p-3 text-center text-[#64748b]">{idx + 1}</td>
+                      <td className="p-3 text-[#94a3b8]">{t.date}</td>
+                      <td className="p-3 text-[#1a1a2e] font-bold">{simSymbol}{t.strike}{t.option_type}</td>
                       <td className="p-3">
                         <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
-                          t.option_type === 'CE' ? 'bg-[#22c55e]/10 text-[#22c55e]' : 'bg-[#ef4444]/10 text-[#ef4444]'
+                          t.option_type === 'CE' ? 'bg-[#10b981]/10 text-[#10b981]' : 'bg-[#ef4444]/10 text-[#ef4444]'
                         }`}>
                           {t.option_type === 'CE' ? 'CALL BUY' : 'PUT BUY'}
                         </span>
@@ -1423,7 +1423,7 @@ export default function IgrisStrategyWorkspace() {
                       <td className="p-3 text-right text-gray-450">₹{t.exit_premium}</td>
                       <td className="p-3 text-right text-gray-450">{t.qty}</td>
                       <td className="p-3 text-right text-gray-450 font-sans">{t.exit_reason}</td>
-                      <td className={`p-3 text-right font-bold ${isWin ? 'text-[#22c55e]' : 'text-[#ef4444]'}`}>
+                      <td className={`p-3 text-right font-bold ${isWin ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                         {isWin ? '+' : ''}₹{t.pnl.toLocaleString()}
                       </td>
                     </tr>
@@ -1442,10 +1442,10 @@ export default function IgrisStrategyWorkspace() {
         <div className="lg:col-span-2">
           <div className="card p-6 rounded-lg space-y-4 h-full">
             <div>
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
+              <h3 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest block">
                 Platform Diagnostics Walkthrough
               </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">
+              <p className="text-[11px] text-[#64748b] mt-0.5">
                 Run structural health checks on frontend, Express gateway, FastAPI quant engine, DB connections, and events loop.
               </p>
             </div>
@@ -1461,14 +1461,14 @@ export default function IgrisStrategyWorkspace() {
                 { key: 'bs', name: 'Black-Scholes Solver Precision' },
                 { key: 'kill', name: 'Risk Limit Kill-Switch State' }
               ].map(test => (
-                <div key={test.key} className="flex justify-between items-center p-2.5 bg-gray-950/60 border border-gray-900 rounded-lg">
-                  <span className="text-gray-400">{test.name}</span>
+                <div key={test.key} className="flex justify-between items-center p-2.5 /60 border border-white/30 rounded-lg">
+                  <span className="text-[#94a3b8]">{test.name}</span>
                   <span className={`px-2 py-0.5 rounded text-[9px] font-bold ${
                     testStatuses[test.key] === 'PASS' 
-                      ? 'bg-[#22c55e]/10 text-[#22c55e]' 
+                      ? 'bg-[#10b981]/10 text-[#10b981]' 
                       : testStatuses[test.key] === 'PENDING' 
                         ? 'bg-amber-500/10 text-amber-500 animate-pulse' 
-                        : 'bg-gray-900 text-gray-500'
+                        : ' text-[#64748b]'
                   }`}>
                     {testStatuses[test.key]}
                   </span>
@@ -1482,16 +1482,16 @@ export default function IgrisStrategyWorkspace() {
         <div>
           <div className="card p-6 rounded-lg space-y-4 h-full flex flex-col justify-between">
             <div>
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest block">
+              <h3 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest block">
                 Strategy API Integration
               </h3>
-              <p className="text-[11px] text-gray-500 mt-0.5">
+              <p className="text-[11px] text-[#64748b] mt-0.5">
                 Trigger backtests programmatically via our JSON REST API endpoint.
               </p>
             </div>
 
             <div className="space-y-3">
-              <div className="relative bg-gray-950/70 border border-gray-900 rounded-xl p-3.5 font-mono text-[9px] text-indigo-400 select-all leading-relaxed overflow-x-auto whitespace-pre">
+              <div className="relative /70 border border-white/30 rounded-xl p-3.5 font-mono text-[9px] text-indigo-400 select-all leading-relaxed overflow-x-auto whitespace-pre">
                 {`curl -X POST http://localhost:8000/engine/backtest \\
   -H "Content-Type: application/json" \\
   -d '{"strategy_name":"igris_options_strategy",
@@ -1502,14 +1502,14 @@ export default function IgrisStrategyWorkspace() {
 
               <button
                 onClick={handleCopyCurl}
-                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-gray-900 hover:bg-gray-850 border border-gray-800 hover:border-gray-700 text-white font-bold text-xs uppercase tracking-wider transition-all"
+                className="w-full flex items-center justify-center gap-2 py-2 rounded-xl  hover:bg-gray-850 border border-white/30 hover:border-gray-700 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all"
               >
-                <Copy className="w-4 h-4 text-[#22d3ee]" />
+                <Copy className="w-4 h-4 text-[#7c3aed]" />
                 {copiedCurl ? 'COPIED TO CLIPBOARD ✓' : 'COPY cURL COMMAND'}
               </button>
             </div>
 
-            <div className="text-[9px] text-gray-550 font-mono leading-relaxed mt-2 border-t border-gray-900 pt-3">
+            <div className="text-[9px] text-gray-550 font-mono leading-relaxed mt-2 border-t border-white/30 pt-3">
               * Supports authentication tokens. Refer to developer docs for full endpoint routing schema definitions.
             </div>
           </div>

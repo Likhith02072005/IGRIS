@@ -95,10 +95,10 @@ export default function StrategyBuilder() {
     <div className="space-y-8 relative z-10 max-w-4xl mx-auto">
       {/* Title */}
       <div>
-        <h1 className="text-xl font-bold uppercase tracking-wider text-white">
+        <h1 className="text-xl font-bold uppercase tracking-wider text-[#1a1a2e]">
           Strategy Builder Studio
         </h1>
-        <p className="text-xs text-gray-500">
+        <p className="text-xs text-[#64748b]">
           Design, compile, and configure quantitative trading models with institutional safety rules.
         </p>
       </div>
@@ -112,7 +112,7 @@ export default function StrategyBuilder() {
       )}
 
       {success && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-[#22c55e]/10 border border-[#22c55e]/30 text-[#22c55e] text-xs font-semibold">
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-[#10b981]/10 border border-[#22c55e]/30 text-[#10b981] text-xs font-semibold">
           <Save className="w-5 h-5 flex-shrink-0" />
           <span>Strategy compiled and saved successfully! Redirecting to Workspace...</span>
         </div>
@@ -123,13 +123,13 @@ export default function StrategyBuilder() {
         
         {/* Step 1: Identity */}
         <div className="card p-6 rounded-lg space-y-4">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <Layers className="w-4 h-4 text-[#22d3ee]" /> 1. Strategy Identity
+          <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2 mb-2">
+            <Layers className="w-4 h-4 text-[#7c3aed]" /> 1. Strategy Identity
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Strategy Name
               </label>
               <input
@@ -143,7 +143,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Description / Concept
               </label>
               <input
@@ -158,7 +158,7 @@ export default function StrategyBuilder() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Category
               </label>
               <select
@@ -171,7 +171,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Index / Instrument
               </label>
               <select
@@ -184,7 +184,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Primary Timeframe
               </label>
               <select
@@ -200,13 +200,13 @@ export default function StrategyBuilder() {
 
         {/* Step 2: Signal Logic */}
         <div className="card p-6 rounded-lg space-y-4">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <Cpu className="w-4 h-4 text-[#22d3ee]" /> 2. Signal Execution Logic
+          <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2 mb-2">
+            <Cpu className="w-4 h-4 text-[#7c3aed]" /> 2. Signal Execution Logic
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Entry Signals (DSL / Python expression)
               </label>
               <textarea
@@ -219,7 +219,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Exit Signals (DSL / Python expression)
               </label>
               <textarea
@@ -233,7 +233,7 @@ export default function StrategyBuilder() {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+            <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
               Execution Direction
             </label>
             <div className="flex gap-4">
@@ -256,13 +256,13 @@ export default function StrategyBuilder() {
 
         {/* Step 3: Target & Risk Rules */}
         <div className="card p-6 rounded-lg space-y-4">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <DollarSign className="w-4 h-4 text-[#22d3ee]" /> 3. Risk & Sizing Controls
+          <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2 mb-2">
+            <DollarSign className="w-4 h-4 text-[#7c3aed]" /> 3. Risk & Sizing Controls
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Target Points
               </label>
               <input
@@ -276,7 +276,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Stop Loss Points
               </label>
               <input
@@ -290,7 +290,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Trailing Stop Points
               </label>
               <input
@@ -304,7 +304,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Risk Percent per Trade
               </label>
               <input
@@ -320,7 +320,7 @@ export default function StrategyBuilder() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Position Multiplier / Lots
               </label>
               <input
@@ -333,7 +333,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Active Trading Window
               </label>
               <input
@@ -345,7 +345,7 @@ export default function StrategyBuilder() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+              <label className="block text-[10px] font-bold text-[#64748b] uppercase tracking-wider mb-2">
                 Max Trades Per Day
               </label>
               <input
@@ -360,8 +360,8 @@ export default function StrategyBuilder() {
 
         {/* Step 4: Notes */}
         <div className="card p-6 rounded-lg space-y-4">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2 mb-2">
-            <Calendar className="w-4 h-4 text-[#22d3ee]" /> 4. Operator Journal Notes
+          <h2 className="text-xs font-bold text-[#94a3b8] uppercase tracking-widest flex items-center gap-2 mb-2">
+            <Calendar className="w-4 h-4 text-[#7c3aed]" /> 4. Operator Journal Notes
           </h2>
           <div>
             <textarea
@@ -379,7 +379,7 @@ export default function StrategyBuilder() {
           <button
             type="button"
             onClick={() => router.push('/dashboard/strategies')}
-            className="px-6 py-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-gray-700 text-xs font-bold text-gray-300 uppercase transition-all"
+            className="px-6 py-3 rounded-xl  border border-white/30 hover:border-gray-700 text-xs font-bold text-gray-300 uppercase transition-all"
           >
             Cancel Build
           </button>
@@ -387,7 +387,7 @@ export default function StrategyBuilder() {
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#22d3ee] hover:bg-[#22d3ee]/90 text-white font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 "
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7c3aed] hover:bg-[#7c3aed]/90 text-[#1a1a2e] font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50 "
           >
             <Save className="w-4 h-4" />
             {loading ? 'Compiling Code...' : 'Compile & Save Strategy'}
